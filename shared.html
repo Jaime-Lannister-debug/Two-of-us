@@ -486,7 +486,9 @@ function initPeopleUI(){
    const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(i+(event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length;buttons[next]?.focus();
   }
  });
- $('#peopleMenu').addEventListener('focusout',event=>{if(!$('#peopleArea').contains(event.relatedTarget))closePeopleMenu(false)});
+ // Safari 点击按钮时可能先产生 relatedTarget=null 的 focusout，不能在此时隐藏菜单。
+ // 改为焦点真正进入外部元素时关闭，避免按钮在 click 派发前消失。
+ document.addEventListener('focusin',event=>{if(!$('#peopleArea').contains(event.target))closePeopleMenu(false)});
  for(const id of ['exportBackup','inviteSpace','joinSpace','logout'])$('#'+id).addEventListener('click',()=>closePeopleMenu(false));
  $('#editProfile').onclick=()=>{
   profileReturnFocus=$('#peopleToggle');closePeopleMenu(false);

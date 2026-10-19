@@ -24,6 +24,8 @@ end = html.index('void initSharedCloud();', start) + len('void initSharedCloud()
 backend = html[start:end].replace('void initSharedCloud();', '')
 fixture = (ROOT / 'tests/cloud-stubs.js').read_text() + backend + (ROOT / 'tests/cloud-assertions.js').read_text()
 
+menu_fixture=(ROOT / 'tests/menu-stubs.js').read_text() + backend + (ROOT / 'tests/menu-events.js').read_text()
+
 node = shutil.which('node')
 jsc = Path('/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc')
 if not node and not jsc.exists():
@@ -34,14 +36,18 @@ with tempfile.TemporaryDirectory(prefix='two-us-check-') as directory:
     syntax = folder / 'syntax.js'
     syntax.write_text(script)
     test = folder / 'data-layer.js'
+    menu_test = folder / 'menu-events.js'
+    menu_test.write_text(menu_fixture)
     if node:
         # 兼容现有测试的 JavaScriptCore 输出接口。
         test.write_text('const print=console.log;const quit=code=>process.exit(code);\n' + fixture)
         subprocess.run([node, '--check', str(syntax)], check=True)
         subprocess.run([node, str(test)], check=True)
+        subprocess.run([node, str(menu_test)], check=True)
     else:
         syntax.write_text('new Function(' + json.dumps(script) + ');print("PASS: script syntax");')
         test.write_text(fixture)
         subprocess.run([str(jsc), str(syntax)], check=True)
         subprocess.run([str(jsc), str(test)], check=True)
+        subprocess.run([str(jsc), str(menu_test)], check=True)
 print('PASS: 源码、语法和模拟数据层检查完成；未连接真实数据库。')
