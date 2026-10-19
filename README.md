@@ -63,7 +63,7 @@ python3 scripts/check.py
 - 五个板块、封面、评分、游戏时长、电视剧进度、地图和日历。
 - 搜索防抖、模态框焦点管理、键盘卡片操作、JSON 导出。
 - 已移除无效 seeds / switchCatalog，HTML 约 60 KB。
-- 图片暂用压缩后的 data URL，最多 300,000 字符；未迁移 Storage。
+- 新上传封面压缩为最长边 400px、JPEG 质量 0.6，经 Worker 预签名 PUT 到 R2；条目保存公开 URL。旧封面 data URL 和手工链接仍兼容。个人头像压缩方式不变。
 - DELETE 通知可能暴露删除 UUID 元数据；多空间严格隔离需私有 Broadcast。
 - 单文件仍有内联脚本/样式；移除 img onerror 不代表已经满足 strict CSP。
 
@@ -97,3 +97,16 @@ SQL 新建 shared_profiles、RLS、get_shared_people RPC，并将资料表加入
 验收：两人分别登录；设置自己的昵称/头像，另一端应自动更新；刷新后保留；不能修改他人的 user_id 资料；非成员不能读取 get_shared_people；退出后清空；手机和桌面左上角菜单可开合，键盘方向键/Escape/Tab 可操作，个人资料对话框焦点不能跳到背景。
 
 资料相关模拟测试覆盖头像协议/大小、昵称默认值、读取与实时过滤、退出后的旧响应丢弃。SQL 及真实双账号头像同步尚需在项目内验收。
+
+## R2 封面上传（2026-10-19）
+
+上传签名接口：https://r2-presigner.baopengtoskr.workers.dev/
+公开图片根地址：https://pub-e97c7ebcf6e7475d85a27152bc869d5f.r2.dev
+
+这两个公开地址是 shared.html 的封面相关常量。R2 访问密钥只保存在 Worker，不进前端和仓库。Worker POST 接收 filename/contentType，并使用现有 Supabase 会话 Bearer token 核验空间成员；浏览器取得 uploadUrl 后仅用 Content-Type:image/jpeg PUT，不向 R2 发送 Supabase token。
+
+保留图片链接输入框。上传失败不覆盖旧链接；成功后仍需点击“保存记录”，公开 URL 才写入 Supabase 并同步给对方。个人头像未迁移。旧封面不自动重传或删除；取消编辑可能留下已上传但未被条目引用的对象。
+
+R2 covers 桶的 CORS 必须允许 https://jaime-lannister-debug.github.io 的 PUT/GET，及 Content-Type 请求头。当前只读 Worker 检查 GET=405 JSON、OPTIONS=204，来源与 Authorization/Content-Type 预检正常；未用真实成员 JWT 做实际上传。
+
+Node 环境下 python3 scripts/check.py 会运行 tests/cover-upload.mjs，验证压缩、POST/PUT、只保存 URL、上传失败保留旧值和手填链接；测试不连接真实 R2。
