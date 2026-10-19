@@ -45,6 +45,7 @@ with tempfile.TemporaryDirectory(prefix='two-us-check-') as directory:
         subprocess.run([node, str(test)], check=True)
         subprocess.run([node, str(menu_test)], check=True)
         subprocess.run([node, str(ROOT / 'tests/cover-upload.mjs')], check=True)
+        subprocess.run([node, str(ROOT / 'tests/travel-map.mjs')], check=True)
     else:
         syntax.write_text('new Function(' + json.dumps(script) + ');print("PASS: script syntax");')
         test.write_text(fixture)

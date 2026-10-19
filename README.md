@@ -110,3 +110,13 @@ SQL 新建 shared_profiles、RLS、get_shared_people RPC，并将资料表加入
 R2 covers 桶的 CORS 必须允许 https://jaime-lannister-debug.github.io 的 PUT/GET，及 Content-Type 请求头。当前只读 Worker 检查 GET=405 JSON、OPTIONS=204，来源与 Authorization/Content-Type 预检正常；未用真实成员 JWT 做实际上传。
 
 Node 环境下 python3 scripts/check.py 会运行 tests/cover-upload.mjs，验证压缩、POST/PUT、只保存 URL、上传失败保留旧值和手填链接；测试不连接真实 R2。
+
+## 旅行地图修复与使用
+
+CARTO 原匿名底图出现 API key required 水印，当前改用 OpenStreetMap 标准瓦片，无需地图 key，保留可见版权署名，适用于本项目两人低流量交互查看。地图建立独立层叠上下文，条目编辑与个人资料弹窗位于其上方，Leaflet 控件和提示不再穿透弹窗。
+
+打开旅行足迹 → 在地图点击目的地（可缩放或拖动）→ 点击新增回忆，表单会带入所选经纬度 → 填写目的地、日期、游玩及住宿信息 → 保存记录。地图标点来自数据库条目 lat/lng；仅填写地点名称不会自动地理编码。也可在表单手动填写 WGS84 纬度（-90～90）和经度（-180～180）。单条有效行程会自动居中，多条会自动适配范围。空坐标不会被误认为 0,0。
+
+标点与行程通过现有 Supabase 同步，不需新的 SQL。底图依赖 Leaflet CDN 与 tile.openstreetmap.org 的正常网络访问；网络错误会提示，时间线和记录仍可使用。不要批量抓取、预下载或隐藏版权标注。若以后流量明显增加，应换用适合该流量的底图服务。
+
+地图模拟测试覆盖底图来源和署名、弹窗层级声明、空/合法零坐标、单点居中、瓦片失败提示、点击选点；尚未使用真实账号做浏览器地图交互验收。
