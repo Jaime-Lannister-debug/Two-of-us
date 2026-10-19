@@ -34,7 +34,7 @@ python3 -m http.server 8000
 
 访问 http://localhost:8000/ 。
 
-部署时上传 `index.html`、`shared.html`、实际的 `supabase-config.js` 到同一目录。若部署平台直接从 Git 构建，需要通过该平台的环境变量生成配置文件，或单独配置发布文件；当前仓库没有自动部署工作流，提交不会由本仓库新增工作流自动部署。
+部署时上传 `index.html`、`shared.html`、实际的 `supabase-config.js` 到同一目录。若部署平台直接从 Git 构建，需要通过该平台的环境变量生成配置文件，或单独配置发布文件；仓库现在包含 GitHub Pages 自动部署流程，按下方首次配置完成后，master 提交会自动发布。
 
 Supabase 保存用户记录，GitHub 保存程序源码；数据库内容、JSON 备份、邀请码和账号会话不提交仓库。
 
@@ -68,3 +68,18 @@ python3 scripts/check.py
 - 单文件仍有内联脚本/样式；移除 img onerror 不代表已经满足 strict CSP。
 
 迁移日期：2026-10-19。旧设备上的下载包不是今后的源码依据，后续以仓库最新提交为准。
+
+## GitHub Pages 首次启用
+
+1. 仓库 Settings → Pages → Build and deployment → Source 选择 **GitHub Actions**。
+2. Settings → Secrets and variables → Actions → Variables 新建两个仓库变量：
+   - `SUPABASE_URL`：你的 Supabase Project URL。
+   - `SUPABASE_PUBLISHABLE_KEY`：之前提供的 sb_publishable_ 开头公共 key。
+3. Actions → Deploy GitHub Pages → Run workflow，分支选择 master。
+4. 等待 build 与 deploy 都成功。网址由 GitHub 的 deployment 输出确认；本项目预期为 https://Jaime-Lannister-debug.github.io/Two-of-us/ 。不要把预期 URL 当作已上线验证。
+
+部署只上传网页和生成的配置，不包含 SQL、测试、README 或数据库内容。public key 仅写入构建产物，不提交源码。GitHub Pages 的网页公开访问，但条目仍需登录并通过 Supabase 成员 RLS；上线不等于授予任意访问者读取记录的权限。
+
+邮箱确认若跳转地址仍是 localhost，请在 Supabase Authentication → URL Configuration 将 Site URL 及允许的确认跳转地址改为当前 Pages 站点；本次部署不会自动修改 Supabase 设置。
+
+首次缺少变量或尚未启用 Pages 时，工作流会明确失败；补齐设置后重新运行即可。

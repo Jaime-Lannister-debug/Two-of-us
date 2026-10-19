@@ -8,3 +8,6 @@ supabase-config.js
 .DS_Store
 __pycache__/
 node_modules/
+
+# GitHub Pages 构建产物
+_site/
