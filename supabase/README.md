@@ -85,3 +85,9 @@ B 方案不把邀请 token 放在 URL 中。只需将邀请码通过你们自己
 ## 测试范围
 
 完整脚本语法及模拟数据层测试通过，覆盖空坐标/合法零/范围、数值约束、非进度类型清理、封面上限、冲突提示、共享插入/RPC、加载状态、退出后异步请求丢弃。当前环境无 PostgreSQL 服务，且阻止本地 HTTP 服务监听，因此没有宣称 SQL 已在真实项目执行或完成浏览器焦点/双账号实时验收。请按上述步骤在自己的项目验证；无需提供数据库密码或 service_role。
+
+## 新增个人资料迁移
+
+在 SQL Editor 执行 `04-shared-profiles.sql`，此脚本要求已经有成员方案 B 的 shared_members。只新增 shared_profiles 资料表、本人写入 RLS、成员读取 RPC 和 Realtime 注册，不修改原条目。不要重跑方案 A。
+
+如菜单提示找不到 get_shared_people / shared_profiles，请执行本迁移后刷新。头像最大 60,000 字符，昵称最多 24 字。实时更新依赖 supabase_realtime 已包含 shared_profiles（脚本已注册）。

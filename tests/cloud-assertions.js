@@ -20,5 +20,19 @@
  await saveSharedItem({title:'edit',cat:'game',sub:'Steam'},'id','expected');assert(calls.some(x=>x[0]==='rpc'&&x[2].p_expected_content==='expected'),'RPC optimistic check');
  result={data:[row({cat:'game',sub:'Steam',title:'test'})],error:null};await loadSharedItems();assert(records.length===1&&!listLoading,'load completes');
  let resolveRange;query.range=()=>new Promise(resolve=>resolveRange=resolve);const pending=loadSharedItems();assert(listLoading,'loading state on');cloudEpoch++;cloudUser=null;records=[];resolveRange(result);await pending;assert(records.length===0,'late logout response ignored');
+ cloudUser={id:'person-one'};const subscriptions=[];const channel={on(type,filter,callback){subscriptions.push(filter);return this},subscribe(){return this}};
+ cloud={rpc:async()=>({data:[{user_id:'person-one',nickname:'小一',avatar:'data:image/jpeg;base64,YQ=='},{user_id:'person-two',nickname:'小二',avatar:'javascript:bad'}],error:null}),channel:()=>channel};
+ await loadPeople();assert(sharedPeople.length===2&&sharedPeople[0].nickname==='小一'&&sharedPeople[1].avatar==='','shared profiles rendered safely');assert(subscriptions.some(x=>x.event==='UPDATE'&&x.filter==='shared_id=eq.our-shared-space'),'profile realtime scoped update');
+ let resolvePeople;cloud.rpc=()=>new Promise(resolve=>resolvePeople=resolve);const peoplePending=loadPeople();cloudEpoch++;cloudUser=null;sharedPeople=[];resolvePeople({data:[{user_id:'old',nickname:'old'}],error:null});await peoplePending;assert(sharedPeople.length===0,'profile load cannot restore logged out identity');
+ print('PASS: profiles load, realtime and logout race');
  print('PASS: coordinates, clamping, stale progress cleanup, conflict text, cover limit, insert/RPC, loading and logout race');
+})().catch(error=>{print(String(error));quit(1)});
+
+// 个人资料：安全头像、成员显示顺序、实时重载和会话切换。
+(async()=>{
+ assert(profileAvatar('javascript:alert(1)')==='','avatar protocol');
+ assert(profileAvatar('data:image/jpeg;base64,'+'a'.repeat(60000))==='','avatar size limit');
+ assert(profileAvatar('data:image/jpeg;base64,YQ==')!=='','compressed avatar accepted');
+ assert(profileName({nickname:''},0)==='A'&&profileName({nickname:'  昵称  '},1)==='昵称','profile name fallback');
+ print('PASS: profile avatar validation and nickname fallback');
 })().catch(error=>{print(String(error));quit(1)});
