@@ -1,0 +1,421 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Two of Us · 两个人的小宇宙</title><meta name="description" content="收藏两个人的电影、音乐、游戏、旅途与亲密时光。"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
+:root{color-scheme:dark;--bg:#111216;--panel:#1b1c22;--muted:#94959f;--accent:#efb994;--line:#2b2c33}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f6f2ee;font:14px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}aside{width:225px;position:fixed;inset:0 auto 0 0;padding:34px 22px;border-right:1px solid var(--line);background:#16171c;display:flex;flex-direction:column;z-index:20}.logo{font:italic 28px Georgia;color:var(--accent);letter-spacing:-1px}.logo span{font:11px sans-serif;letter-spacing:3px;display:block;margin-top:9px;color:#aaa}nav{margin-top:48px}nav button,.listnav{width:100%;text-align:left;border:0;background:transparent;padding:15px 17px;border-radius:10px;color:#aaaab4;margin:3px 0}nav button.active{background:#34302e;color:var(--accent)}nav i{font-style:normal;margin-right:15px;font-size:18px}.aside-label{font-size:10px;letter-spacing:2px;color:#666977;margin:32px 15px 10px}.aside-bottom{margin-top:auto;border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:#a3a0a1}.heart{color:var(--accent)}main{margin-left:225px;padding:0 42px 60px;max-width:1900px}header{height:92px;display:flex;align-items:center;gap:18px;border-bottom:1px solid var(--line)}.search{display:flex;align-items:center;gap:12px;max-width:480px;width:45%;background:#22232a;border:1px solid #2e2f36;padding:12px 17px;border-radius:10px}.search input{width:100%;background:none;border:0;color:white;outline:none}.spacer{flex:1}.avatars{display:flex;align-items:center}.avatar{display:grid;place-items:center;border:3px solid var(--bg);border-radius:50%;width:38px;height:38px;background:#66857c;font-weight:700}.avatar+ .avatar{margin-left:-10px;background:#bc8a80}.btn{background:var(--accent);color:#34241c;border:0;border-radius:8px;padding:11px 18px;font-weight:650}.btn.secondary{background:#292a32;color:#ddd}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent)}.hero{margin:28px 0 32px;border-radius:18px;overflow:hidden;position:relative;min-height:292px;padding:42px;display:flex;align-items:center;background:#263c3c}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,28,.95),rgba(13,27,28,.5) 55%,rgba(13,27,28,.05)),url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=85') center 52%/cover}.hero>div{position:relative}.hero h1{font:38px Georgia,'Songti SC',serif;line-height:1.5;margin:15px 0 10px;font-weight:500}.hero p{color:#c3d0cb;line-height:1.9;font-size:13px}.hero .small{font-size:11px;margin-top:22px;color:#d8c5b5}.hero-count{position:absolute!important;right:35px;bottom:25px;display:flex;gap:25px;text-align:center}.hero-count strong{display:block;font:25px Georgia}.hero-count small{color:#c1ceca;font-size:10px}.heading{display:flex;align-items:center;gap:12px;margin:28px 0 20px}.heading h2{margin:0;font-size:21px;font-weight:600;letter-spacing:1px}.heading small{color:var(--muted);font-size:12px}.heading a{margin-left:auto;color:var(--muted);cursor:pointer}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.chip{background:#202127;color:#a4a4af;border:1px solid #2a2b33;border-radius:7px;padding:9px 15px;font-size:12px}.chip.active{background:#e7b794;color:#32251f;border-color:#e7b794}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}.card{cursor:pointer;min-width:0}.poster{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:linear-gradient(145deg,#41574e,#262336)}.poster img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.card:hover img{transform:scale(1.045)}.poster:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.7))}.poster .tag{position:absolute;top:11px;left:11px;background:#16191be0;padding:5px 8px;border-radius:5px;font-size:10px;z-index:1}.poster .score{position:absolute;right:10px;bottom:12px;font-size:12px;z-index:2;color:#f7ce9a}.poster-title{position:absolute;bottom:24px;left:18px;right:16px;font:24px Georgia,'Songti SC',serif;text-shadow:0 2px 8px #000;z-index:1}.card h3{font-size:14px;font-weight:550;margin:12px 0 7px}.meta{color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:8px}.progress{height:3px;background:#33363b;margin-top:11px;border-radius:3px}.progress span{display:block;height:100%;background:#b5c2a2}.banner{margin-top:32px;padding:22px 27px;background:#202321;border:1px solid #343a32;border-radius:12px;display:flex;gap:20px;align-items:center}.banner p{color:#a5aca1;font-size:12px}.banner b{font-weight:500}.banner button{margin-left:auto}.empty{padding:70px;text-align:center;color:var(--muted);grid-column:1/-1}.notice{font-size:11px;color:#747680;margin-top:38px}.map{height:390px;border-radius:14px;overflow:hidden;background:#263331;margin-bottom:28px}.leaflet-container{color-scheme:light}.timeline{display:grid;gap:20px}.trip{display:grid;grid-template-columns:190px 1fr;gap:25px;background:var(--panel);border-radius:13px;overflow:hidden;cursor:pointer}.trip img{width:190px;height:170px;object-fit:cover}.trip-content{padding:22px 25px 20px 0}.trip h3{font-size:21px;margin:8px 0 16px}.trip p{color:#a8a9b0;font-size:13px;line-height:1.7}.calendar{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:25px;margin:25px 0}.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.cal-head button{background:#2c2d34;border:0;border-radius:5px;padding:8px 14px}.days{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{border:0;min-height:64px;background:#24252d;border-radius:7px;padding:12px;text-align:left;color:#aaa}.day.marked{background:#4b3438;color:#f1b2b9}.day.selected{outline:1px solid var(--accent)}.week{color:#777;font-size:11px;text-align:center;padding:5px}.privacy{background:#292429;padding:18px 23px;border:1px solid #4a373f;border-radius:10px;color:#d2b7c0;font-size:12px}.modal{position:fixed;inset:0;background:#000b;z-index:100;display:grid;place-items:center;padding:20px}.modal[hidden]{display:none}.dialog{background:#1d1e25;border:1px solid #3b3c46;border-radius:16px;width:600px;max-width:100%;max-height:90vh;overflow:auto;padding:30px}.dialog h2{font-size:23px;margin:0 0 25px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.field{display:flex;flex-direction:column;gap:8px;font-size:12px;color:#bbb}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{background:#292a33;border:1px solid #3b3c45;color:#eee;padding:11px;border-radius:7px;width:100%}.field textarea{min-height:85px}.actions{display:flex;gap:10px;margin-top:25px}.actions .delete{margin-right:auto;background:transparent;color:#d69898;border:0}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--accent);color:#33281e;padding:12px 23px;border-radius:8px;z-index:200}.section-title{margin:34px 0 6px;font-size:29px}.subtitle{color:var(--muted);font-size:13px;line-height:1.7}.music .poster{aspect-ratio:1}.music .poster-title{font-size:22px}@media(min-width:1500px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:1100px){aside{width:180px;padding:30px 15px}main{margin-left:180px;padding:0 25px 40px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hero-count{display:none!important}}@media(max-width:750px){aside{position:sticky;top:0;width:100%;height:auto;padding:12px 15px;display:block;border-bottom:1px solid var(--line)}.logo{font-size:22px}.logo span,.aside-label,.listnav,.aside-bottom{display:none}nav{margin:8px 0 0;display:flex;justify-content:space-between}nav button{width:auto;padding:9px 7px;font-size:12px}nav i{display:none}main{margin:0;padding:0 17px 35px}header{height:73px;gap:10px}.search{width:100%;max-width:100%}.avatars,header>.spacer{display:none}.btn{white-space:nowrap;padding:11px 13px}.hero{padding:25px;min-height:270px}.hero h1{font-size:29px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 13px}.heading small{display:none}.trip{grid-template-columns:110px 1fr;gap:15px}.trip img{width:110px;height:100%}.trip-content{padding:17px 10px 17px 0}.trip h3{font-size:18px}.day{min-height:44px;padding:8px}.calendar{padding:15px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.map{height:300px}}
+
+/* Shared interaction feedback */
+button, a[data-more], .card, .trip { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { position: relative; isolation: isolate; overflow: hidden; transition: transform .18s ease, background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, filter .22s ease; }
+@media (hover: hover) {
+ button:hover { transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 5px 16px #0003; }
+ nav button:hover, .listnav:hover { background: #29272a; color: var(--accent); }
+ nav button.active:hover { background: #423731; }
+ .btn:hover { box-shadow: 0 6px 22px #efb99426; }
+ .chip:hover { border-color: #a38069; color: #f4dbc8; }
+ .chip.active:hover { color: #32251f; }
+ .day:hover { background: #39313a; color: #f9d3c0; }
+ .day.marked:hover { background: #66424a; }
+ .actions .delete:hover { background: #66323b44; color: #ffc0c0; }
+ .cal-head button:hover { background: #4a3a35; color: var(--accent); }
+ .card:hover { transform: translateY(-5px); }
+ .card:hover .poster { box-shadow: 0 10px 27px #0005, 0 0 0 1px #efb99466; }
+ .card:hover h3 { color: var(--accent); }
+ .trip:hover { transform: translateY(-3px); border-color: #806453; box-shadow: 0 10px 24px #0004; }
+ a[data-more]:hover { color: var(--accent); transform: translateX(3px); }
+ .leaflet-interactive:hover { stroke: #ffe0bd; fill: #ffcfab; stroke-width: 6; }
+}
+button:active { transform: translateY(1px) scale(.96); filter: brightness(.94); box-shadow: 0 1px 4px #0003; transition-duration: .07s; }
+.card, .trip { transition: transform .23s ease, box-shadow .23s ease, border-color .23s ease; }
+.trip { border: 1px solid transparent; }
+.card .poster { transition: box-shadow .23s ease; }
+.card h3 { transition: color .2s ease; }
+.card:active, .trip:active { transform: scale(.975); transition-duration: .08s; }
+a[data-more] { display: inline-block; transition: color .2s ease, transform .2s ease; }
+a[data-more]:active { transform: translateX(3px) scale(.96); }
+.leaflet-interactive { transition: fill .2s ease, stroke .2s ease, stroke-width .2s ease; }
+.card:focus-visible, .trip:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 12px; }
+.click-wave { position: absolute; display: block; pointer-events: none; border-radius: 50%; background: currentColor; opacity: .22; z-index: 3; transform: scale(0); animation: click-wave .55s ease-out forwards; }
+@keyframes click-wave { to { transform: scale(1); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+ button:hover, button:active, .card:hover, .card:active, .trip:hover, .trip:active, a[data-more]:hover, a[data-more]:active { transform: none !important; }
+ .click-wave { display: none; }
+}
+
+/* A quiet, romantic atmosphere behind the content. */
+body { isolation: isolate; }
+.romance-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict; }
+.romance-glow { position: absolute; width: 68vmax; height: 68vmax; border-radius: 50%; will-change: transform; }
+.romance-glow.one { top: -40vmax; right: -18vmax; background: radial-gradient(circle, #b95c7b26 0%, #9b506b12 40%, transparent 68%); animation: romantic-drift 24s ease-in-out infinite alternate; }
+.romance-glow.two { bottom: -38vmax; left: 3vw; background: radial-gradient(circle, #c78c6c20 0%, #b9697b0d 42%, transparent 68%); animation: romantic-drift 29s ease-in-out -12s infinite alternate-reverse; }
+.romance-heart { position: absolute; left: var(--x); bottom: -40px; color: #e3a7bb; font: var(--size) Georgia, serif; opacity: 0; animation: romantic-rise var(--duration) linear var(--delay) infinite; will-change: transform, opacity; }
+@keyframes romantic-drift { from { transform: translate3d(-3vw, 0, 0) scale(.95); } to { transform: translate3d(6vw, 8vh, 0) scale(1.12); } }
+@keyframes romantic-rise { 0% { transform: translate3d(0, 0, 0) rotate(-12deg); opacity: 0; } 15% { opacity: .15; } 55% { opacity: .10; } 100% { transform: translate3d(45px, -110vh, 0) rotate(18deg); opacity: 0; } }
+.search { transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease; transform-origin: center; }
+.search:focus-within { background: #2b252d; border-color: #d49b87; box-shadow: 0 0 0 3px #e8a5ad12, 0 6px 25px #d2879a18; }
+@media (hover: hover) { .search:hover { border-color: #a97e85; background: #29252d; box-shadow: 0 5px 22px #d2879a14; } }
+.search.is-bouncing { animation: search-bounce .54s cubic-bezier(.22,.7,.3,1); }
+.search.is-typing { animation: search-type .32s ease-out; }
+@keyframes search-bounce { 0%,100% { transform: translateY(0) scale(1); } 28% { transform: translateY(-5px) scale(1.014); } 52% { transform: translateY(2px) scale(.993); } 75% { transform: translateY(-1.5px) scale(1.004); } }
+@keyframes search-type { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-2px); } 75% { transform: translateY(.6px); } }
+@media (max-width: 750px) { .romance-heart:nth-of-type(n+7) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .romance-glow, .romance-heart, .search.is-bouncing, .search.is-typing { animation: none !important; will-change: auto; transform: none !important; } .romance-heart { display: none; } }
+
+.poster.wrap-cover img { width:210%; max-width:none; height:100%; object-fit:fill; position:relative; left:-110%; }
+.poster.wrap-cover .poster-title { display:none; }
+.poster.wrap-cover .tag { top:auto; bottom:10px; left:9px; font-size:9px; max-width:68%; }
+.poster.wrap-cover .score { bottom:14px; }
+.poster:not(.wrap-cover) .cover-pending { position:absolute; top:50%; left:18px; color:#bca8ac; font-size:11px; }
+.poster.missing-cover .poster-title { display:block; }
+.genre-badges { display:flex; gap:5px; flex-wrap:wrap; margin:10px 0 3px; }
+.genre-badges span { font-size:10px; color:#d0b7a6; border:1px solid #55463c; border-radius:5px; padding:3px 6px; background:#2b2423; }
+.genre-filter { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:18px 0 22px; color:var(--muted); font-size:12px; }
+.genre-filter select { margin-left:10px; color:#ead0bd; background:#24232a; border:1px solid #55483f; border-radius:7px; padding:9px 12px; max-width:200px; }
+.genre-options { display:flex; flex-wrap:wrap; gap:6px; }
+.genre-options .chip { font-size:11px; padding:6px 9px; }
+.cover-credit { font-size:11px; grid-column:1/-1; margin:0; }
+.cover-credit a { color:#b79e8c; }
+.progress-caption{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#c6b6ae;margin-top:14px}.progress{height:6px;margin-top:7px;overflow:hidden}.progress span{background:linear-gradient(90deg,#d99d98,#efc49d);transition:width .35s ease}.progress-hint{display:block;color:var(--muted);line-height:1.7;margin-top:8px}input[type=range]{accent-color:var(--accent);padding:8px 0;cursor:pointer}@media(prefers-reduced-motion:reduce){.progress span{transition:none}}
+/* 未登录时隐藏条目、导航和新增入口，数据库仍通过 RLS 独立鉴权。 */
+body:not(.signed-in)>aside,body:not(.signed-in)>main{display:none}
+body.signed-in #authPanel{display:none}
+#authPanel{position:relative;max-width:450px;margin:12vh auto 30px;padding:32px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+#authPanel .field{margin:18px 0}#authPanel h1{font-size:26px}
+#cloudNotice{position:relative;z-index:25;max-width:800px;margin:15px auto;padding:12px 18px;color:#d1bbaa;font-size:12px;line-height:1.7}
+body.signed-in #cloudNotice{margin-left:250px}
+#cloudAccount{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:14px 0;flex-wrap:wrap}
+#cloudAccount small{color:var(--muted)}
+button:disabled{opacity:.55;cursor:wait}
+@media(max-width:750px){body.signed-in #cloudNotice{margin-left:0}#authPanel{margin:8vh 15px 20px}}
+</style></head><body><div class="romance-bg" aria-hidden="true"><div class="romance-glow one"></div><div class="romance-glow two"></div><span class="romance-heart" style="--x:9%;--size:15px;--duration:33s;--delay:-8s">♡</span><span class="romance-heart" style="--x:27%;--size:21px;--duration:39s;--delay:-25s">♡</span><span class="romance-heart" style="--x:43%;--size:12px;--duration:29s;--delay:-16s">♡</span><span class="romance-heart" style="--x:61%;--size:17px;--duration:36s;--delay:-4s">♡</span><span class="romance-heart" style="--x:77%;--size:24px;--duration:42s;--delay:-29s">♡</span><span class="romance-heart" style="--x:93%;--size:14px;--duration:31s;--delay:-21s">♡</span><span class="romance-heart" style="--x:54%;--size:11px;--duration:45s;--delay:-35s">♡</span><span class="romance-heart" style="--x:35%;--size:16px;--duration:38s;--delay:-3s">♡</span></div><section id="authPanel"><div class="logo">two of us</div><h1>登录我们的共享空间</h1><p class="subtitle">各自登录同一个 Supabase 项目，共享同一份条目。</p><form id="authForm"><label class="field">邮箱<input id="authEmail" type="email" autocomplete="email" required></label><label class="field">密码<input id="authPassword" type="password" autocomplete="current-password" minlength="6" required></label><div class="actions"><button class="btn" type="submit" value="login">登录</button><button class="btn secondary" type="submit" value="signup">注册</button></div></form></section><div id="cloudNotice" role="status" aria-live="polite"><span id="cloudMessage">正在初始化…</span></div><aside><div class="logo">two of us<span>两个人的小宇宙</span></div><nav id="nav"></nav><div class="aside-label">OUR COLLECTIONS</div><button class="listnav" data-list="wish">♡ &nbsp; 我们的心愿单</button><button class="listnav" data-list="doing">◷ &nbsp; 正在一起做</button><button class="listnav" data-list="done">✓ &nbsp; 已完成的美好</button><div class="aside-bottom"><span class="heart">♥</span> &nbsp;把平凡的日子，过成收藏<br><br><small>EST. 2026 · ONLY FOR US</small></div></aside><main><div id="cloudAccount"><span id="accountEmail"></span><small id="syncState">未登录</small><button id="exportBackup" class="btn secondary" type="button">导出 JSON 备份</button><button id="inviteSpace" class="btn secondary" type="button">生成邀请码</button><button id="joinSpace" class="btn secondary" type="button">邀请码加入</button><button id="logout" class="btn secondary" type="button">退出登录</button></div><header><label class="search">⌕ <input id="search" placeholder="搜索我们的电影、音乐、目的地…" aria-label="搜索记录"></label><div class="spacer"></div><div class="avatars"><span class="avatar">A</span><span class="avatar">B</span></div><button class="btn" id="add">＋ 新增回忆</button></header><div id="content"></div><div class="notice">记录保存在 Supabase 共享空间；封面、评分、进度与时长随条目共同同步。</div></main><div class="modal" id="modal" hidden><form class="dialog" id="form" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><h2 id="dialogTitle">新增一份美好</h2><div class="formgrid" id="fields"></div><div class="actions"><button type="button" class="delete" id="delete">删除记录</button><button type="button" class="btn secondary" id="cancel">取消</button><button class="btn" type="submit">保存记录</button></div></form></div><script src="./supabase-config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const photos={mountain:'photo-1464822759023-fed622ff2c3b',sea:'photo-1518837695005-2083093ee35b',city:'photo-1519608487953-e999c86e7455',forest:'photo-1441974231531-c6227db76b6e',lake:'photo-1476514525535-07fb3b4ae5f1',road:'photo-1469474968028-56623f02e42e',music:'photo-1516280440614-37939bbacd81',night:'photo-1470225620780-dba8ba36b745'};const img=k=>'https://images.unsplash.com/'+(photos[k]||photos.lake)+'?auto=format&fit=crop&w=700&q=85';
+const cats={home:['⌂','我们的小宇宙'],film:['▣','影视时光'],music:['♫','音乐收藏'],game:['♧','游戏搭子'],travel:['⌁','旅行足迹'],intimacy:['♡','亲密日记']};const subs={film:['电影','电视剧'],music:['专辑','单曲','现场'],game:['Steam','PS5','Switch 1 & 2','手游'],travel:['国内','海外'],intimacy:['亲密记录']};const status={wish:'将要看 / 玩',doing:'正在看 / 玩',done:'已看 / 玩'};
+const parseGenres=value=>[...new Set((Array.isArray(value)?value:String(value||'').split(/[,，、;；\n]/)).map(x=>String(x).trim()).filter(Boolean))].slice(0,20);
+const genreSuggestions={game:['开放世界','RPG','动作冒险','解谜','双人合作','平台跳跃','音乐节奏','竞速','生活模拟','策略','卡牌','Roguelike'],film:['喜剧片','悬疑片','爱情片','科幻片','剧情片','动画片','纪录片'],music:['流行','摇滚','爵士','古典','电子','电影原声'],travel:['城市漫游','自然风光','海岛','美食','徒步'],intimacy:['温柔','浪漫','纪念日']};
+let records = [];
+let genreFilter='';
+let page='home',filter='全部',stateFilter='',query='',editing=null,map=null,month=new Date(new Date().getFullYear(),new Date().getMonth(),1),selectedDate='';
+function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.append(d);setTimeout(()=>d.remove(),2400)}function go(p,s=''){page=p;filter='全部';genreFilter='';stateFilter=s;selectedDate='';render()}
+$('#nav').innerHTML=Object.entries(cats).map(([k,v])=>`<button data-page="${k}"><i>${v[0]}</i>${v[1]}</button>`).join('');$('#nav').onclick=e=>{const b=e.target.closest('[data-page]');if(b)go(b.dataset.page)};document.querySelectorAll('[data-list]').forEach(b=>b.onclick=()=>go('home',b.dataset.list));let searchDebounce;$('#search').oninput=e=>{const value=e.target.value;clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{query=value;render()},200)};$('#add').onclick=()=>openForm();
+function hasProgress(r){return r.cat==='game'||(r.cat==='film'&&r.sub==='电视剧')}
+function stateLabels(){return status}
+function progressValue(r){if(r.state==='done')return 100;if(r.state==='wish')return 0;if(r.cat==='film'&&Number(r.totalEpisodes)>0)return Math.min(100,Math.max(0,Math.round(Number(r.watchedEpisodes||0)/Number(r.totalEpisodes)*100)));return Math.min(100,Math.max(0,Number(r.progress)||0))}
+function progressCard(r){if(!hasProgress(r))return '';const n=progressValue(r);return `<div class="progress-caption"><span>${stateLabels(r.cat,r.sub)[r.state]}</span><span>${r.cat==='film'&&Number(r.totalEpisodes)>0?`${Number(r.watchedEpisodes)||0} / ${Number(r.totalEpisodes)} 集 · `:''}${n}%</span></div><div class="progress" role="progressbar" aria-label="${esc(r.title)}进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${n}"><span style="width:${n}%"></span></div>`}
+function card(r){return `<article class="card ${r.cat==='music'?'music':''}" data-id="${r.id}" tabindex="0" role="button" aria-label="编辑${esc(r.title)}"><div class="poster ${!r.image&&r.coverImage&&r.coverWrap?'wrap-cover':''}">${r.image||r.coverImage?`<img src="${esc(r.image||r.coverImage)}" alt="${esc(r.title)}${r.coverImage&&!r.image?'游戏封面':'海报'}" loading="lazy">`:''}${r.cat==='game'&&!r.image&&!r.coverImage?`<span class="cover-pending">${esc(r.coverStatus||'封面待补充')}</span>`:''}<span class="tag">${esc(r.cat==='game'?(r.platform||r.sub):status[r.state])}</span><div class="poster-title">${esc(r.title)}</div><span class="score">★ ${r.score?Number(r.score).toFixed(1):'待评分'}</span></div><h3>${esc(r.title)}</h3><div class="meta"><span>${esc(r.desc)}</span></div>${genreBadges(r)}${r.cat==='game'?`<div class="progress-caption">累计游玩 ${Number(r.playHours)||0} 小时</div>`:''}${r.cat==='film'&&r.sub==='电视剧'&&Number(r.currentEpisode)>0?`<div class="progress-caption">正在看第 ${Number(r.currentEpisode)} 集</div>`:''}${progressCard(r)}</article>`}
+function genreBadges(r){return `<div class="genre-badges">${parseGenres(r.genres).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`}
+function render(){if(!cloudUser)return;if(map){map.remove();map=null}document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));let arr=records.filter(r=>(page==='home'||r.cat===page)&&(filter==='全部'||r.sub===filter)&&(!stateFilter||r.state===stateFilter)&&(!genreFilter||parseGenres(r.genres).includes(genreFilter))&&(!query||(r.title+r.desc+(r.place||'')+parseGenres(r.genres).join(' ')).toLowerCase().includes(query.toLowerCase())));let html='';if(page==='home'&&!stateFilter&&!query&&!genreFilter){html=`<section class="hero"><div><span class="eyebrow">A LITTLE WORLD, JUST FOR TWO</span><h1>把喜欢的事，<br>都和你一起。</h1><p>一部电影，一首歌，一场说走就走的旅行。<br>这里收藏我们的共同喜好，也记录每一次心动。</p><div class="small">✧ &nbsp; 下一次约会，从一个小小的心愿开始</div></div><div class="hero-count"><div><strong>${records.filter(r=>r.state==='done').length}</strong><small>共同回忆</small></div><div><strong>${records.filter(r=>r.state==='wish').length}</strong><small>未来可期</small></div></div></section><div class="heading"><h2>◷ &nbsp;我们的进行时</h2><small>有你在，每件事都变得有趣</small><a data-more="doing">查看全部 →</a></div><div class="grid">${records.filter(r=>r.state==='doing'&&r.cat!=='intimacy').map(card).join('')}</div><div class="heading"><h2>一起收藏的美好</h2><small>慢慢体验，慢慢喜欢</small><a data-more="wish">心愿清单 →</a></div>`}else{html=`<h1 class="section-title">${stateFilter?{wish:'我们的心愿单',doing:'正在一起做',done:'已完成的美好'}[stateFilter]:cats[page][1]}</h1><p class="subtitle">${{home:'把想做的事放在这里，把未来留给我们。',film:'从片头到片尾，身边一直是你。',music:'有些旋律一响起，就想起了你。',game:'最佳队友，永远是你。',travel:'把世界慢慢走成我们的地图。',intimacy:'只属于我们共同记录的亲密时光。'}[page]}</p>`}
+if(page!=='home'||stateFilter||query)html+=`<div class="chips">${['全部',...(subs[page]||[])].map(x=>`<button class="chip ${filter===x?'active':''}" data-sub="${x}">${x}</button>`).join('')}<span class="spacer"></span>${['','wish','doing','done'].map(s=>`<button class="chip ${stateFilter===s?'active':''}" data-state="${s}">${s?stateLabels(page,'')[s]:'所有状态'}</button>`).join('')}</div>`;
+const availableGenres=[...new Set(records.filter(r=>page==='home'||r.cat===page).flatMap(r=>parseGenres(r.genres)))].sort((a,b)=>a.localeCompare(b,'zh'));
+if(availableGenres.length) html+=`<div class="genre-filter"><label>类型 <select id="genreFilter" aria-label="按类型筛选"><option value="">全部类型</option>${availableGenres.map(t=>`<option value="${esc(t)}" ${genreFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select></label><span>${arr.length} 项记录</span></div>`;
+if(page==='travel'){html+='<div class="map" id="map"></div><div class="heading"><h2>旅途时间线</h2><small>从最近的一次出发说起</small></div><div class="timeline">'+arr.sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<article class="trip" data-id="${r.id}" tabindex="0" role="button"><img src="${esc(r.image)}" alt="${esc(r.title)}"><div class="trip-content"><span class="eyebrow">${r.date} · ${status[r.state]}</span><h3>${esc(r.title)} <small style="color:#efb994;font-size:13px">★ ${r.score||'待评分'}</small></h3>${genreBadges(r)}<p>游玩 · ${esc(r.desc)}<br>入住 · ${esc(r.hotel)}<br>${esc(r.note)}</p></div></article>`).join('')+'</div>'}else if(page==='intimacy'){html+='<div class="privacy">♡ 亲密记录 · 当前共享空间的已登录账号可访问。</div>'+calendar()+`<div class="heading"><h2>${selectedDate?selectedDate:'亲密时光'}</h2><small>点击日历中的日期筛选记录</small></div><div class="timeline">`+arr.filter(r=>!selectedDate||r.date===selectedDate).map(r=>`<article class="trip" data-id="${r.id}" tabindex="0" role="button"><img src="${esc(r.image)}" alt="夜色示意图"><div class="trip-content"><span class="eyebrow">${r.date} · ★ ${r.score||'待评分'}</span><h3>${esc(r.title)}</h3>${genreBadges(r)}<p>地点 · ${esc(r.place)}　品牌 · ${esc(r.brand)}<br>感受 · ${esc(r.note)}</p></div></article>`).join('')+'</div>'}else{const display=page==='home'&&!stateFilter&&!query&&!genreFilter?arr.filter(r=>r.cat!=='intimacy'&&r.state==='wish'):arr.filter(r=>r.cat!=='intimacy');html+=`<div class="grid">${display.length?display.map(card).join(''):'<div class="empty">还没有条目。点击右上角「新增回忆」，记录第一份共同收藏。</div>'}</div>`}
+if(page==='home'&&!stateFilter&&!query&&!genreFilter)html+='<div class="banner"><span style="font-size:30px;color:#e6b799">⌁</span><div><b>下一站，我们去哪里？</b><p>把想去的地方放进心愿单，让期待有迹可循。</p></div><button class="btn secondary" data-travel>打开旅行地图 ↗</button></div>';$('#content').innerHTML=(listLoading?'<p role="status" class="subtitle">正在加载共享列表…</p>':'')+html;$('#content').setAttribute('aria-busy',String(listLoading));$('#content').querySelectorAll('img').forEach(image=>image.addEventListener('error',()=>{image.hidden=true;image.parentElement.classList.add('missing-cover')},{once:true}));const gf=$('#genreFilter');if(gf)gf.onchange=()=>{genreFilter=gf.value;render()};$('#content').querySelectorAll('[data-id]').forEach(el=>{el.onclick=()=>openForm(el.dataset.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openForm(el.dataset.id)}}});document.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{filter=b.dataset.sub;render()});document.querySelectorAll('[data-state]').forEach(b=>b.onclick=()=>{stateFilter=b.dataset.state;render()});document.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>go('home',b.dataset.more));const tr=$('[data-travel]');if(tr)tr.onclick=()=>go('travel');document.querySelectorAll('[data-month]').forEach(b=>b.onclick=()=>{month=new Date(month.getFullYear(),month.getMonth()+Number(b.dataset.month),1);selectedDate='';render()});document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selectedDate=selectedDate===b.dataset.day?'':b.dataset.day;render()});if(page==='travel')initMap(arr)}
+function calendar(){let year=month.getFullYear(),m=month.getMonth(),offset=(new Date(year,m,1).getDay()+6)%7,count=new Date(year,m+1,0).getDate();return `<div class="calendar"><div class="cal-head"><button data-month="-1" aria-label="上个月">←</button><b>${year} 年 ${m+1} 月</b><button data-month="1" aria-label="下个月">→</button></div><div class="days">${['一','二','三','四','五','六','日'].map(d=>`<div class="week">${d}</div>`).join('')}${'<div></div>'.repeat(offset)}${Array.from({length:count},(_,i)=>{let date=`${year}-${String(m+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,n=records.filter(r=>r.cat==='intimacy'&&r.date===date).length;return `<button class="day ${n?'marked':''} ${date===selectedDate?'selected':''}" data-day="${date}">${i+1}${n?' <span style="float:right">♥</span>':''}</button>`}).join('')}</div></div>`}
+function initMap(arr){if(!window.L){$('#map').innerHTML='<p style="padding:35px">地图暂时不可用。下方时间线仍可查看和编辑全部行程。</p>';return}map=L.map('map').setView([31,116],4);L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:18}).addTo(map);const points=arr.filter(r=>coordinate(r.lat,90)!==undefined&&coordinate(r.lng,180)!==undefined);points.forEach(r=>L.circleMarker([Number(r.lat),Number(r.lng)],{radius:9,color:'#efb994',fillColor:'#efb994',fillOpacity:.85,weight:3}).addTo(map).bindPopup(esc(r.title)+'<br>'+esc(r.date)));if(points.length>1)map.fitBounds(points.map(r=>[r.lat,r.lng]),{padding:[45,45],maxZoom:7})}
+function field(name,label,type='text',value='',full=false){let input=type==='textarea'?`<textarea name="${name}">${esc(value)}</textarea>`:`<input name="${name}" type="${type}" value="${esc(value)}" ${name==='title'?'required maxlength="100"':''} ${name==='score'?'min="0" max="10" step="0.1"':''} ${name==='lat'?'min="-90" max="90" step="any"':''} ${name==='lng'?'min="-180" max="180" step="any"':''}>`;return `<label class="field ${full?'full':''}">${label}${input}</label>`}
+function select(name,label,options,value){return `<label class="field">${label}<select name="${name}">${Object.entries(options).map(([k,v])=>`<option value="${esc(k)}" ${k===value?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`}
+function openForm(id){if(writeBusy||coverBusy)return;modalTrigger=document.activeElement;if(!cloudUser){toast('请先登录');return}if(id&&!rawRows.has(id)){toast('记录已删除，请重新选择');return}editingExpectedContent=id?rawRows.get(id).content:null;editing=id||null;const r=records.find(x=>x.id===id)||{cat:page==='home'?'film':page,state:'wish',score:0,date:new Date().toLocaleDateString('en-CA'),sub:''};$('#fields').innerHTML='';$('#dialogTitle').textContent=id?'编辑这份回忆':'新增一份美好';$('#delete').hidden=!id;$('#fields').innerHTML=field('title','名字','text',r.title||'',true)+select('cat','板块',Object.fromEntries(Object.entries(cats).filter(([k])=>k!=='home').map(([k,v])=>[k,v[1]])),r.cat)+select('sub','分类',Object.fromEntries(subs[r.cat].map(s=>[s,s])),r.sub)+field('genres','类型标签（多个用逗号分隔，可自定义）','text',parseGenres(r.genres).join('，'),true)+`<div class="field full" id="genreSuggestions"></div>`+select('state','清单状态',stateLabels(r.cat,r.sub),r.state)+field('score','我们的评分（0–10，0 表示未评分）','number',r.score)+field('date','日期','date',r.date)+field('image','海报图片链接（也可直接上传）','text',r.image||'')+`<label class="field full">上传本地封面<input id="coverUpload" type="file" accept="image/jpeg,image/png,image/webp"><small id="coverMessage">支持 JPG、PNG、WebP；压缩后最多 300,000 字符，随共享条目保存。</small><img id="coverPreview" alt="封面预览" style="max-width:140px;max-height:180px;object-fit:contain;border-radius:8px" hidden></label>`+field('desc','简介 / 游玩项目','text',r.desc||'',true)+`<div class="field full" id="progressEditor"></div><div class="field full" id="extra"></div>`+field('note',r.cat==='intimacy'?'感受':'我们的感想','textarea',r.note||'',true);const cat=$('[name=cat]');function extras(){const c=cat.value;$('#genreSuggestions').innerHTML='<div class="genre-options">'+genreSuggestions[c].map(t=>`<button type="button" class="chip" data-genre-add="${esc(t)}">＋ ${esc(t)}</button>`).join('')+'</div>';$('#genreSuggestions').querySelectorAll('[data-genre-add]').forEach(b=>b.onclick=()=>{const input=$('[name=genres]');input.value=parseGenres([...parseGenres(input.value),b.dataset.genreAdd]).join('，')});$('#extra').innerHTML=c==='travel'?`<div class="formgrid">${field('place','目的地','text',r.place||'')}${field('hotel','入住信息','text',r.hotel||'')}${field('lat','纬度','number',r.lat??'')}${field('lng','经度','number',r.lng??'')}</div>`:c==='intimacy'?`<div class="formgrid">${field('place','地点','text',r.place||'')}${field('brand','套套品牌','text',r.brand||'')}</div>`:''}cat.onchange=()=>{$('[name=sub]').innerHTML=subs[cat.value].map(s=>`<option>${s}</option>`).join('');extras()};setupProgressEditor(r);setupCoverUpload();extras();if(r.coverSource){const note=document.createElement('p');note.className='cover-credit';const a=document.createElement('a');a.href=r.coverSource;a.target='_blank';a.rel='noopener noreferrer';a.textContent='封面来源：The Cover Project ↗';note.appendChild(a);$('#fields').appendChild(note)}$('#modal').hidden=false;$('[name=title]').focus()}
+function setupProgressEditor(r){
+ const cat=$('[name=cat]'),sub=$('[name=sub]'),state=$('[name=state]'),host=$('#progressEditor');
+ let draft={progress:progressValue(r),watchedEpisodes:Number(r.watchedEpisodes)||0,totalEpisodes:Number(r.totalEpisodes)||0,currentEpisode:Number(r.currentEpisode)||0,playHours:Number(r.playHours)||0};
+ function draw(){const c=cat.value,isTV=c==='film'&&sub.value==='电视剧',supported=c==='game'||isTV;
+ const current=state.value;state.innerHTML=Object.entries(stateLabels(c,sub.value)).map(([k,v])=>`<option value="${k}" ${k===current?'selected':''}>${v}</option>`).join('');
+ if(!supported){host.innerHTML='';return}
+ host.innerHTML=isTV?`<div class="formgrid">${field('watchedEpisodes','已看集数','number',draft.watchedEpisodes)}${field('totalEpisodes','总集数（未知可填 0）','number',draft.totalEpisodes)}${field('currentEpisode','正在看第几集（0 表示未开始）','number',draft.currentEpisode)}</div>`:`<label class="field">游玩进度 <output id="progressOutput">${draft.progress}%</output><input name="progress" type="range" min="0" max="100" step="1" value="${draft.progress}"></label>${field('playHours','累计游戏时间（小时）','number',draft.playHours)}`;
+ host.insertAdjacentHTML('beforeend','<small class="progress-hint">调整进度会同步清单状态；已完成为 100%，将要开始为 0%。</small>');
+ host.querySelectorAll('input[type=number]').forEach(i=>{i.min='0';i.step=i.name==='playHours'?'0.1':'1'});
+ host.oninput=e=>{const i=e.target;draft[i.name]=Number(i.value)||0;if(i.name==='playHours')return;if(isTV){const current=$('[name=currentEpisode]');current.setCustomValidity(draft.totalEpisodes>0&&draft.currentEpisode>draft.totalEpisodes?'当前集数不能超过总集数':'');if(i.name==='currentEpisode'){state.value=draft.currentEpisode>0?'doing':'wish';return}const w=$('[name=watchedEpisodes]'),t=$('[name=totalEpisodes]');w.setCustomValidity(Number(t.value)>0&&Number(w.value)>Number(t.value)?'已看集数不能超过总集数':'');state.value=draft.totalEpisodes>0&&draft.watchedEpisodes===draft.totalEpisodes?'done':draft.watchedEpisodes>0?'doing':'wish'}else{$('#progressOutput').textContent=draft.progress+'%';state.value=draft.progress===100?'done':draft.progress>0?'doing':'wish'}};
+ }
+ state.onchange=()=>{if(state.value==='wish'){draft.progress=0;draft.watchedEpisodes=0;draft.currentEpisode=0}if(state.value==='done'){draft.progress=100;if(draft.totalEpisodes>0)draft.watchedEpisodes=draft.totalEpisodes}draw()};
+ cat.addEventListener('change',draw);sub.addEventListener('change',draw);draw();
+}
+function setupCoverUpload(){
+ const input=$('#coverUpload'),url=$('[name=image]'),preview=$('#coverPreview'),message=$('#coverMessage');let pending=false;
+ function show(){preview.hidden=!url.value;preview.src=url.value}show();url.addEventListener('input',show);
+ input.onchange=async()=>{const file=input.files[0];if(!file)return;if(!['image/jpeg','image/png','image/webp'].includes(file.type)){message.textContent='请选择 JPG、PNG 或 WebP 图片';return}if(file.size>20*1024*1024){message.textContent='请选择小于 20 MB 的图片';return}
+ pending=true;coverBusy=true;const save=$('#form button[type=submit]');save.disabled=true;message.textContent='正在压缩封面…';let objectUrl;
+ try{objectUrl=URL.createObjectURL(file);const picture=new Image();await new Promise((resolve,reject)=>{picture.onload=resolve;picture.onerror=reject;picture.src=objectUrl});const scale=Math.min(1,720/Math.max(picture.width,picture.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(picture.width*scale));canvas.height=Math.max(1,Math.round(picture.height*scale));const context=canvas.getContext('2d');context.fillStyle='#1b1c22';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(picture,0,0,canvas.width,canvas.height);const encoded=canvas.toDataURL('image/jpeg',.8);if(encoded.length>MAX_COVER_DATA_LENGTH)throw new Error('封面压缩后仍超过 300,000 字符，请换小图');url.value=encoded;show();message.textContent='封面已准备好，点击「保存记录」生效'}catch(error){message.textContent=error.message||'图片读取失败，请换一张图片'}finally{if(objectUrl)URL.revokeObjectURL(objectUrl);pending=false;coverBusy=false;save.disabled=false}
+ };
+}
+function closeModal(){if(writeBusy||coverBusy)return;const wasOpen=!$('#modal').hidden;$('#modal').hidden=true;if(wasOpen){const replacement=modalTrigger?.dataset?.id?document.querySelector('[data-id="'+modalTrigger.dataset.id+'"]'):null;(modalTrigger?.isConnected?modalTrigger:replacement||$('#add')).focus()}}$('#cancel').onclick=closeModal;$('#modal').onclick=e=>{if(e.target===$('#modal'))closeModal()};document.addEventListener('keydown',e=>{
+ if($('#modal').hidden)return;
+ if(e.key==='Escape'){e.preventDefault();closeModal();return}
+ if(e.key==='Tab'){const nodes=[...$('#form').querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled&&!n.hidden&&n.getClientRects().length);const first=nodes[0],last=nodes.at(-1);if(!first){e.preventDefault();return}if(e.shiftKey&&(document.activeElement===first||!$('#form').contains(document.activeElement))){e.preventDefault();last.focus()}else if(!e.shiftKey&&(document.activeElement===last||!$('#form').contains(document.activeElement))){e.preventDefault();first.focus()}}
+});$('#delete').onclick=async()=>{
+ if(writeBusy||!cloudUser||!editing)return;
+ if(!confirm('确定删除这条共享记录？对方也会同步删除。'))return;
+ const epoch=cloudEpoch,id=editing;writeBusy=true;$('#delete').disabled=true;
+ try{await deleteSharedItem(id);if(epoch!==cloudEpoch)return;writeBusy=false;closeModal();await loadSharedItems();toast('记录已删除')}
+ catch(error){if(epoch===cloudEpoch)toast(friendlyError(error))}
+ finally{writeBusy=false;$('#delete').disabled=false}
+};$('#form').onsubmit=async e=>{e.preventDefault();if(writeBusy||coverBusy||!cloudUser)return;const data={...(records.find(r=>r.id===editing)||{}),...Object.fromEntries(new FormData(e.target))};data.genres=parseGenres(data.genres);if(hasProgress(data)){data.playHours=Math.max(0,Number(data.playHours)||0);data.currentEpisode=Math.max(0,Number(data.currentEpisode)||0);data.progress=Number(data.progress)||0;data.watchedEpisodes=Number(data.watchedEpisodes)||0;data.totalEpisodes=Number(data.totalEpisodes)||0;if(data.state==='wish'){data.progress=0;data.watchedEpisodes=0;data.currentEpisode=0}if(data.state==='done'){data.progress=100;if(data.totalEpisodes>0)data.watchedEpisodes=data.totalEpisodes}data.progress=progressValue(data)}data.score=Number(data.score);normalizeItem(data);data.image=data.image||(data.cat==='game'?'':img(data.cat==='intimacy'?'night':'lake'));const epoch=cloudEpoch,id=editing,expected=editingExpectedContent;
+ delete data.id;writeBusy=true;const save=$('#form button[type=submit]');save.disabled=true;
+ try{await saveSharedItem(data,id,expected);if(epoch!==cloudEpoch)return;writeBusy=false;closeModal();await loadSharedItems();toast('已保存到共享空间')}
+ catch(error){if(epoch===cloudEpoch)toast(friendlyError(error))}
+ finally{writeBusy=false;save.disabled=false}
+};
+
+// 事件委托同时覆盖筛选器、表单和日历动态创建的按钮。
+function buttonWave(button, x, y) {
+ if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ const rect = button.getBoundingClientRect();
+ const size = Math.hypot(rect.width, rect.height) * 2;
+ const wave = document.createElement('span');
+ wave.className = 'click-wave';
+ wave.setAttribute('aria-hidden', 'true');
+ wave.style.width = wave.style.height = size + 'px';
+ wave.style.left = (x - rect.left - size / 2) + 'px';
+ wave.style.top = (y - rect.top - size / 2) + 'px';
+ button.appendChild(wave);
+ wave.addEventListener('animationend', () => wave.remove(), { once: true });
+ setTimeout(() => wave.remove(), 650);
+}
+document.addEventListener('pointerdown', e => {
+ if (e.button !== 0) return;
+ const button = e.target.closest('button');
+ if (button && !button.disabled) buttonWave(button, e.clientX, e.clientY);
+});
+document.addEventListener('keydown', e => {
+ if (e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return;
+ const button = e.target.closest('button');
+ if (button && !button.disabled) {
+  const rect = button.getBoundingClientRect();
+  buttonWave(button, rect.left + rect.width / 2, rect.top + rect.height / 2);
+ }
+});
+
+// 搜索动效不改变光标位置和焦点。
+const searchBox = document.querySelector('.search');
+const searchInput = document.querySelector('#search');
+let searchMotionTimer, lastSearchMotion = 0;
+function animateSearch(kind = 'is-bouncing') {
+ if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+ if (kind === 'is-typing' && (searchBox.classList.contains('is-bouncing') || Date.now() - lastSearchMotion < 380)) return;
+ clearTimeout(searchMotionTimer);
+ searchBox.classList.remove('is-bouncing', 'is-typing');
+ void searchBox.offsetWidth;
+ searchBox.classList.add(kind);
+ lastSearchMotion = Date.now();
+ searchMotionTimer = setTimeout(() => searchBox.classList.remove(kind), kind === 'is-bouncing' ? 560 : 340);
+}
+searchBox.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') animateSearch(); });
+searchBox.addEventListener('pointerdown', () => animateSearch());
+searchInput.addEventListener('focus', () => animateSearch());
+searchInput.addEventListener('input', () => animateSearch('is-typing'));
+document.addEventListener('visibilitychange', () => {
+ document.querySelectorAll('.romance-bg [class^="romance-"]').forEach(el => { el.style.animationPlayState = document.hidden ? 'paused' : 'running'; });
+});
+// 只填写 Project URL 和 anon public key；绝不能放入 service_role 或数据库密码。
+// 配置唯一来源为外部文件；项目配置不重复写在页面中。
+const CONFIG = Object.freeze({ ...(window.TWO_US_CONFIG || {}) });
+const MAX_COVER_DATA_LENGTH = 300000;
+let listLoading = false, modalTrigger = null, coverBusy = false;
+const finiteNumber = (value, fallback=0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
+const clamp = (value,min,max) => Math.min(max,Math.max(min,finiteNumber(value)));
+function coordinate(value,limit){
+ if(value===null||value===undefined||typeof value==='boolean'||String(value).trim()==='')return undefined;
+ const number=Number(value);return Number.isFinite(number)&&Math.abs(number)<=limit?number:undefined;
+}
+function normalizeItem(item){
+ item.score=clamp(item.score,0,10);item.progress=clamp(item.progress,0,100);
+ for(const k of ['watchedEpisodes','totalEpisodes','currentEpisode'])item[k]=Math.floor(Math.max(0,finiteNumber(item[k])));
+ item.playHours=Math.max(0,finiteNumber(item.playHours));
+ if(!hasProgress(item))for(const k of ['progress','watchedEpisodes','totalEpisodes','currentEpisode'])delete item[k];
+ if(item.cat!=='game')delete item.playHours;
+ for(const [k,limit] of [['lat',90],['lng',180]]){const n=coordinate(item[k],limit);delete item[k];if(item.cat==='travel'&&n!==undefined)item[k]=n;}
+ return item;
+}
+function validCoverSize(item){
+ for(const k of ['image','coverImage'])if(String(item[k]||'').startsWith('data:')&&item[k].length>MAX_COVER_DATA_LENGTH)throw new Error('封面超过 300,000 字符，请使用更小的图片或图片 URL。');
+}
+let cloud = null, cloudUser = null, cloudChannel = null;
+let cloudEpoch = 0, loadVersion = 0, writeBusy = false;
+let editingExpectedContent = null;
+const rawRows = new Map();
+const cloudMessage = text => { $('#cloudMessage').textContent = text; };
+function friendlyError(error) {
+  const text = String(error?.message || error || '未知错误');
+  if (/记录已被修改|并发|conflict/i.test(text)) return '记录已被修改，请关闭编辑窗口，刷新列表后重新打开再保存。';
+  if (/invalid login credentials/i.test(text)) return '邮箱或密码不正确，请检查后重试。';
+  if (/email not confirmed/i.test(text)) return '邮箱尚未确认，请先点击确认邮件里的链接。';
+  if (/already registered/i.test(text)) return '该邮箱已注册，请直接登录。';
+  if (/rate limit|too many requests/i.test(text)) return '操作过于频繁，请稍后再试。';
+  if (/fetch|network|load failed/i.test(text)) return '连接失败，请检查网络、Project URL 和 CDN 是否可访问。';
+  if (/row-level security|permission denied/i.test(text)) return '没有访问权限，请检查登录状态及数据库 RLS 策略。';
+  return text;
+}
+function setSignedIn(user) {
+  document.body.classList.toggle('signed-in', Boolean(user));
+  $('#accountEmail').textContent = user?.email || '';
+  $('#authPanel').hidden = Boolean(user);
+  if (!user) {
+    records = []; rawRows.clear();$('#modal').hidden=true;
+    if (map) { map.remove(); map = null; }
+    $('#content').replaceChildren();
+  }
+}
+function requireCloudUser() {
+  if (!cloud || !cloudUser) throw new Error('请先登录后再操作。');
+}
+// content 保持 text 类型，使用 JSON 保存原网页的封面、类型、评分和进度等字段。
+function decodeRow(row) {
+  let value;
+  try { value = JSON.parse(row.content); } catch { value = { title: row.content }; }
+  if (!value || typeof value !== 'object' || Array.isArray(value)) value = { title: row.content };
+  const cat = Object.hasOwn(subs, value.cat) ? value.cat : 'film';
+  const item = { id: row.id, cat, sub: subs[cat].includes(value.sub) ? value.sub : subs[cat][0],
+    state: ['wish','doing','done'].includes(value.state) ? value.state : 'wish' };
+  for (const key of ['title','desc','image','coverImage','coverSource','coverStatus','platform','note','place','hotel','brand','date']) {
+    item[key] = typeof value[key] === 'string' ? value[key] : '';
+  }
+  item.title ||= '未命名条目';
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(item.date))item.date='';
+  item.coverWrap = value.coverWrap === true;
+  item.genres = parseGenres(value.genres);
+  for (const key of ['score','progress','watchedEpisodes','totalEpisodes','currentEpisode','playHours']) {
+    item[key] = Math.max(0, finiteNumber(value[key]));
+  }
+  item.lat = coordinate(value.lat,90);
+  item.lng = coordinate(value.lng,180);
+  // 只允许常见图片协议；文本仍通过原网页 esc() 转义后呈现。
+  for (const key of ['image','coverImage']) {
+    if (!/^(https?:\/\/|data:image\/(?:jpeg|png|webp);base64,)/i.test(item[key]) || (item[key].startsWith('data:')&&item[key].length>MAX_COVER_DATA_LENGTH)) item[key] = '';
+  }
+  if (!/^https?:\/\//i.test(item.coverSource)) item.coverSource = '';
+  return normalizeItem(item);
+}
+async function loadSharedItems() {
+  if (!cloudUser) return;
+  const epoch = cloudEpoch, version = ++loadVersion;
+  listLoading=true;render();
+  try {
+    // 分页读取，避免超过默认行数限制时悄悄丢掉较早的条目。
+    const rows = [];
+    for (let start = 0; ; start += 500) {
+      const { data, error } = await cloud.from('shared_items')
+        .select('id,content,shared_id,created_by,created_at')
+        .eq('shared_id', CONFIG.SHARED_ID)
+        .order('created_at', { ascending: true }).order('id', { ascending: true })
+        .range(start, start + 499);
+      if (error) throw error;
+      if (epoch !== cloudEpoch || version !== loadVersion) return;
+      rows.push(...data);
+      if (data.length < 500) break;
+    }
+    if (epoch !== cloudEpoch || version !== loadVersion || !cloudUser) return;
+    rawRows.clear(); rows.forEach(row => rawRows.set(row.id, row));
+    records = rows.map(decodeRow); listLoading=false;render();
+    cloudMessage('共享列表已更新');
+  } catch (error) {
+    if (epoch === cloudEpoch && version === loadVersion) {listLoading=false;render();cloudMessage('加载失败：' + friendlyError(error));}
+  }
+}
+async function activateSession(session) {
+  const user = session?.user || null;
+  if (user && cloudUser?.id === user.id) {
+    await cloud.realtime.setAuth(session.access_token);
+    return;
+  }
+  const epoch = ++cloudEpoch;
+  ++loadVersion;
+  const old = cloudChannel; cloudChannel = null;
+  cloudUser = user; setSignedIn(null);
+  if (old) await cloud.removeChannel(old);
+  if (epoch !== cloudEpoch) return;
+  setSignedIn(user);
+  if (!user) { $('#syncState').textContent = '未登录'; return; }
+  cloudMessage('正在加载共享列表…');
+  await cloud.realtime.setAuth(session.access_token);
+  if (epoch !== cloudEpoch) return;
+  const reload = () => { if (epoch === cloudEpoch) void loadSharedItems(); };
+  cloudChannel = cloud.channel('shared-items-' + user.id)
+    .on('postgres_changes', {
+      event: 'INSERT', schema: 'public', table: 'shared_items',
+      filter: `shared_id=eq.${CONFIG.SHARED_ID}`
+    }, reload)
+    .on('postgres_changes', {event:'UPDATE',schema:'public',table:'shared_items',filter:`shared_id=eq.${CONFIG.SHARED_ID}`}, reload)
+    // DELETE 不支持列过滤；这里只将其作为重新查询信号，不展示事件数据。
+    // 重新 SELECT 时仍按 shared_id 过滤，并由数据库 RLS 强制鉴权。
+    .on('postgres_changes', {
+      event: 'DELETE', schema: 'public', table: 'shared_items'
+    }, reload)
+    .subscribe(status => {
+      if (epoch !== cloudEpoch) return;
+      $('#syncState').textContent = status === 'SUBSCRIBED' ? '实时同步已连接' : '实时连接：' + status;
+      if (status === 'SUBSCRIBED') reload();
+      if (['CHANNEL_ERROR','TIMED_OUT','CLOSED'].includes(status)) {
+        cloudMessage('实时连接暂时中断，重连后会重新加载。请检查网络和 Realtime 配置。');
+      }
+    });
+  // 建立订阅后再加载；订阅成功和重连成功也重新加载，以补齐连接期间的变动。
+  void loadSharedItems();
+}
+async function saveSharedItem(item, id, expectedContent) {
+  requireCloudUser();
+  normalizeItem(item);validCoverSize(item);
+  const content = JSON.stringify(item);
+  if (id) {
+    // 原子替换保留编辑体验，无需新增 UPDATE 策略；并发冲突由数据库检查。
+    const { error } = await cloud.rpc('replace_shared_item', {
+      p_id: id, p_content: content, p_expected_content: expectedContent
+    });
+    if (error) throw error;
+  } else {
+    // 不传 created_by，由数据库 auth.uid() 自动填写；RLS 同时防止伪造。
+    const { error } = await cloud.from('shared_items').insert({ content, shared_id: CONFIG.SHARED_ID });
+    if (error) throw error;
+  }
+}
+async function deleteSharedItem(id) {
+  requireCloudUser();
+  const { data, error } = await cloud.from('shared_items').delete()
+    .eq('id', id).eq('shared_id', CONFIG.SHARED_ID).select('id');
+  if (error) throw error;
+  if (!data.length) throw new Error('这条记录已删除，或你没有删除权限。');
+}
+async function initSharedCloud() {
+  $('#authForm').onsubmit = async event => {
+    event.preventDefault(); if (!cloud) return;
+    const buttons = $('#authForm').querySelectorAll('button');
+    buttons.forEach(button => button.disabled = true);
+    cloudMessage('正在处理…');
+    try {
+      const credentials = { email: $('#authEmail').value.trim(), password: $('#authPassword').value };
+      const signup = event.submitter?.value === 'signup';
+      const { data, error } = signup
+        ? await cloud.auth.signUp(credentials)
+        : await cloud.auth.signInWithPassword(credentials);
+      if (error) throw error;
+      $('#authPassword').value = '';
+      cloudMessage(signup && !data.session ? '注册请求已提交，请查看确认邮件；已注册用户请直接登录。' : '登录成功，正在加载…');
+      if (data.session) await activateSession(data.session);
+    } catch (error) { cloudMessage(friendlyError(error)); }
+    finally { buttons.forEach(button => button.disabled = false); }
+  };
+  $('#exportBackup').onclick=()=>{if(!cloudUser)return;const blob=new Blob([JSON.stringify({version:1,shared_id:CONFIG.SHARED_ID,exported_at:new Date().toISOString(),items:records},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='two-of-us-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出当前已加载记录，备份可能包含私密内容')};
+  $('#inviteSpace').hidden=CONFIG.ACCESS_MODE!=='members';$('#joinSpace').hidden=CONFIG.ACCESS_MODE!=='members';
+  $('#inviteSpace').onclick=async()=>{try{requireCloudUser();const {data,error}=await cloud.rpc('create_shared_invite',{p_shared_id:CONFIG.SHARED_ID});if(error)throw error;prompt('一次性邀请码，有效期 24 小时。仅发送给对方：',data)}catch(error){cloudMessage(friendlyError(error))}};
+  $('#joinSpace').onclick=async()=>{const token=prompt('粘贴对方发送的一次性邀请码');if(!token)return;try{requireCloudUser();const {data,error}=await cloud.rpc('join_shared_space',{p_token:token.trim()});if(error)throw error;if(data!==CONFIG.SHARED_ID){cloudMessage('已加入空间 '+data+'；请将配置 SHARED_ID 改为该值后重新打开网页。');return}await loadSharedItems();cloudMessage('已加入共享空间')}catch(error){cloudMessage(friendlyError(error))}};
+  $('#logout').onclick = async () => {
+    if (writeBusy) { toast('正在保存，请稍后退出'); return; }
+    const { error } = await cloud.auth.signOut({ scope: 'local' });
+    if (error) { cloudMessage(friendlyError(error)); return; }
+    await activateSession(null); cloudMessage('已退出登录');
+  };
+  if (!/^https:\/\//.test(CONFIG.SUPABASE_URL||'') || !CONFIG.SUPABASE_ANON_KEY || !CONFIG.SHARED_ID) {
+    cloudMessage('请在同目录 supabase-config.js 中配置 Project URL、publishable key 和 SHARED_ID。'); return;
+  }
+  if (!window.supabase?.createClient) { cloudMessage('Supabase SDK 加载失败，请检查网络或 CDN。'); return; }
+  try {
+    cloud = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    // 回调中不等待其他 Auth API，避免会话锁死；INITIAL_SESSION 也走这里。
+    cloud.auth.onAuthStateChange((_event, session) => {
+      setTimeout(() => { void activateSession(session).catch(error => cloudMessage(friendlyError(error))); }, 0);
+    });
+  } catch (error) { cloudMessage(friendlyError(error)); }
+  window.addEventListener('online', () => { if (cloudUser) void loadSharedItems(); });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && cloudUser) void loadSharedItems();
+  });
+}
+void initSharedCloud();
+
+</script></body></html>

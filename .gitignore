@@ -1,0 +1,10 @@
+# 运行配置与敏感本地数据
+supabase-config.js
+.env
+.env.*
+!.env.example
+*.zip
+*backup*.json
+.DS_Store
+__pycache__/
+node_modules/
