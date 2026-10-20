@@ -5,7 +5,7 @@
  let item=decodeRow(row({cat:'travel',sub:'国内',lat:'',lng:null,score:99,progress:130,watchedEpisodes:4}));
  assert(!('lat' in item)&&!('lng' in item),'blank coordinates omitted');assert(item.score===10&&!('progress' in item),'non-progress fields cleaned');
  item=decodeRow(row({cat:'game',sub:'Steam',progress:130,score:-5,playHours:-10,watchedEpisodes:2.8,currentEpisode:-1}));
- assert(item.progress===100&&item.score===0&&item.playHours===0&&item.watchedEpisodes===2,'numeric clamping');
+ assert(!('progress' in item)&&item.score===0&&item.playHours===0&&!('watchedEpisodes' in item),'numeric clamping');
  item=decodeRow(row({cat:'film',sub:'电视剧',totalEpisodes:24,watchedEpisodes:6,currentEpisode:7}));assert(item.currentEpisode===7,'TV progress retained');
  assert(friendlyError({message:'记录已被修改，请重新编辑'}).includes('刷新'),'conflict actionable');
  let oversize=false;try{validCoverSize({image:'data:'+ 'a'.repeat(300001)})}catch{oversize=true}assert(oversize,'oversized base64 blocked');

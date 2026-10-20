@@ -21,5 +21,5 @@ const menuButtons=['editProfile','exportBackup','inviteSpace','joinSpace','logou
 $('#peopleMenu').parent=$('#peopleArea');$('#peopleToggle').parent=$('#peopleArea');menuButtons.forEach(node=>node.parent=$('#peopleMenu'));
 let records=[],map=null;
 const closeModal=()=>{},render=()=>{},toast=()=>{};
-const subs={film:['电影']},parseGenres=()=>[],hasProgress=()=>false;
+const subs={film:['电影']},parseGenres=()=>[];
 function assert(value,message){if(!value)throw Error(message)}

@@ -21,7 +21,7 @@ assert 'ACCESS_MODE' in (ROOT / 'supabase-config.example.js').read_text()
 script = '\n'.join(re.findall(r'<script>(.*?)</script>', html, re.S))
 start = html.index('// 配置唯一来源')
 end = html.index('void initSharedCloud();', start) + len('void initSharedCloud();')
-backend = html[start:end].replace('void initSharedCloud();', '')
+backend = re.search(r'function hasProgress\(r\)\{[^\n]+', html).group(0) + '\n' + html[start:end].replace('void initSharedCloud();', '')
 fixture = (ROOT / 'tests/cloud-stubs.js').read_text() + backend + (ROOT / 'tests/cloud-assertions.js').read_text()
 
 menu_fixture=(ROOT / 'tests/menu-stubs.js').read_text() + backend + (ROOT / 'tests/menu-events.js').read_text()
@@ -46,6 +46,7 @@ with tempfile.TemporaryDirectory(prefix='two-us-check-') as directory:
         subprocess.run([node, str(menu_test)], check=True)
         subprocess.run([node, str(ROOT / 'tests/cover-upload.mjs')], check=True)
         subprocess.run([node, str(ROOT / 'tests/travel-map.mjs')], check=True)
+        subprocess.run([node, str(ROOT / 'tests/details-and-music.mjs')], check=True)
     else:
         syntax.write_text('new Function(' + json.dumps(script) + ');print("PASS: script syntax");')
         test.write_text(fixture)
