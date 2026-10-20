@@ -2,6 +2,8 @@
 
 这是维护入口。上下文压缩或换设备后，先读本文件，再读 AGENTS.md，只打开目标功能对应的文件。
 
+**最新修复**：图片共用有超时/重试/取消的上传服务；纪念日独立板块显示全部记录；提醒需在正式 SQL Editor 执行 `supabase/06-milestone-notifications.sql`。06 不修改 RLS 或历史记录。
+
 **当前状态**：原生 ES Modules；页面 `shared.html` → `src/main.js` → `src/app.js` → `src/registry.js`。不使用框架、不要求前端打包器。GitHub Pages 仍通过原工作流发布。数据库、RPC、RLS、运行配置和公开地址保持不变。本次整理没有新 SQL 需要执行；05 功能是否已在正式项目启用，仍以 Supabase 中的实际执行状态为准。
 
 ## 功能定位表：每增加一个功能，必须补一行
@@ -36,14 +38,14 @@
 | QQ 音乐分享解析 / 信息读取 | `src/collections/music-link.js`、`src/collections/music.js` | `qqShareInfo()` 纯校验；`readQQMusic()`、`setupMusicImport()`；官方 JSONP，不下载歌曲 | `tests/details-and-music.mjs` |
 | 头像、昵称与双人菜单 | `src/profiles/model.js`、`src/profiles/controller.js`、`src/profiles/template.js` | `initPeopleUI()`、`loadPeople()`、`renderPeople()`；独立资料订阅 | `tests/menu.mjs`、`tests/cloud.mjs`、`supabase/04-shared-profiles.sql` |
 | 互动门禁、数据加载与实时协调 | `src/interactions/runtime.js` | `loadTogether()`、`resetTogether()`、`initTogetherUI()`；只有成员有入口，读取互动表并刷新各功能 | `tests/together-ui.mjs`、`supabase/05-together-features.sql` |
-| 纪念日 | `src/interactions/milestones.js`、`src/interactions/milestones-template.js` | `milestoneHome()`、`openMilestones()`；日期算法在 core/dates；不订阅 Realtime | `tests/together-ui.mjs`、`tests/together-db.mjs` |
+| 纪念日 | `src/interactions/milestones.js`、`src/interactions/milestones-template.js` | `milestoneHome()`、`openMilestones()`、`allMilestones()`；完整板块在 milestones-page，通知驱动重读；日期算法在 core/dates；不订阅 Realtime | `tests/together-ui.mjs`、`tests/together-db.mjs` |
 | 心情瓶子 | `src/interactions/moods.js`、`src/interactions/moods-template.js` | `openMoodComposer()`、`addMood()`、`readMood()`；happy/sad、100 条、展开单条后才已读、只计对方未读 | `tests/together-ui.mjs`、`tests/together-db.mjs` |
 | 心情瓶子二级页 / 双瓶历史 | `src/interactions/moods-page.js` | `openMoodPage()`、`renderMoodPage()`、`refreshMoodPage()`；单一侧栏入口、#view=moods，实时刷新不打断草稿 | `tests/mood-bottles.mjs`、`tests/together-ui.mjs` |
 | 五角星碰撞 / Canvas 生命周期 | `src/interactions/bottle-physics.js`、`src/interactions/star-bottles.js` | `makeStars()`、`stepStars()`、`mountStarBottles()`、`shakeBottle()`；粉/蓝星、100 上限、离页销毁与减少动态效果 | `tests/mood-bottles.mjs` |
 | 纸飞机展开 / 单条阅读回执 | `src/interactions/mood-airmail.js` | `showMoodLetter()`、`closeMoodLetter()`；展开后只确认当前消息，提前关闭/退出取消回执 | `tests/mood-bottles.mjs` |
 | 消息与条目红点 | `src/interactions/notifications.js`、`src/interactions/notifications-template.js` | `itemUnreadBadge()`、`markItemRead()`、`openMessages()`；操作通知由数据库触发器生成 | `tests/together-ui.mjs`、`tests/together-db.mjs` |
 | Pages 打包与发布 | `scripts/build_pages.py`、`.github/workflows/pages.yml` | 只发布 HTML、src/、styles/、生成配置；禁止漏传模块或打包 SQL/测试 | `tests/build.mjs` |
-| 模块与回归检查 | `scripts/check.py`、`tests/helpers/app.mjs`、`tests/helpers/parity.mjs`、`tests/fixtures/ui-contracts.json` | 测试真实模块；19 个保留 DOM 摘要 + 1 个经人工核对的心情弹窗更新；原样式加独立心情样式的语义/顺序摘要 | `npm test` |
+| 模块与回归检查 | `scripts/check.py`、`tests/helpers/app.mjs`、`tests/helpers/parity.mjs`、`tests/fixtures/ui-contracts.json` | 测试真实模块；20 个 DOM 回归摘要，其中首页和心情弹窗是经人工核对的有意更新；原样式加独立心情样式的语义/顺序摘要 | `npm test` |
 
 ## 样式地图与顺序
 
@@ -93,3 +95,13 @@
 | 2026-10-20 | 原生模块化整理；保留界面、数据与权限；增加模块契约、DOM/样式一致性与产物检查 | 本地图 → `src/registry.js` → 目标功能行 |
 
 | 2026-10-20 | 心情入口合并、双透明星星瓶、点击碰撞与纸飞机阅读；沿用现有 SQL | `src/interactions/moods-page.js` → `src/interactions/moods.js` → 动效模块 |
+
+## 2026-10-20：上传超时与纪念日板块/通知修复
+
+| 功能 | 主要文件 | 入口与依赖 | 验证 |
+|---|---|---|---|
+| R2 统一上传 / 有限重试 | `src/media/r2-upload.js` | `uploadR2Photo()`、`cancelImageUploads()`；60s 签名 / 180s PUT、响应体计时、临时失败重试一次，退出中止；封面和旅行共用 | `tests/cover-upload.mjs`、`tests/r2-resilience.mjs` |
+| 纪念日独立板块 / 完整列表 | `src/interactions/milestones-page.js`、`styles/milestones.css` | `openMilestonePage()`、`refreshMilestonePage()`；#view=milestones，分页加载全部，首页改摘要 | `tests/milestones-page.mjs`、`tests/together-ui.mjs` |
+| 纪念日对方通知 | `supabase/06-milestone-notifications.sql`、`src/interactions/notifications.js`、`src/interactions/runtime.js` | SQL Editor 执行 06；触发器复用 item_notifications、接收人 RLS 与已读 RPC；消息到达后重新取纪念日，无 milestones Realtime | `tests/together-db.mjs`、`tests/milestones-page.mjs` |
+
+06 需要管理员在正式 Supabase 手动执行，网页发布不等于数据库迁移已执行。新提醒仅从执行后开始记录，不补发历史操作。

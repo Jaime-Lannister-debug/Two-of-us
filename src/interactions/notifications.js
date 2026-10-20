@@ -1,7 +1,7 @@
 // 条目红点、对方操作消息和自己的阅读状态。
-import { $, toast, esc } from '../core/dom.js';
-import { socialTime } from '../core/dates.js';
-import { cats } from '../collections/model.js';
+import { $, toast, esc } from "../core/dom.js";
+import { socialTime } from "../core/dates.js";
+import { cats } from "../collections/model.js";
 export function createInteractionsNotifications(app) {
   const store = app.state;
   function unreadItem(id) {
@@ -13,22 +13,22 @@ export function createInteractionsNotifications(app) {
   function itemUnreadBadge(id) {
     return unreadItem(id)
       ? '<span class="item-unread" aria-label="对方更新了此条目，有未读消息"></span>'
-      : '';
+      : "";
   }
   async function allNotifications() {
     const rows = [];
     for (let start = 0; ; start += 500) {
       const { data, error } = await store.cloud
-        .from('item_notifications')
+        .from("item_notifications")
         .select(
-          'id,actor_name,action,item_id,item_title,item_cat,created_at,read_at',
+          "id,actor_name,action,item_id,item_title,item_cat,created_at,read_at",
         )
-        .eq('shared_id', app.config.SHARED_ID)
-        .eq('recipient_id', store.cloudUser.id)
-        .order('created_at', {
+        .eq("shared_id", app.config.SHARED_ID)
+        .eq("recipient_id", store.cloudUser.id)
+        .order("created_at", {
           ascending: false,
         })
-        .order('id', {
+        .order("id", {
           ascending: false,
         })
         .range(start, start + 499);
@@ -45,7 +45,7 @@ export function createInteractionsNotifications(app) {
     const epoch = store.cloudEpoch;
     try {
       for (let i = 0; i < target.length; i += 500) {
-        const { error } = await store.cloud.rpc('read_item_notifications', {
+        const { error } = await store.cloud.rpc("read_item_notifications", {
           p_shared_id: app.config.SHARED_ID,
           p_ids: target.slice(i, i + 500),
         });
@@ -57,12 +57,12 @@ export function createInteractionsNotifications(app) {
         if (target.includes(n.id)) n.read_at = n.read_at || now;
       });
       app.actions.updateTogetherBadges();
-      if ($('#messageDialog')?.open) renderMessages();
+      if ($("#messageDialog")?.open) renderMessages();
     } catch (error) {
       if (epoch === store.cloudEpoch) {
         toast(app.actions.socialError(error));
-        if ($('#messageDialog')?.open)
-          $('#notificationStatus').textContent = app.actions.socialError(error);
+        if ($("#messageDialog")?.open)
+          $("#notificationStatus").textContent = app.actions.socialError(error);
       }
     }
   }
@@ -75,25 +75,25 @@ export function createInteractionsNotifications(app) {
   }
   function renderMessages() {
     const rows = store.together.notifications.slice(0, 50);
-    $('#notificationList').innerHTML =
+    $("#notificationList").innerHTML =
       rows
         .map(
           (n) =>
-            `<button type="button" class="notification-row ${n.read_at ? '' : 'is-unread'}" data-notification="${esc(n.id)}"><span>${n.read_at ? '' : '<i class="item-unread" aria-label="未读"></i>'}${esc(n.actor_name)}${
+            `<button type="button" class="notification-row ${n.read_at ? "" : "is-unread"}" data-notification="${esc(n.id)}"><span>${n.read_at ? "" : '<i class="item-unread" aria-label="未读"></i>'}${esc(n.actor_name)}${
               {
-                INSERT: '添加了',
-                UPDATE: '修改了',
-                DELETE: '删除了',
-              }[n.action] || '更新了'
-            }「${esc(n.item_title)}」</span><time>${esc(socialTime(n.created_at))}</time></button>`,
+                INSERT: "添加了",
+                UPDATE: "修改了",
+                DELETE: "删除了",
+              }[n.action] || "更新了"
+            }${n.item_cat === "milestone" ? "纪念日" : ""}「${esc(n.item_title)}」</span><time>${esc(socialTime(n.created_at))}</time></button>`,
         )
-        .join('') || '<p class="empty">还没有来自对方的条目更新。</p>';
-    $('#notificationStatus').textContent =
+        .join("") || '<p class="empty">还没有来自对方的条目更新。</p>';
+    $("#notificationStatus").textContent =
       store.together.notifications.length > 50
-        ? '显示最近 50 条，条目上的红点会保留至阅读。'
-        : '';
-    $('#notificationList')
-      .querySelectorAll('[data-notification]')
+        ? "显示最近 50 条，条目上的红点会保留至阅读。"
+        : "";
+    $("#notificationList")
+      .querySelectorAll("[data-notification]")
       .forEach(
         (button) =>
           (button.onclick = () => {
@@ -102,14 +102,18 @@ export function createInteractionsNotifications(app) {
             );
             if (!n) return;
             void readNotifications([n.id]);
-            $('#messageDialog').close();
-            if (store.records.some((r) => r.id === n.item_id))
+            $("#messageDialog").close();
+            if (n.item_cat === "milestone") {
+              app.actions.openMilestonePage(n.item_id);
+              if (!store.together.milestones.some((m) => m.id === n.item_id))
+                toast("这条纪念日已删除，消息记录仍保留");
+            } else if (store.records.some((r) => r.id === n.item_id))
               app.actions.openDetails(n.item_id);
             else {
               app.actions.go(
-                Object.hasOwn(cats, n.item_cat) ? n.item_cat : 'home',
+                Object.hasOwn(cats, n.item_cat) ? n.item_cat : "home",
               );
-              toast('这条记录已删除，消息记录仍保留');
+              toast("这条记录已删除，消息记录仍保留");
             }
           }),
       );
@@ -117,7 +121,7 @@ export function createInteractionsNotifications(app) {
   function openMessages() {
     if (!app.actions.memberFeature()) return;
     renderMessages();
-    $('#messageDialog').showModal();
+    $("#messageDialog").showModal();
     void readNotifications(
       store.together.notifications.slice(0, 50).map((n) => n.id),
     );

@@ -53,9 +53,11 @@ export function createShellNavigation(app) {
       }, 200);
     };
     $("#add").onclick = () =>
-      app.actions.isMoodPage()
-        ? app.actions.openMoodComposer(store.together.kind)
-        : app.actions.openForm();
+      app.actions.isMilestonePage()
+        ? app.actions.openMilestones()
+        : app.actions.isMoodPage()
+          ? app.actions.openMoodComposer(store.together.kind)
+          : app.actions.openForm();
   }
   return {
     go,

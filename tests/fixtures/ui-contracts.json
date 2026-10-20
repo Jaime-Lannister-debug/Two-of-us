@@ -2,7 +2,7 @@
   "sourceCommit": "a7beb9f82c546b30bd3a8c2caee755e7b9dfdda0",
   "day": "2026-10-20",
   "hashes": {
-    "list-home": "fa39ef1b07d434b868cb545c84ce70124439bcc76de6d36e98a17bddb70295a1",
+    "list-home": "6410335f0bf574405be131037b1420224f4017060049acccb2b75d114b12fe10",
     "list-film": "de21f77b156880ff0c014855a87c4452598776335f8e392e8d29474e319bec23",
     "list-game": "04eb5ccd415904338b0bec83d9c429b844e1530b0d6386bd79f5a0ccafb6afd6",
     "list-music": "b3776aacdd07dfe15c5c983cb4ab7dd6ebd8a19743923f66e5d75d2f2351b33f",
@@ -23,11 +23,15 @@
     "messages": "3a0b6318cc4e90e892897dde8608d706fd4c2e43b57a053f79a07dff76a7f740",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "8e01a167f6a1011e2db52950d762acf01483350e5914dbbb4d3e55f9fb71efe6",
+  "cssHash": "38c49353f34d20b8c93679315bcfd36335e04214027350c4c7db6796113c678b",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
       "feature": "统一心情入口、双透明星星瓶和纸飞机展开；仅替换心情添加弹窗摘要，原收藏及其他互动摘要保持不变。"
+    },
+    {
+      "date": "2026-10-20",
+      "feature": "纪念日移至独立板块，首页改摘要及查看全部入口；保留其他19个界面摘要。"
     }
   ]
 }

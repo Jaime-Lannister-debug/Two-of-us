@@ -1,0 +1,67 @@
+/* 纪念日完整板块，不截断为四条；手机自动改单列。 */
+.milestones-page {
+  max-width: 1100px;
+  margin: auto;
+  padding-bottom: 40px;
+}
+.milestones-heading {
+  text-align: center;
+  margin: 35px 0;
+}
+.milestones-heading h1 {
+  font-size: 32px;
+  margin: 12px 0;
+}
+.milestones-heading .btn {
+  margin-top: 10px;
+}
+.milestones-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: 22px;
+}
+.milestone-card {
+  border: 1px solid #ffffff18;
+  border-radius: 22px;
+  padding: 28px;
+  background: linear-gradient(130deg, #ffffff06, transparent);
+  overflow-wrap: anywhere;
+}
+.milestone-card.relationship {
+  background: linear-gradient(130deg, #edb3a018, #e9a0be08);
+  border-color: #efbaa03a;
+}
+.milestone-card h2 {
+  font-size: 22px;
+  margin: 18px 0;
+}
+.milestone-card strong {
+  display: block;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #eac2b1;
+}
+.milestone-card p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 16px 0 24px;
+}
+.milestone-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+}
+.milestone-summary strong {
+  font-size: 23px;
+  color: #eac2b1;
+}
+@media (max-width: 650px) {
+  .milestones-heading h1 {
+    font-size: 26px;
+  }
+  .milestone-card {
+    padding: 24px;
+  }
+}

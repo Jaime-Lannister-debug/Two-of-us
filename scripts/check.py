@@ -34,6 +34,6 @@ if not node:
     raise SystemExit('原生模块检查需要 Node.js 22；安装后运行 npm ci --ignore-scripts && npm test。')
 for path in source_files:
     subprocess.run([node, '--check', str(path)], check=True)
-for name in ['app-contract.mjs', 'cloud.mjs', 'menu.mjs', 'cover-upload.mjs', 'travel-map.mjs', 'details-and-music.mjs', 'mood-bottles.mjs', 'ui-parity.mjs', 'build.mjs']:
+for name in ['app-contract.mjs', 'cloud.mjs', 'menu.mjs', 'cover-upload.mjs', 'travel-map.mjs', 'details-and-music.mjs', 'mood-bottles.mjs', 'r2-resilience.mjs', 'milestones-page.mjs', 'ui-parity.mjs', 'build.mjs']:
     subprocess.run([node, str(ROOT / 'tests' / name)], check=True)
 print('PASS: 静态结构、模块语法、功能及构建检查；未连接正式数据库。')

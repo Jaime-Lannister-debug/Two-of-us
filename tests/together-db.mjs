@@ -47,6 +47,15 @@ try{
  await assert.rejects(db.query("insert into public.item_notifications(shared_id) values($1)",[space]),/permission denied/);
  await assert.rejects(db.query('insert into public.mood_reads(mood_id,user_id) values($1,$2)',[aMood,A]),/permission denied/);
  await login(A);await db.query('delete from public.shared_items where id=$1',[item]);await login(B);assert.equal(await scalar("select item_title from public.item_notifications where action='DELETE'"),'王国之泪');
+ // 06 纪念日触发器幂等、只发对方、无效更新不重复发送、删除保留标题。
+ await db.exec('reset role');const migration06=await readFile(new URL('../supabase/06-milestone-notifications.sql',import.meta.url),'utf8');await db.exec(migration06);await db.exec(migration06);
+ await login(A);const dateId=await scalar("insert into public.milestones(shared_id,title,date) values($1,'对方生日','2000-01-02') returning id",[space]);
+ assert.equal(await scalar("select count(*)::int from public.item_notifications where item_cat='milestone'"),0,'自己没有自己的纪念日提醒');
+ await login(B);let note=(await db.query("select * from public.item_notifications where item_cat='milestone'")).rows[0];assert.equal(note.actor_name,'小甲');assert.equal(note.item_title,'对方生日');assert.equal(note.action,'INSERT');assert.equal(note.item_id,dateId);
+ await login(A);await db.query("update public.milestones set title=title where id=$1",[dateId]);await login(B);assert.equal(await scalar("select count(*)::int from public.item_notifications where item_cat='milestone'"),1,'相同内容不重复提醒');
+ await db.query("update public.milestones set title='第一次约会' where id=$1",[dateId]);await login(A);assert.equal(await scalar("select count(*)::int from public.item_notifications where item_cat='milestone' and action='UPDATE'"),1);
+ await db.query('delete from public.milestones where id=$1',[dateId]);await login(B);assert.equal(await scalar("select item_title from public.item_notifications where item_cat='milestone' and action='DELETE'"),'第一次约会');
+ const unreadDateIds=(await db.query("select id from public.item_notifications where item_cat='milestone'")).rows.map(r=>r.id);await db.query('select public.read_item_notifications($1,$2::uuid[])',[space,unreadDateIds]);assert.equal(await scalar("select count(*)::int from public.item_notifications where item_cat='milestone' and read_at is null"),0);
  await login(C);for(const table of ['milestones','mood_entries','mood_reads','item_notifications'])assert.equal(await scalar('select count(*)::int from public.'+table),0,'非成员不能读取 '+table);
  await assert.rejects(db.query("select public.add_mood($1,'happy','越权')",[space]),/共享空间/);
  await assert.rejects(db.query('select public.read_moods($1,$2::uuid[])',[space,[aMood]]),/共享空间/);
@@ -56,5 +65,5 @@ try{
  const concurrent=await Promise.allSettled([db.query("select public.add_mood($1,'happy','最后一条')",[space]),db.query("select public.add_mood($1,'happy','不能超限')",[space])]);assert.equal(concurrent.filter(x=>x.status==='fulfilled').length,1);assert.equal(await scalar("select count(*)::int from public.mood_entries where kind='happy'"),100);
  await assert.rejects(db.query("insert into public.mood_entries(shared_id,kind,content,created_by) values($1,'happy','绕过限制',$2)",[space,A]),/permission denied/);
  await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub','',false)");await db.exec('set role anon');await assert.rejects(db.query('select * from public.mood_entries'),/permission denied/);await assert.rejects(db.query("select public.add_mood($1,'happy','匿名')",[space]),/permission denied/);
- console.log('PASS: PostgreSQL migration idempotence, A/B unread acceptance, own-send exclusion, snapshot receipts, member/anon RLS, 100 cap and automatic INSERT/UPDATE/DELETE messages');
+ console.log('PASS: PostgreSQL migration idempotence, A/B unread acceptance, own-send exclusion, snapshot receipts, member/anon RLS, 100 cap and automatic item/milestone INSERT/UPDATE/DELETE messages');
 }finally{await db.close();}

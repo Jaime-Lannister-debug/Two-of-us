@@ -27,7 +27,7 @@ export function createInteractionsRuntime(app) {
       if (dialog?.open) dialog.close();
     }
     updateTogetherBadges();
-    if (app.actions.isMoodPage()) {
+    if (app.actions.isMoodPage() || app.actions.isMilestonePage()) {
       $("#content").innerHTML = '<p class="empty">请先登录并加入共享空间。</p>';
     }
   }
@@ -52,6 +52,14 @@ export function createInteractionsRuntime(app) {
       moodsBadge.textContent = moodsCount > 99 ? "99+" : moodsCount;
       moodsBadge.hidden = !moodsCount;
     }
+    const milestoneBadge = $("#milestonesUnread"),
+      milestoneCount = store.together.notifications.filter(
+        (n) => n.item_cat === "milestone" && !n.read_at,
+      ).length;
+    if (milestoneBadge) {
+      milestoneBadge.textContent = milestoneCount > 99 ? "99+" : milestoneCount;
+      milestoneBadge.hidden = !milestoneCount;
+    }
     const count = store.together.notifications.filter((n) => !n.read_at).length,
       badge = $("#messageUnread");
     if (badge) {
@@ -60,21 +68,27 @@ export function createInteractionsRuntime(app) {
     }
     const hint = $("#togetherHint");
     if (hint) hint.textContent = store.together.error;
-    for (const id of ["moodBottles", "messageButton"]) {
+    for (const id of ["moodBottles", "milestonesNav", "messageButton"]) {
       const button = $("#" + id);
       if (button) button.disabled = !store.together.ready;
     }
     // 更新红点时不重绘整页，避免地图、上传和用户正在输入的内容丢失。
     if (typeof document.querySelectorAll === "function")
-      document.querySelectorAll("#content [data-id]").forEach((card) => {
-        const old = card.querySelector(".item-unread");
-        if (old) old.remove();
-        if (app.actions.unreadItem(card.dataset.id))
-          card.insertAdjacentHTML(
-            "afterbegin",
-            app.actions.itemUnreadBadge(card.dataset.id),
-          );
-      });
+      document
+        .querySelectorAll("#content [data-id], #content [data-milestone-id]")
+        .forEach((card) => {
+          const old = card.querySelector(".item-unread");
+          if (old) old.remove();
+          if (
+            app.actions.unreadItem(card.dataset.id || card.dataset.milestoneId)
+          )
+            card.insertAdjacentHTML(
+              "afterbegin",
+              app.actions.itemUnreadBadge(
+                card.dataset.id || card.dataset.milestoneId,
+              ),
+            );
+        });
   }
   async function loadTogether(
     options = {
@@ -114,16 +128,7 @@ export function createInteractionsRuntime(app) {
           .limit(200),
         app.actions.allNotifications(),
         options.milestones
-          ? store.cloud
-              .from("milestones")
-              .select("id,title,date,repeat_yearly,is_relationship")
-              .eq("shared_id", app.config.SHARED_ID)
-              .order("date", {
-                ascending: true,
-              })
-              .order("id", {
-                ascending: true,
-              })
+          ? app.actions.allMilestones()
           : Promise.resolve(null),
       ]);
       if (moods.error) throw moods.error;
@@ -150,6 +155,7 @@ export function createInteractionsRuntime(app) {
       store.together.error = "";
       updateTogetherBadges();
       app.actions.refreshMilestoneHome();
+      app.actions.refreshMilestonePage();
       app.actions.refreshMoodPage();
       if ($("#moodDialog")?.open) app.actions.renderBottleContents();
       if ($("#messageDialog")?.open) app.actions.renderMessages();
@@ -158,10 +164,7 @@ export function createInteractionsRuntime(app) {
           if (epoch !== store.cloudEpoch) return;
           app.timers.clearTimeout(store.together.timer);
           store.together.timer = app.timers.setTimeout(
-            () =>
-              void loadTogether({
-                milestones: false,
-              }),
+            () => void loadTogether(),
             120,
           );
         };
@@ -224,6 +227,7 @@ export function createInteractionsRuntime(app) {
         store.together.notifications = [];
         updateTogetherBadges();
         app.actions.refreshMilestoneHome();
+        app.actions.refreshMilestonePage();
         app.actions.refreshMoodPage();
       }
     }
@@ -236,6 +240,7 @@ export function createInteractionsRuntime(app) {
     return true;
   }
   function initTogetherUI() {
+    $("#milestonesNav").onclick = () => app.actions.openMilestonePage();
     $("#moodBottles").onclick = () => app.actions.openMoodPage();
     app.actions.initMoodAirmail();
     $("#messageButton").onclick = app.actions.openMessages;
@@ -270,8 +275,10 @@ export function createInteractionsRuntime(app) {
       if (!document.hidden && store.cloudUser) void loadTogether();
     });
     app.timers.setInterval(() => {
-      if (!document.hidden && store.cloudUser)
+      if (!document.hidden && store.cloudUser) {
         app.actions.refreshMilestoneHome();
+        app.actions.refreshMilestonePage();
+      }
     }, 60000);
   }
   return {

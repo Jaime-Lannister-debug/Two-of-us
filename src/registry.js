@@ -1,3 +1,5 @@
+import { createMilestonesPage } from "./interactions/milestones-page.js";
+import { createR2Upload } from "./media/r2-upload.js";
 import { createStarBottles } from "./interactions/star-bottles.js";
 import { createMoodsPage } from "./interactions/moods-page.js";
 import { createMoodAirmail } from "./interactions/mood-airmail.js";
@@ -39,6 +41,8 @@ export const featureTemplates = [
 ];
 
 export const featureModules = [
+  { id: "interactions/milestones-page", create: createMilestonesPage },
+  { id: "media/r2-upload", create: createR2Upload },
   { id: "interactions/star-bottles", create: createStarBottles },
   { id: "interactions/moods-page", create: createMoodsPage },
   { id: "interactions/mood-airmail", create: createMoodAirmail },

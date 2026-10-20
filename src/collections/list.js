@@ -24,6 +24,11 @@ export function createCollectionsList(app) {
       store.map.remove();
       store.map = null;
     }
+    if (app.actions.isMilestonePage()) {
+      app.actions.renderMilestonePage();
+      return;
+    }
+    $("#milestonesNav").classList.remove("active");
     if (app.actions.isMoodPage()) {
       app.actions.renderMoodPage();
       return;
@@ -218,7 +223,7 @@ export function createCollectionsList(app) {
     );
     if (store.page === "travel") app.actions.initMap(arr);
     const manage = $("#manageMilestones");
-    if (manage) manage.onclick = app.actions.openMilestones;
+    if (manage) manage.onclick = () => app.actions.openMilestonePage();
   }
   return {
     card,
