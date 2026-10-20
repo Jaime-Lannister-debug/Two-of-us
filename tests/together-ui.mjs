@@ -189,16 +189,18 @@ try {
     created_at: '2026-10-20T00:00:00Z'
   });
   await login(A);
-  assert($('#happyUnread').hidden, '自己心情不计未读');
+  assert($('#moodsUnread').hidden, '自己心情不计未读');
   await login(B);
-  assert.equal($('#happyUnread').textContent, '1');
-  assert(!$('#happyUnread').hidden);
-  $('#happyBottle').click();
-  await tick();
-  assert($('#moodDialog').open);
-  assert($('#happyUnread').hidden);
-  assert.match($('#moodList').textContent, /今天有好事/);
+  assert.equal($('#moodsUnread').textContent, '1');
+  assert(!$('#moodsUnread').hidden);
+  $('#moodBottles').click();
+  assert(api.isMoodPage());
+  assert(!$('#moodsUnread').hidden, '进入页面不清未读');
+  assert.match($('#moodHistoryList').textContent, /今天有好事/);
+  await api.readMood('a-mood');
+  assert($('#moodsUnread').hidden);
   assert(rpcCalls.some(c => c.name === 'read_moods' && c.args.p_ids.includes('a-mood')));
+  api.openMoodComposer('happy');
   $('#moodText').value = '我的回应也是一份心情';
   $('#moodForm').dispatchEvent(new w.Event('submit', {
     cancelable: true
@@ -206,9 +208,13 @@ try {
   await tick();
   await tick();
   assert.equal($('#moodText').value, '');
-  assert($('#happyUnread').hidden, 'B 自己添加不增自己的未读');
+  assert.equal(document.querySelector('[data-stars="happy"]').parentElement.querySelector('.star-fallback').textContent.length, 2, '添加一份心情增加一颗星');
+  $('#moodText').value = '尚未提交的草稿';
+  await api.loadTogether({milestones:false});
+  assert.equal($('#moodText').value, '尚未提交的草稿', '实时读取不清空草稿');
+  assert($('#moodsUnread').hidden, 'B 自己添加不增自己的未读');
   await login(A);
-  assert.equal($('#happyUnread').textContent, '1');
+  assert.equal($('#moodsUnread').textContent, '1');
   tables.mood_entries.unshift({
     id: 'a-second',
     shared_id: 'test-space',
@@ -220,7 +226,7 @@ try {
   await api.loadTogether({
     milestones: false
   });
-  assert.equal($('#happyUnread').textContent, '1');
+  assert.equal($('#moodsUnread').textContent, '1');
   // 消息与条目红点；当前账号不会查询到自己的操作通知。
   tables.item_notifications.push({
     id: 'n1',
@@ -292,9 +298,10 @@ try {
     milestones: false
   });
   $('#milestoneDialog').close();
-  $('#sadBottle').click();
-  await tick();
-  assert.equal($('#moodJar').style.getPropertyValue('--fill'), '100%');
+  api.openMoodPage('sad');
+  assert.equal(document.querySelector('[data-stars="sad"]').parentElement.querySelector('.star-fallback').textContent.length, 100);
+  assert(document.querySelector('[data-compose="sad"]').disabled);
+  api.openMoodComposer('sad');
   assert($('#moodSubmit').disabled);
   await login(C);
   assert($('#togetherNav').hidden);

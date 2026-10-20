@@ -19,9 +19,15 @@
     "editor-music": "b1942e3c1550e8fe7c70f684de642df02814e8a3fddcd5edd2b1a08a4e93719d",
     "editor-trip": "c8498610c34383b3c8f4611075f8f3bf806daafb63a45c831c62d54547ac91be",
     "editor-intimacy": "154196d81643d2273218a538d62ae24300d3a77c2a6af439b1e5628434623506",
-    "bottle-happy": "529ee9770d209c1c099861bb28bc62a7705953daef7275f3a3ae331f80c133fa",
+    "bottle-happy": "2c4c485c40ded4706f94b8c9c4b30002de59d5411babb3b7c81a816f33eb2704",
     "messages": "3a0b6318cc4e90e892897dde8608d706fd4c2e43b57a053f79a07dff76a7f740",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "74a1e4aa9a2f8e606504e25e4f923646bbc89653bc0c9940f9c89d1c5b2eed8f"
+  "cssHash": "8e01a167f6a1011e2db52950d762acf01483350e5914dbbb4d3e55f9fb71efe6",
+  "intentionalUpdates": [
+    {
+      "date": "2026-10-20",
+      "feature": "统一心情入口、双透明星星瓶和纸飞机展开；仅替换心情添加弹窗摘要，原收藏及其他互动摘要保持不变。"
+    }
+  ]
 }

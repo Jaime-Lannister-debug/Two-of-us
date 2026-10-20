@@ -15,6 +15,7 @@ export async function createTestApp(options = {}) {
  const html = await readFile(new URL('../../shared.html', import.meta.url), 'utf8');
  const dom = new JSDOM(html, { url: 'https://example.test/shared.html', pretendToBeVisual: true, virtualConsole });
  const w = dom.window;
+ w.HTMLCanvasElement.prototype.getContext = () => null; // DOM 测试使用无 Canvas 的星星回退，物理与浏览器另测。
  for (const name of ['window','document','history','Image','FormData','Event','KeyboardEvent','FocusEvent']) globalThis[name] = name === 'window' ? w : w[name];
  w.confirm = globalThis.confirm = () => true;
  globalThis.prompt = () => null;

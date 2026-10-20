@@ -88,3 +88,7 @@ npm test
 只发布 `index.html`、`shared.html`、`src/`、`styles/`、生成的 `supabase-config.js` 和 `.nojekyll`。自行上传静态托管时也必须带上这两个目录，不能再只上传一个 HTML。
 
 邮箱确认跳转地址在 Supabase Authentication → URL Configuration 设置；配置变化、正式 SQL 执行或成员邀请不由部署流程自动代办。
+
+### 心情瓶子页面
+
+侧栏统一为「心情瓶子」。粉色好心情与蓝色坏心情各最多 100 颗星，每条心情对应一颗星，点击瓶身可摇动碰撞。添加按钮写入原有 RPC；打开新心情或历史条目播放纸飞机，完整展开后只确认这一条已读。提前关闭不会清除未读，自己的心情不计未读。减少动态效果设置会跳过飞行动画；无需执行新 SQL。实现位置与测试见 project map.md。
