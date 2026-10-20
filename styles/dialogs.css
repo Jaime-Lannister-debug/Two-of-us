@@ -1,0 +1,76 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #000b;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.modal[hidden] {
+  display: none;
+}
+.dialog {
+  background: #1d1e25;
+  border: 1px solid #3b3c46;
+  border-radius: 16px;
+  width: 600px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 30px;
+}
+.dialog h2 {
+  font-size: 23px;
+  margin: 0 0 25px;
+}
+.formgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: #bbb;
+}
+.field.full {
+  grid-column: 1/-1;
+}
+.field input,
+.field select,
+.field textarea {
+  background: #292a33;
+  border: 1px solid #3b3c45;
+  color: #eee;
+  padding: 11px;
+  border-radius: 7px;
+  width: 100%;
+}
+.field textarea {
+  min-height: 85px;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+.actions .delete {
+  margin-right: auto;
+  background: transparent;
+  color: #d69898;
+  border: 0;
+}
+.toast {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #33281e;
+  padding: 12px 23px;
+  border-radius: 8px;
+  z-index: 200;
+}

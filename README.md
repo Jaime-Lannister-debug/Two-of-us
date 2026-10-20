@@ -1,157 +1,90 @@
 # Two of Us · 两个人的小宇宙
 
-原生单文件 HTML + Supabase Auth / Postgres / RLS / Realtime 的情侣共享清单。
+原生 HTML / CSS / ES Modules + Supabase Auth、Postgres、RLS、Realtime；图片通过现有 Worker 上传 Cloudflare R2。
 
-## 换设备后继续维护
+**维护先读 [project map.md](project%20map.md) 与 [AGENTS.md](AGENTS.md)。** 地图按功能列出源码、模板、依赖和测试；每增加或删除功能都要更新相应一行。检查脚本会要求所有新模块和样式登记在地图中。
 
-1. 在有本仓库访问权限的 Codex 中打开或检出此仓库。
-2. 让助手先读 `AGENTS.md` 和本文，再说明需要修改的功能。
-3. 从最新远端分支继续，不要用旧设备的 HTML 覆盖远端。
-4. 改动通过检查后提交 Git；发布仍使用现有部署平台。
+## 项目结构
 
-本仓库是源码与维护记录的长期来源。GitHub 连接可以用于访问文件；若要运行代码、预览或部署，新设备/云端会话仍需要可用的仓库工作环境。普通聊天与 Codex 工作目录不会因仓库存在而自动绑定。
+| 位置 | 责任 |
+|---|---|
+| `shared.html`、`index.html` | 网页骨架与访问入口 |
+| `src/main.js`、`src/app.js`、`src/registry.js` | 启动、装配与功能注册 |
+| `src/core/` | 状态、配置、生命周期、DOM、错误、数值与日期 |
+| `src/shell/` | 导航、搜索、背景和交互动效 |
+| `src/auth/`、`src/data/`、`src/profiles/` | 登录、账号操作、收藏数据库访问、头像与昵称 |
+| `src/collections/` | 收藏列表、编辑、详情、游戏/电视剧、音乐、日历、旅行 |
+| `src/media/` | 图片压缩与 R2 上传 |
+| `src/interactions/` | 纪念日、心情瓶子、条目消息及互动实时协调 |
+| `styles/` | 外置样式；`app.css` 保留原始级联顺序 |
+| `supabase/` | 权限迁移与数据库说明，不发布到 Pages |
+| `scripts/`、`tests/` | 构建、静态检查、真实模块与隔离数据库验证 |
 
-## 文件
+这次整理只改变源码组织：原有外观、功能、条目格式、详情 URL、SQL、RPC、RLS、Supabase/R2 配置和托管地址不变，没有新数据库迁移。旧单文件下载包不再是维护依据，不要用它覆盖远端。
 
-- `shared.html`：唯一前端源码，含视觉、交互及 Supabase 数据层。
-- `index.html`：跳转到 shared.html 的首页入口。
-- `supabase-config.example.js`：项目配置模板，不包含实际项目 key。
-- `supabase/01-option-a.sql`：固定空间权限方案及编辑 RPC。
-- `supabase/02-option-b-members.sql`：成员表、一次性邀请码，推荐方案。
-- `supabase/03-bootstrap-owner.sql`：管理员指定第一位成员，执行前替换邮箱。
-- `supabase/README.md`：详细权限、部署、验收与已知限制。
-- `scripts/check.py`、`tests/`：无第三方依赖的脚本语法及模拟数据层检查。
+## 本地运行
 
-## 配置与运行
-
-复制 `supabase-config.example.js` 为 `supabase-config.js`，填写 Project URL、publishable key、SHARED_ID。该文件被 Git 忽略，换设备需重新配置。不要在聊天中提供数据库密码或 service_role。
-
-当前共享空间标识为 `our-shared-space`；推荐配置 `ACCESS_MODE: 'members'`。这是前端 UI 设置，真正权限仍由数据库 RLS 决定。实际 Supabase SQL 执行状态及目前部署平台尚未从服务端确认。
+复制 `supabase-config.example.js` 为 `supabase-config.js`，填写 Project URL、浏览器 public/publishable key、SHARED_ID，保留成员方案。真实配置被 Git 忽略，不要提交数据库密码或 service_role。
 
 ```sh
 python3 -m http.server 8000
 ```
 
-访问 http://localhost:8000/ 。
+打开 http://localhost:8000/ 。原生模块需要 HTTP/HTTPS，不能双击 file://。运行网页不需要 npm 或前端打包器；npm 仅安装开发测试依赖。
 
-部署时上传 `index.html`、`shared.html`、实际的 `supabase-config.js` 到同一目录。若部署平台直接从 Git 构建，需要通过该平台的环境变量生成配置文件，或单独配置发布文件；仓库现在包含 GitHub Pages 自动部署流程，按下方首次配置完成后，master 提交会自动发布。
+## 验证
 
-Supabase 保存用户记录，GitHub 保存程序源码；数据库内容、JSON 备份、邀请码和账号会话不提交仓库。
-
-## 数据库
-
-首次安装按详细说明执行基础 SQL，再升级成员方案并指定首位成员。**已使用成员方案 B 的数据库不要单独重跑 A**，否则会退回固定空间授权。
-
-编辑 RPC 为 SECURITY DEFINER + UPDATE，显式检查登录、空间成员与旧 content，保留 id / created_by / created_at。前端监听 INSERT / UPDATE / DELETE；DELETE 只触发受 RLS 保护的重新查询，不展示事件数据。
-
-控制台 Database → Replication / Publications 的 supabase_realtime 必须包含 shared_items。
-
-## 检查
-
-Python 3 加 Node.js，或 macOS 自带 JavaScriptCore：
-
-```sh
-python3 scripts/check.py
-```
-
-检查覆盖语法、配置引用、空坐标、数值约束、脏进度字段清理、图片上限、并发提示、数据库请求构造、加载和退出竞态。不会操作真实数据库或发送邮件。
-
-真实 RLS、邀请码和双账号实时同步仍需在测试项目中按 `supabase/README.md` 验收。
-
-## 当前实现与限制
-
-- 五个板块、封面、评分、游戏时长、电视剧进度、地图和日历。
-- 搜索防抖、模态框焦点管理、键盘卡片操作、JSON 导出。
-- 已移除无效 seeds / switchCatalog，HTML 约 60 KB。
-- 新上传封面压缩为最长边 400px、JPEG 质量 0.6，经 Worker 预签名 PUT 到 R2；条目保存公开 URL。旧封面 data URL 和手工链接仍兼容。个人头像压缩方式不变。
-- DELETE 通知可能暴露删除 UUID 元数据；多空间严格隔离需私有 Broadcast。
-- 单文件仍有内联脚本/样式；移除 img onerror 不代表已经满足 strict CSP。
-
-迁移日期：2026-10-19。旧设备上的下载包不是今后的源码依据，后续以仓库最新提交为准。
-
-## GitHub Pages 首次启用
-
-1. 仓库 Settings → Pages → Build and deployment → Source 选择 **GitHub Actions**。
-2. Settings → Secrets and variables → Actions → Variables 新建两个仓库变量：
-   - `SUPABASE_URL`：你的 Supabase Project URL。
-   - `SUPABASE_PUBLISHABLE_KEY`：之前提供的 sb_publishable_ 开头公共 key。
-3. Actions → Deploy GitHub Pages → Run workflow，分支选择 master。
-4. 等待 build 与 deploy 都成功。网址由 GitHub 的 deployment 输出确认；本项目预期为 https://Jaime-Lannister-debug.github.io/Two-of-us/ 。不要把预期 URL 当作已上线验证。
-
-部署只上传网页和生成的配置，不包含 SQL、测试、README 或数据库内容。public key 仅写入构建产物，不提交源码。GitHub Pages 的网页公开访问，但条目仍需登录并通过 Supabase 成员 RLS；上线不等于授予任意访问者读取记录的权限。
-
-邮箱确认若跳转地址仍是 localhost，请在 Supabase Authentication → URL Configuration 将 Site URL 及允许的确认跳转地址改为当前 Pages 站点；本次部署不会自动修改 Supabase 设置。
-
-首次缺少变量或尚未启用 Pages 时，工作流会明确失败；补齐设置后重新运行即可。
-
-## 双人头像、昵称与左上角菜单（2026-10-19）
-
-用户确认 GitHub Pages 已可打开。最新个人资料功能需另在 Supabase SQL Editor 执行 `supabase/04-shared-profiles.sql`（基于已启用的成员方案 B），无需重跑 A/B，也不修改现有条目。
-
-左上角显示两位成员的头像与昵称，并显示“实时同步已连接”“共享列表已更新”等状态。点击双人头像打开菜单，包含个人头像/昵称设置、JSON 导出、生成邀请码、邀请码加入及退出。
-
-个人头像自动居中裁剪为 192×192 JPEG，最多 60,000 字符；昵称最多 24 字。空昵称使用 A/B，双方以成员 UUID 排序，显示顺序一致。资料仅本人可写，同一空间成员可读；不会把昵称或图片提交 GitHub。
-
-SQL 新建 shared_profiles、RLS、get_shared_people RPC，并将资料表加入实时复制。前端使用独立资料订阅；未执行 SQL 时菜单会提示个人资料同步未启用，原条目列表仍能使用。
-
-验收：两人分别登录；设置自己的昵称/头像，另一端应自动更新；刷新后保留；不能修改他人的 user_id 资料；非成员不能读取 get_shared_people；退出后清空；手机和桌面左上角菜单可开合，键盘方向键/Escape/Tab 可操作，个人资料对话框焦点不能跳到背景。
-
-资料相关模拟测试覆盖头像协议/大小、昵称默认值、读取与实时过滤、退出后的旧响应丢弃。SQL 及真实双账号头像同步尚需在项目内验收。
-
-## R2 封面上传（2026-10-19）
-
-上传签名接口：https://r2-presigner.baopengtoskr.workers.dev/
-公开图片根地址：https://pub-e97c7ebcf6e7475d85a27152bc869d5f.r2.dev
-
-这两个公开地址是 shared.html 的封面相关常量。R2 访问密钥只保存在 Worker，不进前端和仓库。Worker POST 接收 filename/contentType，并使用现有 Supabase 会话 Bearer token 核验空间成员；浏览器取得 uploadUrl 后仅用 Content-Type:image/jpeg PUT，不向 R2 发送 Supabase token。
-
-保留图片链接输入框。上传失败不覆盖旧链接；成功后仍需点击“保存记录”，公开 URL 才写入 Supabase 并同步给对方。个人头像未迁移。旧封面不自动重传或删除；取消编辑可能留下已上传但未被条目引用的对象。
-
-R2 covers 桶的 CORS 必须允许 https://jaime-lannister-debug.github.io 的 PUT/GET，及 Content-Type 请求头。当前只读 Worker 检查 GET=405 JSON、OPTIONS=204，来源与 Authorization/Content-Type 预检正常；未用真实成员 JWT 做实际上传。
-
-Node 环境下 python3 scripts/check.py 会运行 tests/cover-upload.mjs，验证压缩、POST/PUT、只保存 URL、上传失败保留旧值和手填链接；测试不连接真实 R2。
-
-## 旅行地图修复与使用
-
-CARTO 原匿名底图出现 API key required 水印，当前改用 OpenStreetMap 标准瓦片，无需地图 key，保留可见版权署名，适用于本项目两人低流量交互查看。地图建立独立层叠上下文，条目编辑与个人资料弹窗位于其上方，Leaflet 控件和提示不再穿透弹窗。
-
-打开旅行足迹 → 在地图点击目的地（可缩放或拖动）→ 点击新增回忆，表单会带入所选经纬度 → 填写目的地、日期、游玩及住宿信息 → 保存记录。地图标点来自数据库条目 lat/lng；仅填写地点名称不会自动地理编码。也可在表单手动填写 WGS84 纬度（-90～90）和经度（-180～180）。单条有效行程会自动居中，多条会自动适配范围。空坐标不会被误认为 0,0。
-
-标点与行程通过现有 Supabase 同步，不需新的 SQL。底图依赖 Leaflet CDN 与 tile.openstreetmap.org 的正常网络访问；网络错误会提示，时间线和记录仍可使用。不要批量抓取、预下载或隐藏版权标注。若以后流量明显增加，应换用适合该流量的底图服务。
-
-地图模拟测试覆盖底图来源和署名、弹窗层级声明、空/合法零坐标、单点居中、瓦片失败提示、点击选点；尚未使用真实账号做浏览器地图交互验收。
-
-## 条目详情、旅行相册与 QQ 音乐（2026-10-20）
-
-点击卡片／旅行时间线进入详情页，点击「编辑这份回忆」继续使用原编辑弹窗。详情页地址使用 `shared.html#item=记录UUID`，刷新或分享同一地址可重开；查看者仍需登录并是同一空间成员。无须 SQL 迁移，新增字段存于原 content JSON，旧条目兼容。
-
-游戏封面不再叠加名称、评分和平台文字，这些信息显示在图片下方。游戏不再存完成百分比或集数字段；时间条表示累计小时，默认 100 小时标尺，超出后以 50 小时扩展，完成状态手动设置。电视剧仍使用集数进度。
-
-旅行支持开始／结束日期及最多 20 家酒店，每家可填写入住、退房和备注，旧 hotel 字符串会读取为第一家酒店。保存记录后在详情页上传最多十张图片（含封面）；封面居中，其余环绕，点击查看大图，移除封面后下一张成为封面。旅行相册压缩最长边 1000px、JPEG 0.75，沿用现有 R2 Worker 和成员 JWT；原编辑表单封面仍为 400px、JPEG 0.6。照片列表通过原乐观并发 RPC 保存并实时同步；同时修改冲突时不会覆盖他人内容，重新打开后重试。取消或保存失败可能留下未被引用的 R2 对象，移除照片只解除引用，不物理删除 R2 文件。公开 R2 照片持链接可访问。
-
-音乐编辑中粘贴 QQ 音乐歌曲／专辑详情链接，或包含歌名、歌手的完整分享文字，点击「读取音乐信息」再确认保存。QQ 官方 JSONP 接口读取标题、歌手和专辑封面，不下载歌曲、不获取播放授权。纯短链接可能无法解析，需要完整分享文字或展开后的详情链接；接口不可用时仍可手工填写标题、简介与封面链接。
-
-检查：`python3 scripts/check.py` 包括详情渲染、旧酒店迁移、日期范围、照片十张上限、照片保存并发契约、游戏时长和 QQ 分享链接／元数据模拟。真实项目双账号、真实 R2 多图及 QQ 浏览器网络仍应在登录后验收。
-
-## 纪念日、心情瓶子与条目消息（2026-10-20）
-
-**启用步骤**：在已有成员方案 B 和个人资料表的 Supabase 项目中，打开 SQL Editor → New query，完整执行 `supabase/05-together-features.sql`，成功后刷新网页。不要重跑方案 A/B。新功能的表、策略、RPC、条目通知触发器及三张表的 Realtime publication 在一个事务内建立；可重复执行。未执行时网页显示启用说明，原有条目不受影响。成员需在 shared_members 中；非成员不显示新入口，数据库层也拒绝读写。
-
-- 首页「我们的纪念日」→ 管理纪念日，可添加、编辑和删除；指定一条为在一起的开始日。当天为第 1 天，按设备本地日期计算，日期运算避开夏令时；2 月 29 日在非闰年按 2 月 28 日纪念。每年重复的项目显示下一次倒计时；一次性项目过去后显示已过去天数。纪念日不订阅 Realtime，登录、回到页面、恢复网络和手动重开时读取；保持页面打开时每分钟更新日期计算。
-- 侧栏「好心情瓶子」「坏心情瓶子」各是两人共同使用的独立瓶子，每瓶总共最多 100 条（不是每人各 100）。心情最多 1000 字，按创建时间倒序。瓶内填充高度随数量增加；满瓶保留全部内容并停止添加，不自动清空。没有回复、评论或聊天会话。
-- 心情只计算对方的未读，自己添加不增加自己的未读。打开某瓶，当前展示的对方心情在数据库写入自己的阅读回执，刷新或换设备后保留；另一瓶不受影响。打开期间新来的心情继续显示未读，可点「将当前心情标为已读」；不会通过一个时间戳误清掉新到内容。
-- 顶部铃铛打开条目消息；卡片／时间线红点表示对方新增或修改了该条目，点击条目清除对应消息。消息中心打开后只标记当前显示的最近 50 条，可另点「全部标为已读」。打开期间新来的消息仍保留未读。删除条目后没有卡片，铃铛及消息中心保留「昵称删除了条目」的记录。
-- 条目通知在数据库触发器中生成，和 INSERT / UPDATE / DELETE 同一事务提交，包含操作时的昵称与条目名快照，只发给另一位成员。不能由前端冒充昵称或伪造事件。没有内容变化的 UPDATE 不发通知；迁移前的历史操作不回填。当前网页对封面和相册的修改属于条目 UPDATE，也会通知对方。
-
-数据库新增 `milestones`、`mood_entries`、`mood_reads`、`item_notifications`，全部开启 RLS；moods 与通知仅允许受检 RPC 写入。两人并发投放时通过每空间／瓶子的事务锁保证 100 条上限。阅读 RPC 只接收已展示的 UUID 集合，接收人只能改自己的阅读状态。新功能只向已有成员开放，不改变原条目 RLS 或共享范围。
-
-验证命令（测试依赖仅用于开发，不进入 Pages 产物）：
+需要 Python 3 和 Node.js 22：
 
 ```sh
 npm ci --ignore-scripts
 npm test
 ```
 
-`tests/together-db.mjs` 使用 PGlite 内嵌 PostgreSQL 与虚构的 A/B/C 账号，实际执行迁移两次并验收 RLS、未读、回执、容量及触发器；`tests/together-ui.mjs` 使用 DOM 模拟验证日期、界面计数、表单、红点、非成员隐藏和退出竞态。旧的 `python3 scripts/check.py` 仍可单独执行。CI 在部署前运行全部检查。
+- `scripts/check.py`：模块路径、项目地图、外部配置、所有 JS 语法及模块/功能/构建检查。
+- `tests/app-contract.mjs`：模块接口、状态隔离、模板 id、幂等启动和资源清理。
+- `tests/cloud.mjs`、`menu.mjs`：数值与空坐标、数据请求、并发提示、退出竞态、个人资料与菜单。
+- `tests/cover-upload.mjs`、`travel-map.mjs`、`details-and-music.mjs`：R2、地图、详情、照片限制、酒店、时长、QQ 音乐。
+- `tests/together-ui.mjs`、`together-db.mjs`：纪念日、心情未读、消息、容量及实际执行的隔离 PostgreSQL RLS / 触发器检查。
+- `tests/ui-parity.mjs`：20 个重构前 DOM 摘要及 289 条样式规则的内容/顺序一致性；故意改界面时先人工检查，再更新对应摘要。
+- `tests/build.mjs`：发布产物必须含全部模块和样式，不含 SQL、测试、node_modules 或维护文档。
 
-已通过隔离 PostgreSQL 和 DOM 的验收；已检查示例数据下的桌面与 390px 手机布局。没有在用户真实 Supabase 执行迁移，也没有冒充两个真实账号进行线上 Realtime 测试。正式项目执行 SQL 后，按下述清单做双浏览器验收。
+这些测试使用虚构账号和替身网络，不读取真实配置、不连接正式数据库、不发送邮件或上传照片。正式项目的双账号 Realtime/RLS 验收见 `supabase/README.md`，不能把隔离测试当成已经操作了正式项目。
+
+## 数据库与权限
+
+现有项目继续使用成员方案 B；**不要单独重跑方案 A**。
+
+- `01-option-a.sql`：最初建表与原子编辑 RPC，供首次初始化使用。
+- `02-option-b-members.sql`：成员授权、一次性邀请与双人上限。
+- `03-bootstrap-owner.sql`：管理员指定第一位成员。
+- `04-shared-profiles.sql`：双人昵称、头像和资料订阅。
+- `05-together-features.sql`：纪念日、心情、阅读回执、条目通知及对应 Realtime publication。
+
+如果尚未启用上轮的新互动功能，在 Supabase SQL Editor 完整执行 05，再刷新网页。本次模块化不要求重新执行任何 SQL，也不会自动代替你执行迁移。
+
+收藏继续使用 shared_items.content JSON text；编辑 RPC `replace_shared_item(p_id,p_content,p_expected_content)` 在数据库检查旧内容并 UPDATE，保留 UUID、创建者和创建时间。条目监听 INSERT/UPDATE/DELETE；DELETE 仅触发受 RLS 约束的重新查询。当前 DELETE 通知可能包含删除 UUID 元数据，多空间严格隔离需另设计私有 Broadcast。
+
+## 已有功能与边界
+
+- 五类收藏、分类/标签/状态筛选、200ms 搜索、评分、详情、表单焦点管理和 JSON 导出。
+- 游戏封面无遮挡、累计小时条；电视剧集数/当前集；其他类型不保存脏进度字段。
+- 旅行地图用 OSM，无需 API key；先点地图再新增，或填写 WGS84 坐标。空值丢弃，明确 0 坐标有效。支持日期区间、多个酒店，详情最多十张照片（含封面），中心封面与周围照片、查看大图与移除引用。
+- 本地封面 400px / JPEG .6，相册 1000px / JPEG .75；通过 Worker 预签名 PUT，content 仅保存公开 URL。旧 data URL 与手填链接兼容。R2 原对象不会随移除引用自动删除，失败/取消可能留下未引用对象。头像压缩与资料表保持原方式。
+- QQ 音乐读取官方 JSONP 元数据，不下载歌曲；纯短链接可能需要完整分享文字或展开的详情地址，接口失效仍可手填。
+- 左上角双人头像、昵称、连接状态和菜单；菜单包含导出、邀请、加入、资料、退出。
+- 首页纪念日按本地日期纯计算，不建 Realtime 订阅；开始当天第 1 天，2 月 29 日在平年按 2 月 28 日纪念。
+- 好/坏心情瓶独立，两人每瓶合计 100 条，满瓶保留内容；只计对方未读，阅读回执跨设备保存，不是聊天。
+- 数据库在条目增删改同一事务内给对方生成消息，自己的操作不产生自己的未读；昵称和标题快照在删除条目后仍保留。
+
+公开 R2 地址与 Worker 在 `src/core/config.js`，没有新增密钥。公开图片持链接可访问；网页壳公开不代表共享数据允许匿名读取。
+
+## GitHub Pages 部署
+
+现有地址：https://jaime-lannister-debug.github.io/Two-of-us/
+
+现有流程不变：master 提交触发 `.github/workflows/pages.yml`，检查成功后运行 `scripts/build_pages.py`。首次配置时在 Settings → Pages 选择 GitHub Actions，在 Actions Variables 设置 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`。真实公共 key 只写入部署产物，不提交源码。
+
+只发布 `index.html`、`shared.html`、`src/`、`styles/`、生成的 `supabase-config.js` 和 `.nojekyll`。自行上传静态托管时也必须带上这两个目录，不能再只上传一个 HTML。
+
+邮箱确认跳转地址在 Supabase Authentication → URL Configuration 设置；配置变化、正式 SQL 执行或成员邀请不由部署流程自动代办。

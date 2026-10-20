@@ -1,0 +1,216 @@
+/* 左上角双人资料与状态；菜单与个人资料编辑不改变原条目界面。 */
+.people-area {
+  position: relative;
+  margin: -12px 0 24px;
+  flex-shrink: 0;
+}
+.people-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  border: 1px solid #393039;
+  border-radius: 14px;
+  background: linear-gradient(140deg, #28272d, #252023);
+  padding: 12px 9px;
+  color: #f6f2ee;
+}
+.person-chip {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  flex: 1;
+}
+.person-photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #68867e;
+  border: 2px solid #c6b9a5;
+  font-size: 17px;
+}
+#person1 .person-photo {
+  background: #b98983;
+}
+.person-photo img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  inset: 0;
+}
+.person-name {
+  font-size: 11px;
+  max-width: 66px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+.people-heart {
+  color: var(--accent);
+  font-size: 19px;
+}
+.connection-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 9px 5px 0;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #aaa29d;
+  overflow-wrap: anywhere;
+}
+.connection-status > small {
+  color: #b2c2a5;
+  font-size: 10px;
+}
+.connection-status #cloudMessage {
+  font-size: 10px;
+}
+.people-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  max-width: calc(100vw - 30px);
+  max-height: 65vh;
+  overflow: auto;
+  background: #25232b;
+  border: 1px solid #4b3e42;
+  box-shadow: 0 15px 40px #0007;
+  border-radius: 12px;
+  padding: 8px;
+  z-index: 90;
+}
+.people-menu[hidden] {
+  display: none;
+}
+.people-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 12px 11px;
+  border-radius: 7px;
+  font-size: 12px;
+  color: #e3d6cf;
+}
+.people-menu button:hover,
+.people-menu button:focus-visible {
+  background: #433337;
+}
+.people-menu button[hidden] {
+  display: none;
+}
+.menu-account {
+  padding: 8px 11px 12px;
+  border-bottom: 1px solid #44363b;
+  color: #aaa;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.profile-hint {
+  display: block;
+  padding: 8px;
+  color: #c0a29d;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.profile-hint:empty {
+  display: none;
+}
+body.signed-in #cloudNotice {
+  display: none;
+}
+aside nav {
+  margin-top: 26px;
+}
+#profileModal {
+  z-index: 110;
+}
+#profileModal .dialog {
+  width: 440px;
+}
+.my-avatar-preview {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #b98983;
+  font-size: 30px;
+  margin: 0 auto 24px;
+}
+.my-avatar-preview img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+#profileFormMessage {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 18px;
+}
+@media (max-width: 750px) {
+  .people-area {
+    margin: 0 0 12px;
+  }
+  .people-toggle {
+    max-width: 230px;
+    padding: 8px;
+  }
+  .person-chip {
+    flex-direction: row;
+    gap: 7px;
+  }
+  .person-photo {
+    width: 34px;
+    height: 34px;
+  }
+  .person-name {
+    max-width: 55px;
+  }
+  .connection-status {
+    position: absolute;
+    left: 242px;
+    right: 0;
+    top: 0;
+    padding: 4px 0;
+    font-size: 10px;
+  }
+  .connection-status small {
+    font-size: 10px;
+  }
+  aside nav {
+    margin-top: 8px;
+  }
+  .people-menu {
+    min-width: 230px;
+    top: calc(100% + 5px);
+  }
+}
+@media (max-width: 390px) {
+  .people-toggle {
+    max-width: 190px;
+  }
+  .connection-status {
+    left: 200px;
+  }
+  .person-name {
+    max-width: 37px;
+  }
+  .people-heart {
+    font-size: 14px;
+  }
+}

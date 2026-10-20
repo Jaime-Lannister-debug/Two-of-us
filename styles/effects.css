@@ -1,0 +1,322 @@
+/* 通用交互反馈 */
+button,
+a[data-more],
+.card,
+.trip {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+@media (hover: hover) {
+  button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+    box-shadow: 0 5px 16px #0003;
+  }
+  nav button:hover,
+  .listnav:hover {
+    background: #29272a;
+    color: var(--accent);
+  }
+  nav button.active:hover {
+    background: #423731;
+  }
+  .btn:hover {
+    box-shadow: 0 6px 22px #efb99426;
+  }
+  .chip:hover {
+    border-color: #a38069;
+    color: #f4dbc8;
+  }
+  .chip.active:hover {
+    color: #32251f;
+  }
+  .day:hover {
+    background: #39313a;
+    color: #f9d3c0;
+  }
+  .day.marked:hover {
+    background: #66424a;
+  }
+  .actions .delete:hover {
+    background: #66323b44;
+    color: #ffc0c0;
+  }
+  .cal-head button:hover {
+    background: #4a3a35;
+    color: var(--accent);
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .card:hover .poster {
+    box-shadow:
+      0 10px 27px #0005,
+      0 0 0 1px #efb99466;
+  }
+  .card:hover h3 {
+    color: var(--accent);
+  }
+  .trip:hover {
+    transform: translateY(-3px);
+    border-color: #806453;
+    box-shadow: 0 10px 24px #0004;
+  }
+  a[data-more]:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+  .leaflet-interactive:hover {
+    stroke: #ffe0bd;
+    fill: #ffcfab;
+    stroke-width: 6;
+  }
+}
+button:active {
+  transform: translateY(1px) scale(0.96);
+  filter: brightness(0.94);
+  box-shadow: 0 1px 4px #0003;
+  transition-duration: 0.07s;
+}
+.card,
+.trip {
+  transition:
+    transform 0.23s ease,
+    box-shadow 0.23s ease,
+    border-color 0.23s ease;
+}
+.trip {
+  border: 1px solid transparent;
+}
+.card .poster {
+  transition: box-shadow 0.23s ease;
+}
+.card h3 {
+  transition: color 0.2s ease;
+}
+.card:active,
+.trip:active {
+  transform: scale(0.975);
+  transition-duration: 0.08s;
+}
+a[data-more] {
+  display: inline-block;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+a[data-more]:active {
+  transform: translateX(3px) scale(0.96);
+}
+.leaflet-interactive {
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease,
+    stroke-width 0.2s ease;
+}
+.card:focus-visible,
+.trip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+.click-wave {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.22;
+  z-index: 3;
+  transform: scale(0);
+  animation: click-wave 0.55s ease-out forwards;
+}
+@keyframes click-wave {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  button:hover,
+  button:active,
+  .card:hover,
+  .card:active,
+  .trip:hover,
+  .trip:active,
+  a[data-more]:hover,
+  a[data-more]:active {
+    transform: none !important;
+  }
+  .click-wave {
+    display: none;
+  }
+}
+
+/* 内容背后的柔和背景动效。 */
+body {
+  isolation: isolate;
+}
+.romance-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+.romance-glow {
+  position: absolute;
+  width: 68vmax;
+  height: 68vmax;
+  border-radius: 50%;
+  will-change: transform;
+}
+.romance-glow.one {
+  top: -40vmax;
+  right: -18vmax;
+  background: radial-gradient(
+    circle,
+    #b95c7b26 0%,
+    #9b506b12 40%,
+    transparent 68%
+  );
+  animation: romantic-drift 24s ease-in-out infinite alternate;
+}
+.romance-glow.two {
+  bottom: -38vmax;
+  left: 3vw;
+  background: radial-gradient(
+    circle,
+    #c78c6c20 0%,
+    #b9697b0d 42%,
+    transparent 68%
+  );
+  animation: romantic-drift 29s ease-in-out -12s infinite alternate-reverse;
+}
+.romance-heart {
+  position: absolute;
+  left: var(--x);
+  bottom: -40px;
+  color: #e3a7bb;
+  font:
+    var(--size) Georgia,
+    serif;
+  opacity: 0;
+  animation: romantic-rise var(--duration) linear var(--delay) infinite;
+  will-change: transform, opacity;
+}
+@keyframes romantic-drift {
+  from {
+    transform: translate3d(-3vw, 0, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(6vw, 8vh, 0) scale(1.12);
+  }
+}
+@keyframes romantic-rise {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-12deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.15;
+  }
+  55% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate3d(45px, -110vh, 0) rotate(18deg);
+    opacity: 0;
+  }
+}
+.search {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  transform-origin: center;
+}
+.search:focus-within {
+  background: #2b252d;
+  border-color: #d49b87;
+  box-shadow:
+    0 0 0 3px #e8a5ad12,
+    0 6px 25px #d2879a18;
+}
+@media (hover: hover) {
+  .search:hover {
+    border-color: #a97e85;
+    background: #29252d;
+    box-shadow: 0 5px 22px #d2879a14;
+  }
+}
+.search.is-bouncing {
+  animation: search-bounce 0.54s cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+.search.is-typing {
+  animation: search-type 0.32s ease-out;
+}
+@keyframes search-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  28% {
+    transform: translateY(-5px) scale(1.014);
+  }
+  52% {
+    transform: translateY(2px) scale(0.993);
+  }
+  75% {
+    transform: translateY(-1.5px) scale(1.004);
+  }
+}
+@keyframes search-type {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-2px);
+  }
+  75% {
+    transform: translateY(0.6px);
+  }
+}
+@media (max-width: 750px) {
+  .romance-heart:nth-of-type(n + 7) {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .romance-glow,
+  .romance-heart,
+  .search.is-bouncing,
+  .search.is-typing {
+    animation: none !important;
+    will-change: auto;
+    transform: none !important;
+  }
+  .romance-heart {
+    display: none;
+  }
+}

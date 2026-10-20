@@ -1,0 +1,60 @@
+/* 未登录时隐藏条目、导航和新增入口，数据库仍通过 RLS 独立鉴权。 */
+body:not(.signed-in) > aside,
+body:not(.signed-in) > main {
+  display: none;
+}
+body.signed-in #authPanel {
+  display: none;
+}
+#authPanel {
+  position: relative;
+  max-width: 450px;
+  margin: 12vh auto 30px;
+  padding: 32px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+#authPanel .field {
+  margin: 18px 0;
+}
+#authPanel h1 {
+  font-size: 26px;
+}
+#cloudNotice {
+  position: relative;
+  z-index: 25;
+  max-width: 800px;
+  margin: 15px auto;
+  padding: 12px 18px;
+  color: #d1bbaa;
+  font-size: 12px;
+  line-height: 1.7;
+}
+body.signed-in #cloudNotice {
+  margin-left: 250px;
+}
+#cloudAccount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+#cloudAccount small {
+  color: var(--muted);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+@media (max-width: 750px) {
+  body.signed-in #cloudNotice {
+    margin-left: 0;
+  }
+  #authPanel {
+    margin: 8vh 15px 20px;
+  }
+}

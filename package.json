@@ -7,5 +7,6 @@
   "devDependencies": {
     "@electric-sql/pglite": "0.5.10",
     "jsdom": "27.0.1"
-  }
+  },
+  "type": "module"
 }

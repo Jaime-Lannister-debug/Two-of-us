@@ -1,0 +1,15 @@
+.section-title {
+  margin: 34px 0 6px;
+  font-size: 29px;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.music .poster {
+  aspect-ratio: 1;
+}
+.music .poster-title {
+  font-size: 22px;
+}

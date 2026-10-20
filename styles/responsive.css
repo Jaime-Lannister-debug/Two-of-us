@@ -1,0 +1,118 @@
+@media (min-width: 1500px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1100px) {
+  aside {
+    width: 180px;
+    padding: 30px 15px;
+  }
+  main {
+    margin-left: 180px;
+    padding: 0 25px 40px;
+  }
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .hero-count {
+    display: none !important;
+  }
+}
+@media (max-width: 750px) {
+  aside {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    padding: 12px 15px;
+    display: block;
+    border-bottom: 1px solid var(--line);
+  }
+  .logo {
+    font-size: 22px;
+  }
+  .logo span,
+  .aside-label,
+  .listnav,
+  .aside-bottom {
+    display: none;
+  }
+  nav {
+    margin: 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  nav button {
+    width: auto;
+    padding: 9px 7px;
+    font-size: 12px;
+  }
+  nav i {
+    display: none;
+  }
+  main {
+    margin: 0;
+    padding: 0 17px 35px;
+  }
+  header {
+    height: 73px;
+    gap: 10px;
+  }
+  .search {
+    width: 100%;
+    max-width: 100%;
+  }
+  .avatars,
+  header > .spacer {
+    display: none;
+  }
+  .btn {
+    white-space: nowrap;
+    padding: 11px 13px;
+  }
+  .hero {
+    padding: 25px;
+    min-height: 270px;
+  }
+  .hero h1 {
+    font-size: 29px;
+  }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 13px;
+  }
+  .heading small {
+    display: none;
+  }
+  .trip {
+    grid-template-columns: 110px 1fr;
+    gap: 15px;
+  }
+  .trip img {
+    width: 110px;
+    height: 100%;
+  }
+  .trip-content {
+    padding: 17px 10px 17px 0;
+  }
+  .trip h3 {
+    font-size: 18px;
+  }
+  .day {
+    min-height: 44px;
+    padding: 8px;
+  }
+  .calendar {
+    padding: 15px;
+  }
+  .formgrid {
+    grid-template-columns: 1fr;
+  }
+  .field.full {
+    grid-column: auto;
+  }
+  .map {
+    height: 300px;
+  }
+}

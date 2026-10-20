@@ -25,8 +25,10 @@ if output.exists():
 output.mkdir()
 for name in ['index.html', 'shared.html']:
     shutil.copyfile(ROOT / name, output / name)
+for name in ['src', 'styles']:
+    shutil.copytree(ROOT / name, output / name)
 config = dict(SUPABASE_URL=url, SUPABASE_ANON_KEY=key, SHARED_ID=space, ACCESS_MODE='members')
 # 配置属于部署产物，不回写或提交 Git；浏览器运行时可见，这是公共 key 的用途。
 (output / 'supabase-config.js').write_text('window.TWO_US_CONFIG = ' + json.dumps(config, ensure_ascii=False) + ';\n')
 (output / '.nojekyll').touch()
-print('Pages 产物已准备：index.html、shared.html、supabase-config.js。')
+print('Pages 产物已准备：页面骨架、src/ 模块、styles/ 样式、运行配置。')

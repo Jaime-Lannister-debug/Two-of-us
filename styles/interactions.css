@@ -1,0 +1,333 @@
+/* 新功能沿用现有色彩；入口在窄屏保持可用，徽标不挤压文字。 */
+aside {
+  overflow-y: auto;
+}
+.together-nav {
+  margin-top: 18px;
+}
+.together-nav[hidden],
+.message-button[hidden],
+.unread-badge[hidden] {
+  display: none !important;
+}
+.together-nav > button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background: #242329;
+  border: 1px solid #3c3338;
+  border-radius: 9px;
+  padding: 11px 10px;
+  color: #d8c5b5;
+  margin-top: 7px;
+  text-align: left;
+  white-space: nowrap;
+  font-size: 12px;
+}
+.unread-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 20px;
+  background: #d26d78;
+  color: white;
+  font-size: 10px;
+  line-height: 1;
+  margin-left: auto;
+}
+.message-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.message-button .unread-badge {
+  margin-left: 0;
+}
+header #add {
+  flex-shrink: 0;
+}
+#togetherHint {
+  color: #c0a29d;
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 7px 0;
+  overflow-wrap: anywhere;
+}
+#togetherHint:empty {
+  display: none;
+}
+.card {
+  position: relative;
+}
+.item-unread {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background: #e77884;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #252027;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.card > .item-unread {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  z-index: 3;
+  width: 11px;
+  height: 11px;
+}
+.milestone-home {
+  margin: 25px 0 32px;
+}
+.milestone-home .heading {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+.milestone-grid article {
+  border: 1px solid #4a3b40;
+  background: linear-gradient(130deg, #30272d, #242b2b);
+  padding: 20px;
+  border-radius: 12px;
+}
+.milestone-grid h3 {
+  font-weight: 500;
+  margin: 0 0 13px;
+}
+.milestone-grid strong {
+  display: block;
+  color: #efc2a7;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.milestone-grid small {
+  display: block;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.social-dialog {
+  background: #1d1e25;
+  color: #f6f2ee;
+  border: 1px solid #514048;
+  border-radius: 16px;
+  padding: 26px;
+  width: 650px;
+  max-width: calc(100vw - 28px);
+  max-height: 88vh;
+  overflow: auto;
+}
+.social-dialog::backdrop {
+  background: #000b;
+}
+.social-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.social-dialog h2 {
+  margin: 0;
+  font-size: 23px;
+}
+.social-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.social-actions > span,
+#milestoneMessage,
+#notificationStatus {
+  font-size: 12px;
+  color: #c7ada6;
+  line-height: 1.7;
+}
+.social-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+  font-size: 12px;
+}
+.social-check input {
+  accent-color: var(--accent);
+}
+.milestone-list article {
+  padding: 15px 0;
+  border-bottom: 1px solid #41343a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.milestone-list p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 8px 0;
+}
+.milestone-list .social-actions {
+  margin: 0;
+}
+.bottle-intro {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 25px 0;
+}
+.mood-jar {
+  position: relative;
+  width: 80px;
+  height: 110px;
+  flex-shrink: 0;
+  border: 3px solid #b1a99d;
+  border-radius: 15px 15px 25px 25px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #22252a;
+}
+.mood-jar:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--fill, 0%);
+  background: linear-gradient(#d4b991, #9c9e75);
+  transition: height 0.5s ease;
+}
+.mood-jar.sad:before {
+  background: linear-gradient(#8b98b6, #656a99);
+}
+.mood-jar > span {
+  z-index: 1;
+  font-size: 32px;
+  color: #f3dfd2;
+}
+.mood-entry {
+  margin-top: 14px;
+  background: #24242c;
+  border: 1px solid #3b323d;
+  border-radius: 12px;
+  padding: 17px;
+}
+.mood-entry > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.mood-entry time {
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: auto;
+}
+.mood-entry p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+  color: #d5c9c5;
+}
+.unread-pill {
+  font-size: 10px;
+  background: #613743;
+  color: #ffd3d5;
+  padding: 3px 7px;
+  border-radius: 20px;
+}
+.notification-row {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 9px;
+  text-align: left;
+  background: #27252c;
+  border: 1px solid #42353c;
+  border-radius: 10px;
+  padding: 17px;
+  width: 100%;
+  margin-top: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.notification-row.is-unread {
+  border-color: #b17b81;
+}
+.notification-row time {
+  color: var(--muted);
+  font-size: 11px;
+}
+.notification-row .item-unread {
+  margin: 0 8px 0 0;
+}
+@media (max-width: 750px) {
+  aside {
+    overflow: visible;
+  }
+  .together-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .together-nav > button {
+    width: auto;
+    flex: 1;
+    padding: 9px;
+    font-size: 11px;
+    margin: 0;
+    justify-content: center;
+  }
+  .together-nav .unread-badge {
+    margin-left: 2px;
+  }
+  #togetherHint {
+    width: 100%;
+  }
+  .message-label {
+    display: none;
+  }
+  .message-button {
+    padding: 10px;
+    gap: 4px;
+  }
+  header {
+    gap: 6px;
+  }
+  .search {
+    min-width: 0;
+  }
+  .social-dialog {
+    padding: 18px;
+  }
+  .social-dialog h2 {
+    font-size: 20px;
+  }
+  .milestone-grid {
+    grid-template-columns: 1fr;
+  }
+  .milestone-home .btn {
+    font-size: 12px;
+  }
+  .bottle-intro {
+    gap: 17px;
+  }
+  .social-dialog .empty {
+    padding: 30px 10px;
+  }
+}

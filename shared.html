@@ -1,969 +1,168 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Two of Us · 两个人的小宇宙</title><meta name="description" content="收藏两个人的电影、音乐、游戏、旅途与亲密时光。"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style>
-:root{color-scheme:dark;--bg:#111216;--panel:#1b1c22;--muted:#94959f;--accent:#efb994;--line:#2b2c33}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f6f2ee;font:14px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}aside{width:225px;position:fixed;inset:0 auto 0 0;padding:34px 22px;border-right:1px solid var(--line);background:#16171c;display:flex;flex-direction:column;z-index:20}.logo{font:italic 28px Georgia;color:var(--accent);letter-spacing:-1px}.logo span{font:11px sans-serif;letter-spacing:3px;display:block;margin-top:9px;color:#aaa}nav{margin-top:48px}nav button,.listnav{width:100%;text-align:left;border:0;background:transparent;padding:15px 17px;border-radius:10px;color:#aaaab4;margin:3px 0}nav button.active{background:#34302e;color:var(--accent)}nav i{font-style:normal;margin-right:15px;font-size:18px}.aside-label{font-size:10px;letter-spacing:2px;color:#666977;margin:32px 15px 10px}.aside-bottom{margin-top:auto;border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:#a3a0a1}.heart{color:var(--accent)}main{margin-left:225px;padding:0 42px 60px;max-width:1900px}header{height:92px;display:flex;align-items:center;gap:18px;border-bottom:1px solid var(--line)}.search{display:flex;align-items:center;gap:12px;max-width:480px;width:45%;background:#22232a;border:1px solid #2e2f36;padding:12px 17px;border-radius:10px}.search input{width:100%;background:none;border:0;color:white;outline:none}.spacer{flex:1}.avatars{display:flex;align-items:center}.avatar{display:grid;place-items:center;border:3px solid var(--bg);border-radius:50%;width:38px;height:38px;background:#66857c;font-weight:700}.avatar+ .avatar{margin-left:-10px;background:#bc8a80}.btn{background:var(--accent);color:#34241c;border:0;border-radius:8px;padding:11px 18px;font-weight:650}.btn.secondary{background:#292a32;color:#ddd}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--accent)}.hero{margin:28px 0 32px;border-radius:18px;overflow:hidden;position:relative;min-height:292px;padding:42px;display:flex;align-items:center;background:#263c3c}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,28,.95),rgba(13,27,28,.5) 55%,rgba(13,27,28,.05)),url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=85') center 52%/cover}.hero>div{position:relative}.hero h1{font:38px Georgia,'Songti SC',serif;line-height:1.5;margin:15px 0 10px;font-weight:500}.hero p{color:#c3d0cb;line-height:1.9;font-size:13px}.hero .small{font-size:11px;margin-top:22px;color:#d8c5b5}.hero-count{position:absolute!important;right:35px;bottom:25px;display:flex;gap:25px;text-align:center}.hero-count strong{display:block;font:25px Georgia}.hero-count small{color:#c1ceca;font-size:10px}.heading{display:flex;align-items:center;gap:12px;margin:28px 0 20px}.heading h2{margin:0;font-size:21px;font-weight:600;letter-spacing:1px}.heading small{color:var(--muted);font-size:12px}.heading a{margin-left:auto;color:var(--muted);cursor:pointer}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.chip{background:#202127;color:#a4a4af;border:1px solid #2a2b33;border-radius:7px;padding:9px 15px;font-size:12px}.chip.active{background:#e7b794;color:#32251f;border-color:#e7b794}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}.card{cursor:pointer;min-width:0}.poster{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:linear-gradient(145deg,#41574e,#262336)}.poster img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.card:hover img{transform:scale(1.045)}.poster:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.7))}.poster .tag{position:absolute;top:11px;left:11px;background:#16191be0;padding:5px 8px;border-radius:5px;font-size:10px;z-index:1}.poster .score{position:absolute;right:10px;bottom:12px;font-size:12px;z-index:2;color:#f7ce9a}.poster-title{position:absolute;bottom:24px;left:18px;right:16px;font:24px Georgia,'Songti SC',serif;text-shadow:0 2px 8px #000;z-index:1}.card h3{font-size:14px;font-weight:550;margin:12px 0 7px}.meta{color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:8px}.progress{height:3px;background:#33363b;margin-top:11px;border-radius:3px}.progress span{display:block;height:100%;background:#b5c2a2}.banner{margin-top:32px;padding:22px 27px;background:#202321;border:1px solid #343a32;border-radius:12px;display:flex;gap:20px;align-items:center}.banner p{color:#a5aca1;font-size:12px}.banner b{font-weight:500}.banner button{margin-left:auto}.empty{padding:70px;text-align:center;color:var(--muted);grid-column:1/-1}.notice{font-size:11px;color:#747680;margin-top:38px}.map{height:390px;border-radius:14px;overflow:hidden;background:#263331;margin-bottom:28px}.leaflet-container{color-scheme:light}.timeline{display:grid;gap:20px}.trip{display:grid;grid-template-columns:190px 1fr;gap:25px;background:var(--panel);border-radius:13px;overflow:hidden;cursor:pointer}.trip img{width:190px;height:170px;object-fit:cover}.trip-content{padding:22px 25px 20px 0}.trip h3{font-size:21px;margin:8px 0 16px}.trip p{color:#a8a9b0;font-size:13px;line-height:1.7}.calendar{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:25px;margin:25px 0}.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.cal-head button{background:#2c2d34;border:0;border-radius:5px;padding:8px 14px}.days{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{border:0;min-height:64px;background:#24252d;border-radius:7px;padding:12px;text-align:left;color:#aaa}.day.marked{background:#4b3438;color:#f1b2b9}.day.selected{outline:1px solid var(--accent)}.week{color:#777;font-size:11px;text-align:center;padding:5px}.privacy{background:#292429;padding:18px 23px;border:1px solid #4a373f;border-radius:10px;color:#d2b7c0;font-size:12px}.modal{position:fixed;inset:0;background:#000b;z-index:100;display:grid;place-items:center;padding:20px}.modal[hidden]{display:none}.dialog{background:#1d1e25;border:1px solid #3b3c46;border-radius:16px;width:600px;max-width:100%;max-height:90vh;overflow:auto;padding:30px}.dialog h2{font-size:23px;margin:0 0 25px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.field{display:flex;flex-direction:column;gap:8px;font-size:12px;color:#bbb}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{background:#292a33;border:1px solid #3b3c45;color:#eee;padding:11px;border-radius:7px;width:100%}.field textarea{min-height:85px}.actions{display:flex;gap:10px;margin-top:25px}.actions .delete{margin-right:auto;background:transparent;color:#d69898;border:0}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--accent);color:#33281e;padding:12px 23px;border-radius:8px;z-index:200}.section-title{margin:34px 0 6px;font-size:29px}.subtitle{color:var(--muted);font-size:13px;line-height:1.7}.music .poster{aspect-ratio:1}.music .poster-title{font-size:22px}@media(min-width:1500px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:1100px){aside{width:180px;padding:30px 15px}main{margin-left:180px;padding:0 25px 40px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hero-count{display:none!important}}@media(max-width:750px){aside{position:sticky;top:0;width:100%;height:auto;padding:12px 15px;display:block;border-bottom:1px solid var(--line)}.logo{font-size:22px}.logo span,.aside-label,.listnav,.aside-bottom{display:none}nav{margin:8px 0 0;display:flex;justify-content:space-between}nav button{width:auto;padding:9px 7px;font-size:12px}nav i{display:none}main{margin:0;padding:0 17px 35px}header{height:73px;gap:10px}.search{width:100%;max-width:100%}.avatars,header>.spacer{display:none}.btn{white-space:nowrap;padding:11px 13px}.hero{padding:25px;min-height:270px}.hero h1{font-size:29px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 13px}.heading small{display:none}.trip{grid-template-columns:110px 1fr;gap:15px}.trip img{width:110px;height:100%}.trip-content{padding:17px 10px 17px 0}.trip h3{font-size:18px}.day{min-height:44px;padding:8px}.calendar{padding:15px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.map{height:300px}}
+<!doctype html>
+<html lang="zh-CN"
+  ><head
+    ><meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width,initial-scale=1" /><title
+      >Two of Us · 两个人的小宇宙</title
+    ><meta
+      name="description"
+      content="收藏两个人的电影、音乐、游戏、旅途与亲密时光。" /><link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /><link
+      rel="stylesheet"
+      href="./styles/app.css" /></head
+  ><body
+    ><div class="romance-bg" aria-hidden="true"
+      ><div class="romance-glow one"></div><div class="romance-glow two"></div
+      ><span
+        class="romance-heart"
+        style="--x: 9%; --size: 15px; --duration: 33s; --delay: -8s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 27%; --size: 21px; --duration: 39s; --delay: -25s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 43%; --size: 12px; --duration: 29s; --delay: -16s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 61%; --size: 17px; --duration: 36s; --delay: -4s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 77%; --size: 24px; --duration: 42s; --delay: -29s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 93%; --size: 14px; --duration: 31s; --delay: -21s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 54%; --size: 11px; --duration: 45s; --delay: -35s"
+        >♡</span
+      ><span
+        class="romance-heart"
+        style="--x: 35%; --size: 16px; --duration: 38s; --delay: -3s"
+        >♡</span
+      ></div
+    ><section id="authPanel"
+      ><div class="logo">two of us</div><h1>登录我们的共享空间</h1
+      ><p class="subtitle">各自登录同一个 Supabase 项目，共享同一份条目。</p
+      ><form id="authForm"
+        ><label class="field"
+          >邮箱<input
+            id="authEmail"
+            type="email"
+            autocomplete="email"
+            required="" /></label
+        ><label class="field"
+          >密码<input
+            id="authPassword"
+            type="password"
+            autocomplete="current-password"
+            minlength="6"
+            required="" /></label
+        ><div class="actions"
+          ><button class="btn" type="submit" value="login">登录</button
+          ><button class="btn secondary" type="submit" value="signup"
+            >注册</button
+          ></div
+        ></form
+      ></section
+    ><div id="cloudNotice" role="status" aria-live="polite"
+      ><span id="cloudMessage">正在初始化…</span></div
+    ><aside
+      ><div id="peopleArea" class="people-area"
+        ><button
+          id="peopleToggle"
+          class="people-toggle"
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-controls="peopleMenu"
+          ><span id="person0" class="person-chip"></span
+          ><span class="people-heart" aria-hidden="true">♡</span
+          ><span id="person1" class="person-chip"></span
+          ><span aria-hidden="true">⌄</span></button
+        ><div class="connection-status"
+          ><small id="syncState">未登录</small
+          ><span id="cloudStatusSlot" aria-live="polite"></span></div
+        ><div
+          id="peopleMenu"
+          class="people-menu"
+          role="menu"
+          aria-label="个人与共享设置"
+          hidden=""
+          ><div class="menu-account" id="accountEmail"></div
+          ><button id="editProfile" role="menuitem" type="button"
+            >设置我的头像和昵称</button
+          ><button id="exportBackup" role="menuitem" type="button"
+            >导出 JSON 备份</button
+          ><button id="inviteSpace" role="menuitem" type="button"
+            >生成邀请码</button
+          ><button id="joinSpace" role="menuitem" type="button"
+            >邀请码加入</button
+          ><button id="logout" role="menuitem" type="button">退出登录</button
+          ><small
+            id="profileHint"
+            class="profile-hint"
+            role="status"
+          ></small></div></div
+      ><div class="logo">two of us<span>两个人的小宇宙</span></div
+      ><nav id="nav"></nav
+      ><div id="togetherNav" class="together-nav" hidden=""
+        ><button id="happyBottle" type="button"
+          >☀ 好心情瓶子
+          <span id="happyUnread" class="unread-badge" hidden=""></span></button
+        ><button id="sadBottle" type="button"
+          >☂ 坏心情瓶子
+          <span id="sadUnread" class="unread-badge" hidden=""></span></button
+        ><p id="togetherHint" role="status"></p></div
+      ><div class="aside-label">OUR COLLECTIONS</div
+      ><button class="listnav" data-list="wish">♡ &nbsp; 我们的心愿单</button
+      ><button class="listnav" data-list="doing">◷ &nbsp; 正在一起做</button
+      ><button class="listnav" data-list="done">✓ &nbsp; 已完成的美好</button
+      ><div class="aside-bottom"
+        ><span class="heart">♥</span>
+        &nbsp;把平凡的日子，过成收藏<br /><br /><small
+          >EST. 2026 · ONLY FOR US</small
+        ></div
+      ></aside
+    ><main
+      ><header
+        ><label class="search"
+          >⌕
+          <input
+            id="search"
+            placeholder="搜索我们的电影、音乐、目的地…"
+            aria-label="搜索记录" /></label
+        ><div class="spacer"></div
+        ><button
+          class="btn secondary message-button"
+          id="messageButton"
+          type="button"
+          aria-label="打开条目消息"
+          hidden=""
+          >🔔 <span class="message-label">消息</span
+          ><span
+            id="messageUnread"
+            class="unread-badge"
+            hidden=""
+          ></span></button
+        ><button class="btn" id="add">＋ 新增回忆</button></header
+      ><div id="content"></div
+      ><div class="notice"
+        >记录保存在 Supabase
+        共享空间；封面、评分、进度与时长随条目共同同步。</div
+      ></main
+    >
 
-/* Shared interaction feedback */
-button, a[data-more], .card, .trip { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-button { position: relative; isolation: isolate; overflow: hidden; transition: transform .18s ease, background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease, filter .22s ease; }
-@media (hover: hover) {
- button:hover { transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 5px 16px #0003; }
- nav button:hover, .listnav:hover { background: #29272a; color: var(--accent); }
- nav button.active:hover { background: #423731; }
- .btn:hover { box-shadow: 0 6px 22px #efb99426; }
- .chip:hover { border-color: #a38069; color: #f4dbc8; }
- .chip.active:hover { color: #32251f; }
- .day:hover { background: #39313a; color: #f9d3c0; }
- .day.marked:hover { background: #66424a; }
- .actions .delete:hover { background: #66323b44; color: #ffc0c0; }
- .cal-head button:hover { background: #4a3a35; color: var(--accent); }
- .card:hover { transform: translateY(-5px); }
- .card:hover .poster { box-shadow: 0 10px 27px #0005, 0 0 0 1px #efb99466; }
- .card:hover h3 { color: var(--accent); }
- .trip:hover { transform: translateY(-3px); border-color: #806453; box-shadow: 0 10px 24px #0004; }
- a[data-more]:hover { color: var(--accent); transform: translateX(3px); }
- .leaflet-interactive:hover { stroke: #ffe0bd; fill: #ffcfab; stroke-width: 6; }
-}
-button:active { transform: translateY(1px) scale(.96); filter: brightness(.94); box-shadow: 0 1px 4px #0003; transition-duration: .07s; }
-.card, .trip { transition: transform .23s ease, box-shadow .23s ease, border-color .23s ease; }
-.trip { border: 1px solid transparent; }
-.card .poster { transition: box-shadow .23s ease; }
-.card h3 { transition: color .2s ease; }
-.card:active, .trip:active { transform: scale(.975); transition-duration: .08s; }
-a[data-more] { display: inline-block; transition: color .2s ease, transform .2s ease; }
-a[data-more]:active { transform: translateX(3px) scale(.96); }
-.leaflet-interactive { transition: fill .2s ease, stroke .2s ease, stroke-width .2s ease; }
-.card:focus-visible, .trip:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 12px; }
-.click-wave { position: absolute; display: block; pointer-events: none; border-radius: 50%; background: currentColor; opacity: .22; z-index: 3; transform: scale(0); animation: click-wave .55s ease-out forwards; }
-@keyframes click-wave { to { transform: scale(1); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) {
- *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
- button:hover, button:active, .card:hover, .card:active, .trip:hover, .trip:active, a[data-more]:hover, a[data-more]:active { transform: none !important; }
- .click-wave { display: none; }
-}
-
-/* A quiet, romantic atmosphere behind the content. */
-body { isolation: isolate; }
-.romance-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict; }
-.romance-glow { position: absolute; width: 68vmax; height: 68vmax; border-radius: 50%; will-change: transform; }
-.romance-glow.one { top: -40vmax; right: -18vmax; background: radial-gradient(circle, #b95c7b26 0%, #9b506b12 40%, transparent 68%); animation: romantic-drift 24s ease-in-out infinite alternate; }
-.romance-glow.two { bottom: -38vmax; left: 3vw; background: radial-gradient(circle, #c78c6c20 0%, #b9697b0d 42%, transparent 68%); animation: romantic-drift 29s ease-in-out -12s infinite alternate-reverse; }
-.romance-heart { position: absolute; left: var(--x); bottom: -40px; color: #e3a7bb; font: var(--size) Georgia, serif; opacity: 0; animation: romantic-rise var(--duration) linear var(--delay) infinite; will-change: transform, opacity; }
-@keyframes romantic-drift { from { transform: translate3d(-3vw, 0, 0) scale(.95); } to { transform: translate3d(6vw, 8vh, 0) scale(1.12); } }
-@keyframes romantic-rise { 0% { transform: translate3d(0, 0, 0) rotate(-12deg); opacity: 0; } 15% { opacity: .15; } 55% { opacity: .10; } 100% { transform: translate3d(45px, -110vh, 0) rotate(18deg); opacity: 0; } }
-.search { transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease; transform-origin: center; }
-.search:focus-within { background: #2b252d; border-color: #d49b87; box-shadow: 0 0 0 3px #e8a5ad12, 0 6px 25px #d2879a18; }
-@media (hover: hover) { .search:hover { border-color: #a97e85; background: #29252d; box-shadow: 0 5px 22px #d2879a14; } }
-.search.is-bouncing { animation: search-bounce .54s cubic-bezier(.22,.7,.3,1); }
-.search.is-typing { animation: search-type .32s ease-out; }
-@keyframes search-bounce { 0%,100% { transform: translateY(0) scale(1); } 28% { transform: translateY(-5px) scale(1.014); } 52% { transform: translateY(2px) scale(.993); } 75% { transform: translateY(-1.5px) scale(1.004); } }
-@keyframes search-type { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-2px); } 75% { transform: translateY(.6px); } }
-@media (max-width: 750px) { .romance-heart:nth-of-type(n+7) { display: none; } }
-@media (prefers-reduced-motion: reduce) { .romance-glow, .romance-heart, .search.is-bouncing, .search.is-typing { animation: none !important; will-change: auto; transform: none !important; } .romance-heart { display: none; } }
-
-.poster.wrap-cover img { width:210%; max-width:none; height:100%; object-fit:fill; position:relative; left:-110%; }
-.poster.wrap-cover .poster-title { display:none; }
-.poster.wrap-cover .tag { top:auto; bottom:10px; left:9px; font-size:9px; max-width:68%; }
-.poster.wrap-cover .score { bottom:14px; }
-.poster:not(.wrap-cover) .cover-pending { position:absolute; top:50%; left:18px; color:#bca8ac; font-size:11px; }
-.poster.missing-cover .poster-title { display:block; }
-.genre-badges { display:flex; gap:5px; flex-wrap:wrap; margin:10px 0 3px; }
-.genre-badges span { font-size:10px; color:#d0b7a6; border:1px solid #55463c; border-radius:5px; padding:3px 6px; background:#2b2423; }
-.genre-filter { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:18px 0 22px; color:var(--muted); font-size:12px; }
-.genre-filter select { margin-left:10px; color:#ead0bd; background:#24232a; border:1px solid #55483f; border-radius:7px; padding:9px 12px; max-width:200px; }
-.genre-options { display:flex; flex-wrap:wrap; gap:6px; }
-.genre-options .chip { font-size:11px; padding:6px 9px; }
-.cover-credit { font-size:11px; grid-column:1/-1; margin:0; }
-.cover-credit a { color:#b79e8c; }
-.progress-caption{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#c6b6ae;margin-top:14px}.progress{height:6px;margin-top:7px;overflow:hidden}.progress span{background:linear-gradient(90deg,#d99d98,#efc49d);transition:width .35s ease}.progress-hint{display:block;color:var(--muted);line-height:1.7;margin-top:8px}input[type=range]{accent-color:var(--accent);padding:8px 0;cursor:pointer}@media(prefers-reduced-motion:reduce){.progress span{transition:none}}
-/* 未登录时隐藏条目、导航和新增入口，数据库仍通过 RLS 独立鉴权。 */
-body:not(.signed-in)>aside,body:not(.signed-in)>main{display:none}
-body.signed-in #authPanel{display:none}
-#authPanel{position:relative;max-width:450px;margin:12vh auto 30px;padding:32px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
-#authPanel .field{margin:18px 0}#authPanel h1{font-size:26px}
-#cloudNotice{position:relative;z-index:25;max-width:800px;margin:15px auto;padding:12px 18px;color:#d1bbaa;font-size:12px;line-height:1.7}
-body.signed-in #cloudNotice{margin-left:250px}
-#cloudAccount{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:14px 0;flex-wrap:wrap}
-#cloudAccount small{color:var(--muted)}
-button:disabled{opacity:.55;cursor:wait}
-@media(max-width:750px){body.signed-in #cloudNotice{margin-left:0}#authPanel{margin:8vh 15px 20px}}
-
-/* 左上角双人资料与状态；菜单与个人资料编辑不改变原条目界面。 */
-.people-area{position:relative;margin:-12px 0 24px;flex-shrink:0}.people-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;border:1px solid #393039;border-radius:14px;background:linear-gradient(140deg,#28272d,#252023);padding:12px 9px;color:#f6f2ee}.person-chip{display:flex;align-items:center;flex-direction:column;gap:7px;min-width:0;flex:1}.person-photo{position:relative;display:grid;place-items:center;width:42px;height:42px;overflow:hidden;border-radius:50%;background:#68867e;border:2px solid #c6b9a5;font-size:17px}#person1 .person-photo{background:#b98983}.person-photo img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0}.person-name{font-size:11px;max-width:66px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}.people-heart{color:var(--accent);font-size:19px}.connection-status{display:flex;flex-direction:column;gap:4px;padding:9px 5px 0;font-size:10px;line-height:1.5;color:#aaa29d;overflow-wrap:anywhere}.connection-status>small{color:#b2c2a5;font-size:10px}.connection-status #cloudMessage{font-size:10px}.people-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:220px;max-width:calc(100vw - 30px);max-height:65vh;overflow:auto;background:#25232b;border:1px solid #4b3e42;box-shadow:0 15px 40px #0007;border-radius:12px;padding:8px;z-index:90}.people-menu[hidden]{display:none}.people-menu button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:12px 11px;border-radius:7px;font-size:12px;color:#e3d6cf}.people-menu button:hover,.people-menu button:focus-visible{background:#433337}.people-menu button[hidden]{display:none}.menu-account{padding:8px 11px 12px;border-bottom:1px solid #44363b;color:#aaa;font-size:11px;overflow-wrap:anywhere}.profile-hint{display:block;padding:8px;color:#c0a29d;font-size:10px;line-height:1.6}.profile-hint:empty{display:none}body.signed-in #cloudNotice{display:none}aside nav{margin-top:26px}#profileModal{z-index:110}#profileModal .dialog{width:440px}.my-avatar-preview{display:grid;place-items:center;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#b98983;font-size:30px;margin:0 auto 24px}.my-avatar-preview img{height:100%;width:100%;object-fit:cover}#profileFormMessage{color:var(--muted);font-size:12px;line-height:1.7;margin-top:18px}
-@media(max-width:750px){.people-area{margin:0 0 12px}.people-toggle{max-width:230px;padding:8px}.person-chip{flex-direction:row;gap:7px}.person-photo{width:34px;height:34px}.person-name{max-width:55px}.connection-status{position:absolute;left:242px;right:0;top:0;padding:4px 0;font-size:10px}.connection-status small{font-size:10px}aside nav{margin-top:8px}.people-menu{min-width:230px;top:calc(100% + 5px)}}
-@media(max-width:390px){.people-toggle{max-width:190px}.connection-status{left:200px}.person-name{max-width:37px}.people-heart{font-size:14px}}
-
-/* Leaflet 瓦片、弹出提示和控件必须封闭在地图自身层级，不能覆盖编辑弹窗。 */
-.map{position:relative;z-index:0;isolation:isolate}
-.modal{z-index:2000}#profileModal{z-index:2100}
-.map-load-status{position:absolute;left:12px;right:12px;bottom:32px;z-index:1000;background:#202127ee;color:#ebdbd0;padding:10px 13px;border-radius:8px;font-size:12px;line-height:1.6;pointer-events:none}.map-load-status[hidden]{display:none}
-.map-guide{margin:-12px 0 26px}
-
-/* 游戏信息置于图片下方，保持封面无遮挡。 */
-.game-card .poster .tag,.game-card .poster .poster-title,.game-card .poster .score{display:none!important}.game-card .poster:after{display:none}.game-meta{font-size:11px;color:var(--muted);line-height:1.7}
-.detail-toolbar{display:flex;justify-content:space-between;gap:12px;margin-bottom:30px}.detail-page{display:grid;grid-template-columns:minmax(200px,340px) minmax(0,1fr);gap:42px}.detail-cover{border-radius:16px;background:#26252b;overflow:hidden;align-self:start}.detail-cover button{display:block;width:100%;border:0;padding:0;background:transparent}.detail-cover img{display:block;width:100%;max-height:570px;object-fit:contain}.detail-cover>span{display:block;padding:90px 20px;text-align:center;color:var(--muted)}.detail-copy{min-width:0;line-height:1.9}.detail-copy h1{font-size:clamp(26px,4vw,40px);line-height:1.4;margin:12px 0}.detail-copy dt{color:var(--muted);font-size:12px}.detail-copy dd{margin:0 0 14px}.detail-note{white-space:pre-wrap;overflow-wrap:anywhere}.detail-panel{margin-top:36px;padding-top:24px;border-top:1px solid #413438}.travel-detail{display:flex;flex-direction:column;gap:26px}.orbit-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(4,112px);gap:12px}.orbit-photo{border:0;border-radius:12px;background:#2d282c;padding:0;overflow:hidden;min-width:0}.orbit-photo img{width:100%;height:100%;object-fit:cover;display:block}.orbit-cover{grid-column:2/5;grid-row:2/4;border:2px solid #c99b86;box-shadow:0 8px 35px #0005}.orbit-cover img{object-fit:contain}.orbit-empty{grid-column:1/-1;grid-row:1/-1;display:grid;place-items:center;background:#28252b;color:var(--muted);border-radius:16px}.orbit-photo:nth-child(2){grid-area:1/2}.orbit-photo:nth-child(3){grid-area:1/3}.orbit-photo:nth-child(4){grid-area:1/4}.orbit-photo:nth-child(5){grid-area:2/1}.orbit-photo:nth-child(6){grid-area:2/5}.orbit-photo:nth-child(7){grid-area:3/1}.orbit-photo:nth-child(8){grid-area:3/5}.orbit-photo:nth-child(9){grid-area:4/2}.orbit-photo:nth-child(10){grid-area:4/4}.hotel-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;border:1px solid #493b40;border-radius:10px;padding:15px;margin:14px 0}.hotel-row label{font-size:12px;color:var(--muted)}.hotel-row input{display:block;width:100%;margin-top:6px}.hotels-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.hotels-detail article{padding:18px;border:1px solid #493b40;border-radius:12px}.photo-manage{display:flex;flex-wrap:wrap;gap:14px;margin:20px 0 35px}.photo-manage>div{width:100px}.photo-manage img{width:100px;height:75px;object-fit:cover;border-radius:8px}.photo-manage button{width:100%;font-size:11px;margin-top:6px;padding:8px}.travel-upload-button{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;width:max-content;max-width:100%;flex-shrink:0}#travelPhotoUpload[hidden]{display:none!important}#galleryMessage,#qqMessage{font-size:12px;color:var(--muted);line-height:1.7}#photoLightbox{background:#211f25;color:#eee;border:1px solid #685057;border-radius:14px;max-width:94vw;max-height:94vh;padding:14px}#photoLightbox::backdrop{background:#000d}#largePhoto{display:block;max-width:85vw;max-height:78vh;object-fit:contain;margin-top:12px}
-@media(max-width:700px){.detail-page{grid-template-columns:1fr;gap:24px}.detail-cover{max-width:320px;width:100%;justify-self:center}.orbit-gallery{grid-template-rows:repeat(4,70px);gap:6px}.orbit-photo{border-radius:7px}.hotel-row{grid-template-columns:1fr}.detail-toolbar .btn{font-size:12px;padding:10px}.detail-copy h1{font-size:28px}}
-
-
-/* 新功能沿用现有色彩；入口在窄屏保持可用，徽标不挤压文字。 */
-aside{overflow-y:auto}.together-nav{margin-top:18px}.together-nav[hidden],.message-button[hidden],.unread-badge[hidden]{display:none!important}.together-nav>button{display:flex;align-items:center;gap:6px;width:100%;background:#242329;border:1px solid #3c3338;border-radius:9px;padding:11px 10px;color:#d8c5b5;margin-top:7px;text-align:left;white-space:nowrap;font-size:12px}.unread-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:20px;background:#d26d78;color:white;font-size:10px;line-height:1;margin-left:auto}.message-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex-shrink:0}.message-button .unread-badge{margin-left:0}header #add{flex-shrink:0}#togetherHint{color:#c0a29d;font-size:10px;line-height:1.6;margin:7px 0;overflow-wrap:anywhere}#togetherHint:empty{display:none}.card{position:relative}.item-unread{display:inline-block;width:9px;height:9px;background:#e77884;border-radius:50%;box-shadow:0 0 0 2px #252027;margin-left:6px;vertical-align:middle}.card>.item-unread{position:absolute;right:-3px;top:-3px;z-index:3;width:11px;height:11px}.milestone-home{margin:25px 0 32px}.milestone-home .heading{justify-content:space-between;flex-wrap:wrap}.milestone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.milestone-grid article{border:1px solid #4a3b40;background:linear-gradient(130deg,#30272d,#242b2b);padding:20px;border-radius:12px}.milestone-grid h3{font-weight:500;margin:0 0 13px}.milestone-grid strong{display:block;color:#efc2a7;font-size:16px;line-height:1.8}.milestone-grid small{display:block;color:var(--muted);margin-top:10px}.social-dialog{background:#1d1e25;color:#f6f2ee;border:1px solid #514048;border-radius:16px;padding:26px;width:650px;max-width:calc(100vw - 28px);max-height:88vh;overflow:auto}.social-dialog::backdrop{background:#000b}.social-dialog-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.social-dialog h2{margin:0;font-size:23px}.social-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}.social-actions>span,#milestoneMessage,#notificationStatus{font-size:12px;color:#c7ada6;line-height:1.7}.social-check{display:flex;align-items:center;gap:8px;color:#ccc;font-size:12px}.social-check input{accent-color:var(--accent)}.milestone-list article{padding:15px 0;border-bottom:1px solid #41343a;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.milestone-list p{font-size:12px;color:var(--muted);margin:8px 0}.milestone-list .social-actions{margin:0}.bottle-intro{display:flex;align-items:center;gap:25px;margin:25px 0}.mood-jar{position:relative;width:80px;height:110px;flex-shrink:0;border:3px solid #b1a99d;border-radius:15px 15px 25px 25px;overflow:hidden;display:grid;place-items:center;background:#22252a}.mood-jar:before{content:'';position:absolute;bottom:0;left:0;right:0;height:var(--fill,0%);background:linear-gradient(#d4b991,#9c9e75);transition:height .5s ease}.mood-jar.sad:before{background:linear-gradient(#8b98b6,#656a99)}.mood-jar>span{z-index:1;font-size:32px;color:#f3dfd2}.mood-entry{margin-top:14px;background:#24242c;border:1px solid #3b323d;border-radius:12px;padding:17px}.mood-entry>div{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.mood-entry time{font-size:10px;color:var(--muted);margin-left:auto}.mood-entry p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;color:#d5c9c5}.unread-pill{font-size:10px;background:#613743;color:#ffd3d5;padding:3px 7px;border-radius:20px}.notification-row{display:flex;align-items:flex-start;flex-direction:column;gap:9px;text-align:left;background:#27252c;border:1px solid #42353c;border-radius:10px;padding:17px;width:100%;margin-top:12px;line-height:1.8;overflow-wrap:anywhere}.notification-row.is-unread{border-color:#b17b81}.notification-row time{color:var(--muted);font-size:11px}.notification-row .item-unread{margin:0 8px 0 0}
-@media(max-width:750px){aside{overflow:visible}.together-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.together-nav>button{width:auto;flex:1;padding:9px;font-size:11px;margin:0;justify-content:center}.together-nav .unread-badge{margin-left:2px}#togetherHint{width:100%}.message-label{display:none}.message-button{padding:10px;gap:4px}header{gap:6px}.search{min-width:0}.social-dialog{padding:18px}.social-dialog h2{font-size:20px}.milestone-grid{grid-template-columns:1fr}.milestone-home .btn{font-size:12px}.bottle-intro{gap:17px}.social-dialog .empty{padding:30px 10px}}
-
-</style></head><body><div class="romance-bg" aria-hidden="true"><div class="romance-glow one"></div><div class="romance-glow two"></div><span class="romance-heart" style="--x:9%;--size:15px;--duration:33s;--delay:-8s">♡</span><span class="romance-heart" style="--x:27%;--size:21px;--duration:39s;--delay:-25s">♡</span><span class="romance-heart" style="--x:43%;--size:12px;--duration:29s;--delay:-16s">♡</span><span class="romance-heart" style="--x:61%;--size:17px;--duration:36s;--delay:-4s">♡</span><span class="romance-heart" style="--x:77%;--size:24px;--duration:42s;--delay:-29s">♡</span><span class="romance-heart" style="--x:93%;--size:14px;--duration:31s;--delay:-21s">♡</span><span class="romance-heart" style="--x:54%;--size:11px;--duration:45s;--delay:-35s">♡</span><span class="romance-heart" style="--x:35%;--size:16px;--duration:38s;--delay:-3s">♡</span></div><section id="authPanel"><div class="logo">two of us</div><h1>登录我们的共享空间</h1><p class="subtitle">各自登录同一个 Supabase 项目，共享同一份条目。</p><form id="authForm"><label class="field">邮箱<input id="authEmail" type="email" autocomplete="email" required></label><label class="field">密码<input id="authPassword" type="password" autocomplete="current-password" minlength="6" required></label><div class="actions"><button class="btn" type="submit" value="login">登录</button><button class="btn secondary" type="submit" value="signup">注册</button></div></form></section><div id="cloudNotice" role="status" aria-live="polite"><span id="cloudMessage">正在初始化…</span></div><aside><div id="peopleArea" class="people-area"><button id="peopleToggle" class="people-toggle" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="peopleMenu"><span id="person0" class="person-chip"></span><span class="people-heart" aria-hidden="true">♡</span><span id="person1" class="person-chip"></span><span aria-hidden="true">⌄</span></button><div class="connection-status"><small id="syncState">未登录</small><span id="cloudStatusSlot" aria-live="polite"></span></div><div id="peopleMenu" class="people-menu" role="menu" aria-label="个人与共享设置" hidden><div class="menu-account" id="accountEmail"></div><button id="editProfile" role="menuitem" type="button">设置我的头像和昵称</button><button id="exportBackup" role="menuitem" type="button">导出 JSON 备份</button><button id="inviteSpace" role="menuitem" type="button">生成邀请码</button><button id="joinSpace" role="menuitem" type="button">邀请码加入</button><button id="logout" role="menuitem" type="button">退出登录</button><small id="profileHint" class="profile-hint" role="status"></small></div></div><div class="logo">two of us<span>两个人的小宇宙</span></div><nav id="nav"></nav><div id="togetherNav" class="together-nav" hidden><button id="happyBottle" type="button">☀ 好心情瓶子 <span id="happyUnread" class="unread-badge" hidden></span></button><button id="sadBottle" type="button">☂ 坏心情瓶子 <span id="sadUnread" class="unread-badge" hidden></span></button><p id="togetherHint" role="status"></p></div><div class="aside-label">OUR COLLECTIONS</div><button class="listnav" data-list="wish">♡ &nbsp; 我们的心愿单</button><button class="listnav" data-list="doing">◷ &nbsp; 正在一起做</button><button class="listnav" data-list="done">✓ &nbsp; 已完成的美好</button><div class="aside-bottom"><span class="heart">♥</span> &nbsp;把平凡的日子，过成收藏<br><br><small>EST. 2026 · ONLY FOR US</small></div></aside><main><header><label class="search">⌕ <input id="search" placeholder="搜索我们的电影、音乐、目的地…" aria-label="搜索记录"></label><div class="spacer"></div><button class="btn secondary message-button" id="messageButton" type="button" aria-label="打开条目消息" hidden>🔔 <span class="message-label">消息</span><span id="messageUnread" class="unread-badge" hidden></span></button><button class="btn" id="add">＋ 新增回忆</button></header><div id="content"></div><div class="notice">记录保存在 Supabase 共享空间；封面、评分、进度与时长随条目共同同步。</div></main><div class="modal" id="modal" hidden><form class="dialog" id="form" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><h2 id="dialogTitle">新增一份美好</h2><div class="formgrid" id="fields"></div><div class="actions"><button type="button" class="delete" id="delete">删除记录</button><button type="button" class="btn secondary" id="cancel">取消</button><button class="btn" type="submit">保存记录</button></div></form></div><div class="modal" id="profileModal" hidden><form class="dialog" id="profileForm" role="dialog" aria-modal="true" aria-labelledby="profileTitle"><h2 id="profileTitle">我的头像和昵称</h2><div id="myAvatarPreview" class="my-avatar-preview">我</div><label class="field">昵称<input id="myNickname" maxlength="24" autocomplete="nickname" placeholder="输入你的昵称，最多 24 字"></label><label class="field" style="margin-top:18px">选择头像<input id="myAvatarFile" type="file" accept="image/jpeg,image/png,image/webp"><small>自动裁成正方形并压缩，保存后对方会同步看到。</small></label><button id="removeMyAvatar" class="btn secondary" style="margin-top:12px" type="button">恢复默认头像</button><p id="profileFormMessage" role="status"></p><div class="actions"><button class="btn secondary" id="profileCancel" type="button">取消</button><button class="btn" id="profileSave" type="submit">保存个人资料</button></div></form></div><dialog id="milestoneDialog" class="social-dialog" aria-labelledby="milestoneHeading" aria-modal="true"><div class="social-dialog-head"><h2 id="milestoneHeading">我们的纪念日</h2><button type="button" class="btn secondary" data-social-close>关闭</button></div><div id="milestoneList" class="milestone-list"></div><form id="milestoneForm"><h3>添加 / 编辑纪念日</h3><div class="formgrid"><label class="field">名称<input id="milestoneTitle" required maxlength="80" placeholder="在一起、第一次约会、生日…"></label><label class="field">日期<input id="milestoneDate" type="date" required min="1900-01-01" max="2200-12-31"></label><label class="social-check"><input id="milestoneRepeat" type="checkbox" checked>每年重复</label><label class="social-check"><input id="milestoneRelationship" type="checkbox">设为在一起的开始日（仅一条）</label></div><p class="subtitle">开始当天算第 1 天。2 月 29 日在非闰年按 2 月 28 日纪念。</p><p id="milestoneMessage" role="status"></p><div class="social-actions"><button class="btn" id="milestoneSave" type="submit">保存纪念日</button><button class="btn secondary" id="newMilestone" type="button">清空，添加新纪念日</button></div></form></dialog>
-<dialog id="moodDialog" class="social-dialog" aria-labelledby="moodTitle" aria-modal="true"><div class="social-dialog-head"><h2 id="moodTitle">心情瓶子</h2><button type="button" class="btn secondary" data-social-close>关闭</button></div><div class="bottle-intro"><div id="moodJar" class="mood-jar" role="img"><span>♡</span></div><div><strong id="moodCount"></strong><p id="moodFull" class="subtitle"></p><button class="btn secondary" id="moodRead" type="button">将当前心情标为已读</button></div></div><form id="moodForm"><label class="field">放入一份心情<textarea id="moodText" required maxlength="1000" placeholder="今天想分享的好心情，或想放下的不开心…"></textarea></label><div class="social-actions"><button class="btn" id="moodSubmit" type="submit">放进瓶子</button><span id="moodMessage" role="status"></span></div></form><h3>瓶子里的心情</h3><div id="moodList" class="mood-list"></div></dialog>
-<dialog id="messageDialog" class="social-dialog" aria-labelledby="messageHeading" aria-modal="true"><div class="social-dialog-head"><h2 id="messageHeading">对方的条目更新</h2><button type="button" class="btn secondary" data-social-close>关闭</button></div><p class="subtitle">打开后，当前显示的消息会标为已读；点击消息可查看条目。删除的条目会保留消息。</p><button class="btn secondary" id="readAllNotifications" type="button">全部标为已读</button><p id="notificationStatus" role="status"></p><div id="notificationList"></div></dialog>
-<dialog id="photoLightbox" aria-label="照片大图"><button id="closePhoto" class="btn secondary" type="button">关闭大图</button><img id="largePhoto" alt="照片大图"></dialog><script src="./supabase-config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
-const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const photos={mountain:'photo-1464822759023-fed622ff2c3b',sea:'photo-1518837695005-2083093ee35b',city:'photo-1519608487953-e999c86e7455',forest:'photo-1441974231531-c6227db76b6e',lake:'photo-1476514525535-07fb3b4ae5f1',road:'photo-1469474968028-56623f02e42e',music:'photo-1516280440614-37939bbacd81',night:'photo-1470225620780-dba8ba36b745'};const img=k=>'https://images.unsplash.com/'+(photos[k]||photos.lake)+'?auto=format&fit=crop&w=700&q=85';
-const cats={home:['⌂','我们的小宇宙'],film:['▣','影视时光'],music:['♫','音乐收藏'],game:['♧','游戏搭子'],travel:['⌁','旅行足迹'],intimacy:['♡','亲密日记']};const subs={film:['电影','电视剧'],music:['专辑','单曲','现场'],game:['Steam','PS5','Switch 1 & 2','手游'],travel:['国内','海外'],intimacy:['亲密记录']};const status={wish:'将要看 / 玩',doing:'正在看 / 玩',done:'已看 / 玩'};
-const parseGenres=value=>[...new Set((Array.isArray(value)?value:String(value||'').split(/[,，、;；\n]/)).map(x=>String(x).trim()).filter(Boolean))].slice(0,20);
-const genreSuggestions={game:['开放世界','RPG','动作冒险','解谜','双人合作','平台跳跃','音乐节奏','竞速','生活模拟','策略','卡牌','Roguelike'],film:['喜剧片','悬疑片','爱情片','科幻片','剧情片','动画片','纪录片'],music:['流行','摇滚','爵士','古典','电子','电影原声'],travel:['城市漫游','自然风光','海岛','美食','徒步'],intimacy:['温柔','浪漫','纪念日']};
-let records = [];
-let selectedTripPoint=null;
-let genreFilter='';
-let page='home',filter='全部',stateFilter='',query='',editing=null,map=null,month=new Date(new Date().getFullYear(),new Date().getMonth(),1),selectedDate='';
-function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.append(d);setTimeout(()=>d.remove(),2400)}function go(p,s=''){history.replaceState(null,'',window.location.pathname+window.location.search);page=p;filter='全部';genreFilter='';stateFilter=s;selectedDate='';render()}
-$('#nav').innerHTML=Object.entries(cats).map(([k,v])=>`<button data-page="${k}"><i>${v[0]}</i>${v[1]}</button>`).join('');$('#nav').onclick=e=>{const b=e.target.closest('[data-page]');if(b)go(b.dataset.page)};document.querySelectorAll('[data-list]').forEach(b=>b.onclick=()=>go('home',b.dataset.list));let searchDebounce;$('#search').oninput=e=>{const value=e.target.value;clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{query=value;render()},200)};$('#add').onclick=()=>openForm();
-function hasProgress(r){return r.cat==='film'&&r.sub==='电视剧'}
-function stateLabels(){return status}
-function progressValue(r){if(r.state==='done')return 100;if(r.state==='wish')return 0;if(r.cat==='film'&&Number(r.totalEpisodes)>0)return Math.min(100,Math.max(0,Math.round(Number(r.watchedEpisodes||0)/Number(r.totalEpisodes)*100)));return Math.min(100,Math.max(0,Number(r.progress)||0))}
-function progressCard(r){if(r.cat==='game')return gameTimeCard(r);if(!hasProgress(r))return '';const n=progressValue(r);return `<div class="progress-caption"><span>${stateLabels(r.cat,r.sub)[r.state]}</span><span>${r.cat==='film'&&Number(r.totalEpisodes)>0?`${Number(r.watchedEpisodes)||0} / ${Number(r.totalEpisodes)} 集 · `:''}${n}%</span></div><div class="progress" role="progressbar" aria-label="${esc(r.title)}进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${n}"><span style="width:${n}%"></span></div>`}
-function card(r){return `<article class="card ${r.cat==='music'?'music':''} ${r.cat==='game'?'game-card':''}" data-id="${r.id}" tabindex="0" role="button" aria-label="查看${esc(r.title)}详情"><div class="poster ${!r.image&&r.coverImage&&r.coverWrap?'wrap-cover':''}">${r.image||r.coverImage?`<img src="${esc(r.image||r.coverImage)}" alt="${esc(r.title)}${r.coverImage&&!r.image?'游戏封面':'海报'}" loading="lazy">`:''}${r.cat==='game'&&!r.image&&!r.coverImage?`<span class="cover-pending">${esc(r.coverStatus||'封面待补充')}</span>`:''}<span class="tag">${esc(r.cat==='game'?(r.platform||r.sub):status[r.state])}</span><div class="poster-title">${esc(r.title)}</div><span class="score">★ ${r.score?Number(r.score).toFixed(1):'待评分'}</span></div><h3>${esc(r.title)}</h3><div class="meta"><span>${esc(r.desc)}</span></div>${genreBadges(r)}${r.cat==='game'?`<p class="game-meta">${esc(r.platform||r.sub)} · ${esc(status[r.state])} · ★ ${r.score?Number(r.score).toFixed(1):'待评分'}</p>`:''}${r.cat==='film'&&r.sub==='电视剧'&&Number(r.currentEpisode)>0?`<div class="progress-caption">正在看第 ${Number(r.currentEpisode)} 集</div>`:''}${progressCard(r)}${itemUnreadBadge(r.id)}</article>`}
-function genreBadges(r){return `<div class="genre-badges">${parseGenres(r.genres).map(t=>`<span>${esc(t)}</span>`).join('')}</div>`}
-function render(){if(!cloudUser)return;if(map){map.remove();map=null}if(detailId()){renderDetail(detailId());return}document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));let arr=records.filter(r=>(page==='home'||r.cat===page)&&(filter==='全部'||r.sub===filter)&&(!stateFilter||r.state===stateFilter)&&(!genreFilter||parseGenres(r.genres).includes(genreFilter))&&(!query||(r.title+r.desc+(r.place||'')+parseGenres(r.genres).join(' ')).toLowerCase().includes(query.toLowerCase())));let html='';if(page==='home'&&!stateFilter&&!query&&!genreFilter){html=`<section class="hero"><div><span class="eyebrow">A LITTLE WORLD, JUST FOR TWO</span><h1>把喜欢的事，<br>都和你一起。</h1><p>一部电影，一首歌，一场说走就走的旅行。<br>这里收藏我们的共同喜好，也记录每一次心动。</p><div class="small">✧ &nbsp; 下一次约会，从一个小小的心愿开始</div></div><div class="hero-count"><div><strong>${records.filter(r=>r.state==='done').length}</strong><small>共同回忆</small></div><div><strong>${records.filter(r=>r.state==='wish').length}</strong><small>未来可期</small></div></div></section><div id="milestoneHome">${milestoneHome()}</div><div class="heading"><h2>◷ &nbsp;我们的进行时</h2><small>有你在，每件事都变得有趣</small><a data-more="doing">查看全部 →</a></div><div class="grid">${records.filter(r=>r.state==='doing'&&r.cat!=='intimacy').map(card).join('')}</div><div class="heading"><h2>一起收藏的美好</h2><small>慢慢体验，慢慢喜欢</small><a data-more="wish">心愿清单 →</a></div>`}else{html=`<h1 class="section-title">${stateFilter?{wish:'我们的心愿单',doing:'正在一起做',done:'已完成的美好'}[stateFilter]:cats[page][1]}</h1><p class="subtitle">${{home:'把想做的事放在这里，把未来留给我们。',film:'从片头到片尾，身边一直是你。',music:'有些旋律一响起，就想起了你。',game:'最佳队友，永远是你。',travel:'把世界慢慢走成我们的地图。',intimacy:'只属于我们共同记录的亲密时光。'}[page]}</p>`}
-if(page!=='home'||stateFilter||query)html+=`<div class="chips">${['全部',...(subs[page]||[])].map(x=>`<button class="chip ${filter===x?'active':''}" data-sub="${x}">${x}</button>`).join('')}<span class="spacer"></span>${['','wish','doing','done'].map(s=>`<button class="chip ${stateFilter===s?'active':''}" data-state="${s}">${s?stateLabels(page,'')[s]:'所有状态'}</button>`).join('')}</div>`;
-const availableGenres=[...new Set(records.filter(r=>page==='home'||r.cat===page).flatMap(r=>parseGenres(r.genres)))].sort((a,b)=>a.localeCompare(b,'zh'));
-if(availableGenres.length) html+=`<div class="genre-filter"><label>类型 <select id="genreFilter" aria-label="按类型筛选"><option value="">全部类型</option>${availableGenres.map(t=>`<option value="${esc(t)}" ${genreFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select></label><span>${arr.length} 项记录</span></div>`;
-if(page==='travel'){html+='<div class="map" id="map"></div><p class="subtitle map-guide">先点击地图选择地点，再点「新增回忆」；也可在表单手动填写经纬度。保存后显示旅行标点。</p><div class="heading"><h2>旅途时间线</h2><small>从最近的一次出发说起</small></div><div class="timeline">'+arr.sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<article class="trip" data-id="${r.id}" tabindex="0" role="button"><img src="${esc(r.image)}" alt="${esc(r.title)}"><div class="trip-content"><span class="eyebrow">${esc(travelDates(r))} · ${status[r.state]}${itemUnreadBadge(r.id)}</span><h3>${esc(r.title)} <small style="color:#efb994;font-size:13px">★ ${r.score||'待评分'}</small></h3>${genreBadges(r)}<p>游玩 · ${esc(r.desc)}<br>入住 · ${esc(r.hotel)}<br>${esc(r.note)}</p></div></article>`).join('')+'</div>'}else if(page==='intimacy'){html+='<div class="privacy">♡ 亲密记录 · 当前共享空间的已登录账号可访问。</div>'+calendar()+`<div class="heading"><h2>${selectedDate?selectedDate:'亲密时光'}</h2><small>点击日历中的日期筛选记录</small></div><div class="timeline">`+arr.filter(r=>!selectedDate||r.date===selectedDate).map(r=>`<article class="trip" data-id="${r.id}" tabindex="0" role="button"><img src="${esc(r.image)}" alt="夜色示意图"><div class="trip-content"><span class="eyebrow">${r.date} · ★ ${r.score||'待评分'}${itemUnreadBadge(r.id)}</span><h3>${esc(r.title)}</h3>${genreBadges(r)}<p>地点 · ${esc(r.place)}　品牌 · ${esc(r.brand)}<br>感受 · ${esc(r.note)}</p></div></article>`).join('')+'</div>'}else{const display=page==='home'&&!stateFilter&&!query&&!genreFilter?arr.filter(r=>r.cat!=='intimacy'&&r.state==='wish'):arr.filter(r=>r.cat!=='intimacy');html+=`<div class="grid">${display.length?display.map(card).join(''):'<div class="empty">还没有条目。点击右上角「新增回忆」，记录第一份共同收藏。</div>'}</div>`}
-if(page==='home'&&!stateFilter&&!query&&!genreFilter)html+='<div class="banner"><span style="font-size:30px;color:#e6b799">⌁</span><div><b>下一站，我们去哪里？</b><p>把想去的地方放进心愿单，让期待有迹可循。</p></div><button class="btn secondary" data-travel>打开旅行地图 ↗</button></div>';$('#content').innerHTML=(listLoading?'<p role="status" class="subtitle">正在加载共享列表…</p>':'')+html;$('#content').setAttribute('aria-busy',String(listLoading));$('#content').querySelectorAll('img').forEach(image=>image.addEventListener('error',()=>{image.hidden=true;image.parentElement.classList.add('missing-cover')},{once:true}));const gf=$('#genreFilter');if(gf)gf.onchange=()=>{genreFilter=gf.value;render()};$('#content').querySelectorAll('[data-id]').forEach(el=>{el.onclick=()=>openDetails(el.dataset.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDetails(el.dataset.id)}}});document.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{filter=b.dataset.sub;render()});document.querySelectorAll('[data-state]').forEach(b=>b.onclick=()=>{stateFilter=b.dataset.state;render()});document.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>go('home',b.dataset.more));const tr=$('[data-travel]');if(tr)tr.onclick=()=>go('travel');document.querySelectorAll('[data-month]').forEach(b=>b.onclick=()=>{month=new Date(month.getFullYear(),month.getMonth()+Number(b.dataset.month),1);selectedDate='';render()});document.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selectedDate=selectedDate===b.dataset.day?'':b.dataset.day;render()});if(page==='travel')initMap(arr);const manage=$('#manageMilestones');if(manage)manage.onclick=openMilestones;}
-function calendar(){let year=month.getFullYear(),m=month.getMonth(),offset=(new Date(year,m,1).getDay()+6)%7,count=new Date(year,m+1,0).getDate();return `<div class="calendar"><div class="cal-head"><button data-month="-1" aria-label="上个月">←</button><b>${year} 年 ${m+1} 月</b><button data-month="1" aria-label="下个月">→</button></div><div class="days">${['一','二','三','四','五','六','日'].map(d=>`<div class="week">${d}</div>`).join('')}${'<div></div>'.repeat(offset)}${Array.from({length:count},(_,i)=>{let date=`${year}-${String(m+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,n=records.filter(r=>r.cat==='intimacy'&&r.date===date).length;return `<button class="day ${n?'marked':''} ${date===selectedDate?'selected':''}" data-day="${date}">${i+1}${n?' <span style="float:right">♥</span>':''}</button>`}).join('')}</div></div>`}
-function initMap(arr) {
- const container=$('#map');
- if(!window.L){container.innerHTML='<p style="padding:35px">地图组件未加载，请检查网络后刷新。下方时间线仍可查看和编辑行程。</p>';return}
- map=L.map('map',{worldCopyJump:true}).setView([31,116],4);
- // 使用 OSM 标准瓦片；保留署名，不预取或批量下载。
- const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
-  maxZoom:19,updateWhenIdle:true,keepBuffer:2
- });
- const status=document.createElement('div');status.className='map-load-status';status.setAttribute('role','status');status.textContent='地图加载中…';container.append(status);
- let loaded=0;
- tiles.on('tileload',()=>{loaded++;status.hidden=true});
- tiles.on('tileerror',()=>{if(!loaded){status.hidden=false;status.textContent='底图加载失败，请检查网络；行程记录仍可使用。'}});
- tiles.addTo(map);
- const points=arr.filter(r=>coordinate(r.lat,90)!==undefined&&coordinate(r.lng,180)!==undefined);
- points.forEach(r=>L.circleMarker([Number(r.lat),Number(r.lng)],{
-  radius:9,color:'#efb994',fillColor:'#efb994',fillOpacity:.85,weight:3,bubblingMouseEvents:false
- }).addTo(map).bindPopup(esc(r.title)+'<br>'+esc(r.date)));
- if(points.length>1)map.fitBounds(points.map(r=>[r.lat,r.lng]),{padding:[45,45],maxZoom:7});
- else if(points.length===1)map.setView([Number(points[0].lat),Number(points[0].lng)],9);
- let draftMarker=null;
- function showDraft(){
-  if(draftMarker)map.removeLayer(draftMarker);
-  if(selectedTripPoint)draftMarker=L.circleMarker([selectedTripPoint.lat,selectedTripPoint.lng],{
-   radius:10,color:'#e8a4b4',fillColor:'#e8a4b4',fillOpacity:.6,weight:3,bubblingMouseEvents:false
-  }).addTo(map).bindPopup('待保存的旅行地点');
- }
- showDraft();
- map.on('click',event=>{
-  const lat=coordinate(event.latlng.lat,90);
-  const lng=coordinate(((event.latlng.lng+180)%360+360)%360-180,180);
-  if(lat===undefined||lng===undefined)return;
-  selectedTripPoint={lat:Number(lat.toFixed(6)),lng:Number(lng.toFixed(6))};showDraft();
-  toast('地点已选中，点击「新增回忆」保存行程');
- });
-}
-function field(name,label,type='text',value='',full=false){let input=type==='textarea'?`<textarea name="${name}">${esc(value)}</textarea>`:`<input name="${name}" type="${type}" value="${esc(value)}" ${name==='title'?'required maxlength="100"':''} ${name==='score'?'min="0" max="10" step="0.1"':''} ${name==='lat'?'min="-90" max="90" step="any"':''} ${name==='lng'?'min="-180" max="180" step="any"':''}>`;return `<label class="field ${full?'full':''}">${label}${input}</label>`}
-function select(name,label,options,value){return `<label class="field">${label}<select name="${name}">${Object.entries(options).map(([k,v])=>`<option value="${esc(k)}" ${k===value?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`}
-function openForm(id){if(writeBusy||coverBusy||galleryBusy)return;modalTrigger=document.activeElement;if(!cloudUser){toast('请先登录');return}if(id&&!rawRows.has(id)){toast('记录已删除，请重新选择');return}editingExpectedContent=id?rawRows.get(id).content:null;editing=id||null;const r=records.find(x=>x.id===id)||{cat:page==='home'?'film':page,state:'wish',score:0,date:new Date().toLocaleDateString('en-CA'),sub:''};$('#fields').innerHTML='';$('#dialogTitle').textContent=id?'编辑这份回忆':'新增一份美好';$('#delete').hidden=!id;$('#fields').innerHTML=field('title','名字','text',r.title||'',true)+select('cat','板块',Object.fromEntries(Object.entries(cats).filter(([k])=>k!=='home').map(([k,v])=>[k,v[1]])),r.cat)+select('sub','分类',Object.fromEntries(subs[r.cat].map(s=>[s,s])),r.sub)+field('genres','类型标签（多个用逗号分隔，可自定义）','text',parseGenres(r.genres).join('，'),true)+`<div class="field full" id="genreSuggestions"></div>`+select('state','清单状态',stateLabels(r.cat,r.sub),r.state)+field('score','我们的评分（0–10，0 表示未评分）','number',r.score)+field('date','日期 / 旅行开始日期','date',r.date)+field('image','海报图片链接（也可直接上传）','text',r.image||'')+`<label class="field full">上传本地封面<input id="coverUpload" type="file" accept="image/jpeg,image/png,image/webp"><small id="coverMessage">支持 JPG、PNG、WebP；最长边 400px，压缩后上传 R2，保存记录后同步。</small><img id="coverPreview" alt="封面预览" style="max-width:140px;max-height:180px;object-fit:contain;border-radius:8px" hidden></label>`+field('desc','简介 / 游玩项目','text',r.desc||'',true)+`<div class="field full" id="progressEditor"></div><div class="field full" id="extra"></div>`+field('note',r.cat==='intimacy'?'感受':'我们的感想','textarea',r.note||'',true);const cat=$('[name=cat]');function extras(){const c=cat.value;$('#genreSuggestions').innerHTML='<div class="genre-options">'+genreSuggestions[c].map(t=>`<button type="button" class="chip" data-genre-add="${esc(t)}">＋ ${esc(t)}</button>`).join('')+'</div>';$('#genreSuggestions').querySelectorAll('[data-genre-add]').forEach(b=>b.onclick=()=>{const input=$('[name=genres]');input.value=parseGenres([...parseGenres(input.value),b.dataset.genreAdd]).join('，')});$('#extra').innerHTML=c==='travel'?`<div class="formgrid">${field('place','目的地','text',r.place||'')}${field('endDate','旅行结束日期','date',r.endDate||r.date||'')}${field('lat','纬度','number',r.lat??(id?'':selectedTripPoint?.lat??''))}${field('lng','经度','number',r.lng??(id?'':selectedTripPoint?.lng??''))}<div class="field full" id="hotelEditor"></div><p class="subtitle">保存后进入详情页，最多可添加十张旅行照片（含封面）。</p></div>`:c==='music'?`${field('musicUrl','QQ 音乐链接（可选）','url',r.musicUrl||'',true)}<label class="field full">粘贴 QQ 音乐分享文字或链接<textarea id="qqShareInput" placeholder="支持歌曲、专辑详情链接或完整分享文字"></textarea></label><button type="button" class="btn secondary" id="readQQMusic">读取音乐信息</button><p id="qqMessage" role="status"></p>`:c==='intimacy'?`<div class="formgrid">${field('place','地点','text',r.place||'')}${field('brand','套套品牌','text',r.brand||'')}</div>`:'';if(c==='travel')setupTravelEditor(r);if(c==='music')setupMusicImport()}cat.onchange=()=>{$('[name=sub]').innerHTML=subs[cat.value].map(s=>`<option>${s}</option>`).join('');extras()};setupProgressEditor(r);setupCoverUpload();extras();if(r.coverSource){const note=document.createElement('p');note.className='cover-credit';const a=document.createElement('a');a.href=r.coverSource;a.target='_blank';a.rel='noopener noreferrer';a.textContent='封面来源：The Cover Project ↗';note.appendChild(a);$('#fields').appendChild(note)}$('#modal').hidden=false;$('[name=title]').focus()}
-function setupProgressEditor(r){
- const cat=$('[name=cat]'),sub=$('[name=sub]'),state=$('[name=state]'),host=$('#progressEditor');
- let draft={progress:progressValue(r),watchedEpisodes:Number(r.watchedEpisodes)||0,totalEpisodes:Number(r.totalEpisodes)||0,currentEpisode:Number(r.currentEpisode)||0,playHours:Number(r.playHours)||0};
- function draw(){const c=cat.value,isTV=c==='film'&&sub.value==='电视剧',supported=c==='game'||isTV;
- const current=state.value;state.innerHTML=Object.entries(stateLabels(c,sub.value)).map(([k,v])=>`<option value="${k}" ${k===current?'selected':''}>${v}</option>`).join('');
- if(!supported){host.innerHTML='';return}
- host.innerHTML=isTV?`<div class="formgrid">${field('watchedEpisodes','已看集数','number',draft.watchedEpisodes)}${field('totalEpisodes','总集数（未知可填 0）','number',draft.totalEpisodes)}${field('currentEpisode','正在看第几集（0 表示未开始）','number',draft.currentEpisode)}</div>`:`<label class="field">累计游玩时长 <output id="hoursOutput">${draft.playHours} 小时</output><input name="playHoursSlider" type="range" min="0" max="${hoursScale(draft.playHours)}" step="0.5" value="${draft.playHours}"></label>${field('playHours','累计游戏时间（小时）','number',draft.playHours)}`;
- host.insertAdjacentHTML('beforeend',`<small class="progress-hint">${isTV?'调整集数会同步清单状态。':'时间条表示累计小时数，标尺随时长增长；完成状态请手动选择。'}</small>`);
- host.querySelectorAll('input[type=number]').forEach(i=>{i.min='0';i.step=i.name==='playHours'?'0.1':'1'});
- host.oninput=e=>{const i=e.target;if(!isTV){draft.playHours=Math.max(0,Number(i.value)||0);const slider=$('[name=playHoursSlider]');slider.max=hoursScale(draft.playHours);slider.value=draft.playHours;$('[name=playHours]').value=draft.playHours;$('#hoursOutput').textContent=draft.playHours+' 小时';return}draft[i.name]=Number(i.value)||0;if(isTV){const current=$('[name=currentEpisode]');current.setCustomValidity(draft.totalEpisodes>0&&draft.currentEpisode>draft.totalEpisodes?'当前集数不能超过总集数':'');if(i.name==='currentEpisode'){state.value=draft.currentEpisode>0?'doing':'wish';return}const w=$('[name=watchedEpisodes]'),t=$('[name=totalEpisodes]');w.setCustomValidity(Number(t.value)>0&&Number(w.value)>Number(t.value)?'已看集数不能超过总集数':'');state.value=draft.totalEpisodes>0&&draft.watchedEpisodes===draft.totalEpisodes?'done':draft.watchedEpisodes>0?'doing':'wish'}else{$('#progressOutput').textContent=draft.progress+'%';state.value=draft.progress===100?'done':draft.progress>0?'doing':'wish'}};
- }
- state.onchange=()=>{if(state.value==='wish'){draft.progress=0;draft.watchedEpisodes=0;draft.currentEpisode=0}if(state.value==='done'){draft.progress=100;if(draft.totalEpisodes>0)draft.watchedEpisodes=draft.totalEpisodes}draw()};
- cat.addEventListener('change',draw);sub.addEventListener('change',draw);draw();
-}
-// 仅这两个 R2 相关地址出现在前端；R2 密钥只配置在 Worker。
-const COVER_UPLOAD_WORKER_URL = 'https://r2-presigner.baopengtoskr.workers.dev/';
-const R2_PUBLIC_BASE_URL = 'https://pub-e97c7ebcf6e7475d85a27152bc869d5f.r2.dev';
-
-function setupCoverUpload() {
-  const input = $('#coverUpload');
-  const url = $('[name=image]');
-  const preview = $('#coverPreview');
-  const message = $('#coverMessage');
-  const save = $('#form button[type=submit]');
-  function show() {
-    preview.hidden = !url.value;
-    preview.src = url.value;
-  }
-  show();
-  url.addEventListener('input', show);
-
-  async function timedFetch(address, options, milliseconds) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), milliseconds);
-    try { return await fetch(address, { ...options, signal: controller.signal }); }
-    finally { clearTimeout(timer); }
-  }
-
-  input.onchange = async () => {
-    const file = input.files[0];
-    if (!file || coverBusy) return;
-    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      message.textContent = '请选择 JPG、PNG 或 WebP 图片。';
-      return;
-    }
-    if (file.size > 20 * 1024 * 1024) {
-      message.textContent = '请选择小于 20 MB 的图片。';
-      return;
-    }
-    const epoch = cloudEpoch;
-    let objectUrl, phase = '压缩图片';
-    coverBusy = true;
-    input.disabled = true;
-    url.disabled = true;
-    save.disabled = true;
-    message.textContent = '正在压缩封面…';
-    try {
-      requireCloudUser();
-      objectUrl = URL.createObjectURL(file);
-      const picture = new Image();
-      await new Promise((resolve, reject) => {
-        picture.onload = resolve;
-        picture.onerror = () => reject(new Error('无法读取图片，请更换文件。'));
-        picture.src = objectUrl;
-      });
-      const scale = Math.min(1, 400 / Math.max(picture.naturalWidth, picture.naturalHeight));
-      const canvas = document.createElement('canvas');
-      canvas.width = Math.max(1, Math.round(picture.naturalWidth * scale));
-      canvas.height = Math.max(1, Math.round(picture.naturalHeight * scale));
-      const context = canvas.getContext('2d');
-      if (!context) throw new Error('浏览器无法创建图片压缩画布。');
-      context.fillStyle = '#1b1c22';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(picture, 0, 0, canvas.width, canvas.height);
-      const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(value => value ? resolve(value)
-          : reject(new Error('JPEG 压缩失败。')), 'image/jpeg', 0.6);
-      });
-
-      phase = '获取上传地址';
-      message.textContent = '正在获取 R2 上传地址…';
-      const { data, error } = await cloud.auth.getSession();
-      if (error) throw error;
-      if (!data.session?.access_token) throw new Error('登录已失效，请重新登录。');
-      const filename = (file.name.replace(/\.[^.]+$/, '') || 'cover') + '.jpg';
-      const response = await timedFetch(COVER_UPLOAD_WORKER_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.session.access_token
-        },
-        body: JSON.stringify({ filename, contentType: 'image/jpeg' })
-      }, 20000);
-      let result;
-      try { result = await response.json(); }
-      catch { throw new Error(`Worker 没有返回有效 JSON（HTTP ${response.status}）。`); }
-      if (!response.ok) throw new Error(result.error || `Worker 请求失败（HTTP ${response.status}）。`);
-      if (typeof result.uploadUrl !== 'string' || typeof result.publicUrl !== 'string')
-        throw new Error('Worker 响应缺少 uploadUrl 或 publicUrl。');
-      const upload = new URL(result.uploadUrl);
-      const publicAddress = new URL(result.publicUrl);
-      if (upload.protocol !== 'https:' || upload.username || upload.password ||
-        !upload.hostname.endsWith('.r2.cloudflarestorage.com') ||
-        !upload.pathname.startsWith('/covers/covers/') ||
-        publicAddress.origin !== new URL(R2_PUBLIC_BASE_URL).origin ||
-        !publicAddress.pathname.startsWith('/covers/'))
-        throw new Error('Worker 返回的上传地址或公开域名不符合配置。');
-
-      phase = 'PUT 上传图片';
-      message.textContent = '正在上传封面到 R2…';
-      const uploaded = await timedFetch(upload.href, {
-        method: 'PUT',
-        // 必须与签名时一致；不要附带 Supabase Authorization。
-        headers: { 'Content-Type': 'image/jpeg' },
-        body: blob
-      }, 120000);
-      if (!uploaded.ok)
-        throw new Error(`R2 上传失败（HTTP ${uploaded.status}），请检查签名、Content-Type 和桶权限。`);
-      if (epoch !== cloudEpoch || !url.isConnected)
-        throw new Error('登录状态或编辑窗口已变化，请重新打开记录。');
-      // 原表单保存逻辑会将这个输入框的值写入 data.image。
-      // 只有上传成功后才替换，因此失败时保留原封面链接。
-      url.value = publicAddress.href;
-      show();
-      message.textContent = '封面已上传。点击「保存记录」后，两个人都能看到。';
-    } catch (error) {
-      const detail = error.name === 'AbortError' ? '请求超时，请稍后重试。'
-        : error instanceof TypeError ? '网络请求失败，请检查 Worker 与 R2 的 CORS、网址及网络。'
-        : friendlyError(error);
-      message.textContent = `封面上传失败（${phase}）：${detail} 可改用图片链接。`;
-    } finally {
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-      coverBusy = false;
-      input.disabled = false;
-      url.disabled = false;
-      save.disabled = false;
-    }
-  };
-}
-function closeModal(){if(writeBusy||coverBusy)return;const wasOpen=!$('#modal').hidden;$('#modal').hidden=true;if(wasOpen){const replacement=modalTrigger?.dataset?.id?document.querySelector('[data-id="'+modalTrigger.dataset.id+'"]'):null;(modalTrigger?.isConnected?modalTrigger:replacement||$('#add')).focus()}}$('#cancel').onclick=closeModal;$('#modal').onclick=e=>{if(e.target===$('#modal'))closeModal()};document.addEventListener('keydown',e=>{
- if($('#modal').hidden)return;
- if(e.key==='Escape'){e.preventDefault();closeModal();return}
- if(e.key==='Tab'){const nodes=[...$('#form').querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled&&!n.hidden&&n.getClientRects().length);const first=nodes[0],last=nodes.at(-1);if(!first){e.preventDefault();return}if(e.shiftKey&&(document.activeElement===first||!$('#form').contains(document.activeElement))){e.preventDefault();last.focus()}else if(!e.shiftKey&&(document.activeElement===last||!$('#form').contains(document.activeElement))){e.preventDefault();first.focus()}}
-});$('#delete').onclick=async()=>{
- if(writeBusy||!cloudUser||!editing)return;
- if(!confirm('确定删除这条共享记录？对方也会同步删除。'))return;
- const epoch=cloudEpoch,id=editing;writeBusy=true;$('#delete').disabled=true;
- try{await deleteSharedItem(id);if(epoch!==cloudEpoch)return;writeBusy=false;closeModal();await loadSharedItems();toast('记录已删除')}
- catch(error){if(epoch===cloudEpoch)toast(friendlyError(error))}
- finally{writeBusy=false;$('#delete').disabled=false}
-};$('#form').onsubmit=async e=>{e.preventDefault();if(writeBusy||coverBusy||!cloudUser)return;const data={...(records.find(r=>r.id===editing)||{}),...Object.fromEntries(new FormData(e.target))};data.genres=parseGenres(data.genres);if(data.cat==='travel'){try{data.hotels=JSON.parse(data.hotelsJSON||'[]')}catch{toast('酒店信息无效，请重新填写');return}if(data.endDate&&data.date&&data.endDate<data.date){toast('旅行结束日期不能早于开始日期');return}if(data.hotels.some(h=>h.checkIn&&h.checkOut&&h.checkOut<h.checkIn)){toast('酒店退房日期不能早于入住日期');return}}delete data.hotelsJSON;delete data.playHoursSlider;if(hasProgress(data)){data.playHours=Math.max(0,Number(data.playHours)||0);data.currentEpisode=Math.max(0,Number(data.currentEpisode)||0);data.progress=Number(data.progress)||0;data.watchedEpisodes=Number(data.watchedEpisodes)||0;data.totalEpisodes=Number(data.totalEpisodes)||0;if(data.state==='wish'){data.progress=0;data.watchedEpisodes=0;data.currentEpisode=0}if(data.state==='done'){data.progress=100;if(data.totalEpisodes>0)data.watchedEpisodes=data.totalEpisodes}data.progress=progressValue(data)}data.score=Number(data.score);normalizeItem(data);data.image=data.image||(['game','travel'].includes(data.cat)?'':img(data.cat==='intimacy'?'night':'lake'));const epoch=cloudEpoch,id=editing,expected=editingExpectedContent;
- delete data.id;writeBusy=true;const save=$('#form button[type=submit]');save.disabled=true;
- try{await saveSharedItem(data,id,expected);if(epoch!==cloudEpoch)return;if(data.cat==='travel')selectedTripPoint=null;writeBusy=false;closeModal();await loadSharedItems();toast('已保存到共享空间')}
- catch(error){if(epoch===cloudEpoch)toast(friendlyError(error))}
- finally{writeBusy=false;save.disabled=false}
-};
-
-// 事件委托同时覆盖筛选器、表单和日历动态创建的按钮。
-function buttonWave(button, x, y) {
- if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
- const rect = button.getBoundingClientRect();
- const size = Math.hypot(rect.width, rect.height) * 2;
- const wave = document.createElement('span');
- wave.className = 'click-wave';
- wave.setAttribute('aria-hidden', 'true');
- wave.style.width = wave.style.height = size + 'px';
- wave.style.left = (x - rect.left - size / 2) + 'px';
- wave.style.top = (y - rect.top - size / 2) + 'px';
- button.appendChild(wave);
- wave.addEventListener('animationend', () => wave.remove(), { once: true });
- setTimeout(() => wave.remove(), 650);
-}
-document.addEventListener('pointerdown', e => {
- if (e.button !== 0) return;
- const button = e.target.closest('button');
- if (button && !button.disabled) buttonWave(button, e.clientX, e.clientY);
-});
-document.addEventListener('keydown', e => {
- if (e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return;
- const button = e.target.closest('button');
- if (button && !button.disabled) {
-  const rect = button.getBoundingClientRect();
-  buttonWave(button, rect.left + rect.width / 2, rect.top + rect.height / 2);
- }
-});
-
-// 搜索动效不改变光标位置和焦点。
-const searchBox = document.querySelector('.search');
-const searchInput = document.querySelector('#search');
-let searchMotionTimer, lastSearchMotion = 0;
-function animateSearch(kind = 'is-bouncing') {
- if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
- if (kind === 'is-typing' && (searchBox.classList.contains('is-bouncing') || Date.now() - lastSearchMotion < 380)) return;
- clearTimeout(searchMotionTimer);
- searchBox.classList.remove('is-bouncing', 'is-typing');
- void searchBox.offsetWidth;
- searchBox.classList.add(kind);
- lastSearchMotion = Date.now();
- searchMotionTimer = setTimeout(() => searchBox.classList.remove(kind), kind === 'is-bouncing' ? 560 : 340);
-}
-searchBox.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') animateSearch(); });
-searchBox.addEventListener('pointerdown', () => animateSearch());
-searchInput.addEventListener('focus', () => animateSearch());
-searchInput.addEventListener('input', () => animateSearch('is-typing'));
-document.addEventListener('visibilitychange', () => {
- document.querySelectorAll('.romance-bg [class^="romance-"]').forEach(el => { el.style.animationPlayState = document.hidden ? 'paused' : 'running'; });
-});
-// 只填写 Project URL 和 anon public key；绝不能放入 service_role 或数据库密码。
-// 配置唯一来源为外部文件；项目配置不重复写在页面中。
-const CONFIG = Object.freeze({ ...(window.TWO_US_CONFIG || {}) });
-const MAX_COVER_DATA_LENGTH = 300000;
-let listLoading = false, modalTrigger = null, coverBusy = false;
-const finiteNumber = (value, fallback=0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
-const clamp = (value,min,max) => Math.min(max,Math.max(min,finiteNumber(value)));
-function coordinate(value,limit){
- if(value===null||value===undefined||typeof value==='boolean'||String(value).trim()==='')return undefined;
- const number=Number(value);return Number.isFinite(number)&&Math.abs(number)<=limit?number:undefined;
-}
-function normalizeItem(item){
- item.score=clamp(item.score,0,10);item.progress=clamp(item.progress,0,100);
- for(const k of ['watchedEpisodes','totalEpisodes','currentEpisode'])item[k]=Math.floor(Math.max(0,finiteNumber(item[k])));
- item.playHours=Math.max(0,finiteNumber(item.playHours));
- if(!hasProgress(item))for(const k of ['progress','watchedEpisodes','totalEpisodes','currentEpisode'])delete item[k];
- if(item.cat!=='game')delete item.playHours;
- for(const [k,limit] of [['lat',90],['lng',180]]){const n=coordinate(item[k],limit);delete item[k];if(item.cat==='travel'&&n!==undefined)item[k]=n;}
- return normalizeExtras(item);
-}
-function validCoverSize(item){
- for(const k of ['image','coverImage'])if(String(item[k]||'').startsWith('data:')&&item[k].length>MAX_COVER_DATA_LENGTH)throw new Error('封面超过 300,000 字符，请使用更小的图片或图片 URL。');
-}
-let cloud = null, cloudUser = null, cloudChannel = null;
-let cloudEpoch = 0, loadVersion = 0, writeBusy = false;
-let editingExpectedContent = null;
-const rawRows = new Map();
-const cloudMessage = text => { $('#cloudMessage').textContent = text; };
-function friendlyError(error) {
-  const text = String(error?.message || error || '未知错误');
-  if (/记录已被修改|并发|conflict/i.test(text)) return '记录已被修改，请关闭编辑窗口，刷新列表后重新打开再保存。';
-  if (/invalid login credentials/i.test(text)) return '邮箱或密码不正确，请检查后重试。';
-  if (/email not confirmed/i.test(text)) return '邮箱尚未确认，请先点击确认邮件里的链接。';
-  if (/already registered/i.test(text)) return '该邮箱已注册，请直接登录。';
-  if (/rate limit|too many requests/i.test(text)) return '操作过于频繁，请稍后再试。';
-  if (/fetch|network|load failed/i.test(text)) return '连接失败，请检查网络、Project URL 和 CDN 是否可访问。';
-  if (/row-level security|permission denied/i.test(text)) return '没有访问权限，请检查登录状态及数据库 RLS 策略。';
-  return text;
-}
-function setSignedIn(user) {
-  document.body.classList.toggle('signed-in', Boolean(user));
-  $('#accountEmail').textContent = user?.email || '';
-  $('#authPanel').hidden = Boolean(user);
-  (user?$('#cloudStatusSlot'):$('#cloudNotice')).append($('#cloudMessage'));
-  if(!user){resetTogether();++peopleVersion;if(profilesChannel){void cloud.removeChannel(profilesChannel);profilesChannel=null;}sharedPeople=[];renderPeople();closePeopleMenu(false);$('#profileModal').hidden=true;}
-  if (!user) {
-    if($('#photoLightbox')?.open)$('#photoLightbox').close();records = []; selectedTripPoint=null;rawRows.clear();$('#modal').hidden=true;
-    if (map) { map.remove(); map = null; }
-    $('#content').replaceChildren();
-  }
-}
-function requireCloudUser() {
-  if (!cloud || !cloudUser) throw new Error('请先登录后再操作。');
-}
-// content 保持 text 类型，使用 JSON 保存原网页的封面、类型、评分和进度等字段。
-function decodeRow(row) {
-  let value;
-  try { value = JSON.parse(row.content); } catch { value = { title: row.content }; }
-  if (!value || typeof value !== 'object' || Array.isArray(value)) value = { title: row.content };
-  const cat = Object.hasOwn(subs, value.cat) ? value.cat : 'film';
-  const item = { id: row.id, cat, sub: subs[cat].includes(value.sub) ? value.sub : subs[cat][0],
-    state: ['wish','doing','done'].includes(value.state) ? value.state : 'wish' };
-  for (const key of ['title','desc','image','coverImage','coverSource','coverStatus','platform','note','place','hotel','brand','date']) {
-    item[key] = typeof value[key] === 'string' ? value[key] : '';
-  }
-  item.title ||= '未命名条目';
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(item.date))item.date='';
-  for(const key of ['endDate','hotels','photos','musicUrl'])item[key]=value[key];
-  item.coverWrap = value.coverWrap === true;
-  item.genres = parseGenres(value.genres);
-  for (const key of ['score','progress','watchedEpisodes','totalEpisodes','currentEpisode','playHours']) {
-    item[key] = Math.max(0, finiteNumber(value[key]));
-  }
-  item.lat = coordinate(value.lat,90);
-  item.lng = coordinate(value.lng,180);
-  // 只允许常见图片协议；文本仍通过原网页 esc() 转义后呈现。
-  for (const key of ['image','coverImage']) {
-    if (!/^(https?:\/\/|data:image\/(?:jpeg|png|webp);base64,)/i.test(item[key]) || (item[key].startsWith('data:')&&item[key].length>MAX_COVER_DATA_LENGTH)) item[key] = '';
-  }
-  if (!/^https?:\/\//i.test(item.coverSource)) item.coverSource = '';
-  return normalizeItem(item);
-}
-async function loadSharedItems() {
-  if (!cloudUser) return;
-  const epoch = cloudEpoch, version = ++loadVersion;
-  listLoading=true;render();
-  try {
-    // 分页读取，避免超过默认行数限制时悄悄丢掉较早的条目。
-    const rows = [];
-    for (let start = 0; ; start += 500) {
-      const { data, error } = await cloud.from('shared_items')
-        .select('id,content,shared_id,created_by,created_at')
-        .eq('shared_id', CONFIG.SHARED_ID)
-        .order('created_at', { ascending: true }).order('id', { ascending: true })
-        .range(start, start + 499);
-      if (error) throw error;
-      if (epoch !== cloudEpoch || version !== loadVersion) return;
-      rows.push(...data);
-      if (data.length < 500) break;
-    }
-    if (epoch !== cloudEpoch || version !== loadVersion || !cloudUser) return;
-    rawRows.clear(); rows.forEach(row => rawRows.set(row.id, row));
-    records = rows.map(decodeRow); listLoading=false;render();
-    cloudMessage('共享列表已更新');
-  } catch (error) {
-    if (epoch === cloudEpoch && version === loadVersion) {listLoading=false;render();cloudMessage('加载失败：' + friendlyError(error));}
-  }
-}
-async function activateSession(session) {
-  const user = session?.user || null;
-  if (user && cloudUser?.id === user.id) {
-    await cloud.realtime.setAuth(session.access_token);
-    return;
-  }
-  const epoch = ++cloudEpoch;
-  ++loadVersion;
-  const old = cloudChannel; cloudChannel = null;
-  cloudUser = user; setSignedIn(null);
-  if (old) await cloud.removeChannel(old);
-  if (epoch !== cloudEpoch) return;
-  setSignedIn(user);
-  if (!user) { $('#syncState').textContent = '未登录'; return; }
-  cloudMessage('正在加载共享列表…');
-  await cloud.realtime.setAuth(session.access_token);
-  if (epoch !== cloudEpoch) return;
-  const reload = () => { if (epoch === cloudEpoch) void loadSharedItems(); };
-  const reloadPeople=()=>{if(epoch===cloudEpoch)void loadPeople()};
-  cloudChannel = cloud.channel('shared-items-' + user.id)
-    .on('postgres_changes', {
-      event: 'INSERT', schema: 'public', table: 'shared_items',
-      filter: `shared_id=eq.${CONFIG.SHARED_ID}`
-    }, reload)
-    .on('postgres_changes', {event:'UPDATE',schema:'public',table:'shared_items',filter:`shared_id=eq.${CONFIG.SHARED_ID}`}, reload)
-    // DELETE 不支持列过滤；这里只将其作为重新查询信号，不展示事件数据。
-    // 重新 SELECT 时仍按 shared_id 过滤，并由数据库 RLS 强制鉴权。
-    .on('postgres_changes', {
-      event: 'DELETE', schema: 'public', table: 'shared_items'
-    }, reload)
-    .subscribe(status => {
-      if (epoch !== cloudEpoch) return;
-      $('#syncState').textContent = status === 'SUBSCRIBED' ? '实时同步已连接' : '实时连接：' + status;
-      if (status === 'SUBSCRIBED') {reload();reloadPeople();}
-      if (['CHANNEL_ERROR','TIMED_OUT','CLOSED'].includes(status)) {
-        cloudMessage('实时连接暂时中断，重连后会重新加载。请检查网络和 Realtime 配置。');
-      }
-    });
-  // 建立订阅后再加载；订阅成功和重连成功也重新加载，以补齐连接期间的变动。
-  void loadSharedItems();void loadPeople();void loadTogether();
-}
-async function saveSharedItem(item, id, expectedContent) {
-  requireCloudUser();
-  normalizeItem(item);validCoverSize(item);
-  const content = JSON.stringify(item);
-  if (id) {
-    // 原子替换保留编辑体验，无需新增 UPDATE 策略；并发冲突由数据库检查。
-    const { error } = await cloud.rpc('replace_shared_item', {
-      p_id: id, p_content: content, p_expected_content: expectedContent
-    });
-    if (error) throw error;
-  } else {
-    // 不传 created_by，由数据库 auth.uid() 自动填写；RLS 同时防止伪造。
-    const { error } = await cloud.from('shared_items').insert({ content, shared_id: CONFIG.SHARED_ID });
-    if (error) throw error;
-  }
-}
-async function deleteSharedItem(id) {
-  requireCloudUser();
-  const { data, error } = await cloud.from('shared_items').delete()
-    .eq('id', id).eq('shared_id', CONFIG.SHARED_ID).select('id');
-  if (error) throw error;
-  if (!data.length) throw new Error('这条记录已删除，或你没有删除权限。');
-}
-async function initSharedCloud() {
-  initPeopleUI();initTogetherUI();
-  window.addEventListener('hashchange',()=>{render();window.scrollTo({top:0})});
-  $('#closePhoto').onclick=()=>$('#photoLightbox').close();
-  $('#photoLightbox').onclick=e=>{if(e.target===$('#photoLightbox'))$('#photoLightbox').close()};
-  $('#authForm').onsubmit = async event => {
-    event.preventDefault(); if (!cloud) return;
-    const buttons = $('#authForm').querySelectorAll('button');
-    buttons.forEach(button => button.disabled = true);
-    cloudMessage('正在处理…');
-    try {
-      const credentials = { email: $('#authEmail').value.trim(), password: $('#authPassword').value };
-      const signup = event.submitter?.value === 'signup';
-      const { data, error } = signup
-        ? await cloud.auth.signUp(credentials)
-        : await cloud.auth.signInWithPassword(credentials);
-      if (error) throw error;
-      $('#authPassword').value = '';
-      cloudMessage(signup && !data.session ? '注册请求已提交，请查看确认邮件；已注册用户请直接登录。' : '登录成功，正在加载…');
-      if (data.session) await activateSession(data.session);
-    } catch (error) { cloudMessage(friendlyError(error)); }
-    finally { buttons.forEach(button => button.disabled = false); }
-  };
-  $('#exportBackup').onclick=()=>{if(!cloudUser)return;const blob=new Blob([JSON.stringify({version:1,shared_id:CONFIG.SHARED_ID,exported_at:new Date().toISOString(),items:records},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='two-of-us-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出当前已加载记录，备份可能包含私密内容')};
-  $('#inviteSpace').hidden=CONFIG.ACCESS_MODE!=='members';$('#joinSpace').hidden=CONFIG.ACCESS_MODE!=='members';
-  $('#inviteSpace').onclick=async()=>{try{requireCloudUser();const {data,error}=await cloud.rpc('create_shared_invite',{p_shared_id:CONFIG.SHARED_ID});if(error)throw error;prompt('一次性邀请码，有效期 24 小时。仅发送给对方：',data)}catch(error){cloudMessage(friendlyError(error))}};
-  $('#joinSpace').onclick=async()=>{const token=prompt('粘贴对方发送的一次性邀请码');if(!token)return;try{requireCloudUser();const {data,error}=await cloud.rpc('join_shared_space',{p_token:token.trim()});if(error)throw error;if(data!==CONFIG.SHARED_ID){cloudMessage('已加入空间 '+data+'；请将配置 SHARED_ID 改为该值后重新打开网页。');return}await loadSharedItems();await loadPeople();await loadTogether();cloudMessage('已加入共享空间')}catch(error){cloudMessage(friendlyError(error))}};
-  $('#logout').onclick = async () => {
-    if (writeBusy||coverBusy||galleryBusy||together.busy||avatarBusy||profileSaving) { toast('正在保存，请稍后退出'); return; }
-    const { error } = await cloud.auth.signOut({ scope: 'local' });
-    if (error) { cloudMessage(friendlyError(error)); return; }
-    await activateSession(null); cloudMessage('已退出登录');
-  };
-  if (!/^https:\/\//.test(CONFIG.SUPABASE_URL||'') || !CONFIG.SUPABASE_ANON_KEY || !CONFIG.SHARED_ID) {
-    cloudMessage('请在同目录 supabase-config.js 中配置 Project URL、publishable key 和 SHARED_ID。'); return;
-  }
-  if (!window.supabase?.createClient) { cloudMessage('Supabase SDK 加载失败，请检查网络或 CDN。'); return; }
-  try {
-    cloud = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-    // 回调中不等待其他 Auth API，避免会话锁死；INITIAL_SESSION 也走这里。
-    cloud.auth.onAuthStateChange((_event, session) => {
-      setTimeout(() => { void activateSession(session).catch(error => cloudMessage(friendlyError(error))); }, 0);
-    });
-  } catch (error) { cloudMessage(friendlyError(error)); }
-  window.addEventListener('online', () => { if (cloudUser) {void loadSharedItems();void loadPeople();} });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && cloudUser) {void loadSharedItems();void loadPeople();}
-  });
-}
-// 个人资料独立保存，只有本人可写；空间内的两位成员可读。
-let profilesChannel=null;
-let sharedPeople=[], peopleVersion=0, profileAvatarDraft='', avatarBusy=false, profileSaving=false;
-let profileReturnFocus=null;
-function profileName(person,index){return person?.nickname?.trim()||['A','B'][index]||'我们'}
-function profileAvatar(value){return typeof value==='string'&&value.length<=60000&&/^data:image\/(jpeg|png|webp);base64,/.test(value)?value:''}
-function renderPeople(){
- for(let index=0;index<2;index++){
-  const person=sharedPeople[index],name=profileName(person,index),box=$('#person'+index);
-  box.replaceChildren();const circle=document.createElement('span');circle.className='person-photo';
-  const picture=profileAvatar(person?.avatar);
-  circle.textContent=Array.from(name)[0]||'我';
-  if(picture){const image=document.createElement('img');image.src=picture;image.alt='';image.addEventListener('error',()=>image.remove(),{once:true});circle.append(image)}
-  const label=document.createElement('span');label.className='person-name';label.textContent=name;box.append(circle,label);
- }
- $('#peopleToggle').setAttribute('aria-label',sharedPeople.map(profileName).join('和')+'，打开个人菜单');
-}
-function profilesError(error){
- const text=String(error?.message||error||'');
- return /PGRST202|PGRST205|schema cache|get_shared_people|does not exist/.test(text)?'个人资料同步尚未启用，请执行 04-shared-profiles.sql。':friendlyError(error);
-}
-async function loadPeople(){
- if(!cloudUser)return;
- const epoch=cloudEpoch,version=++peopleVersion;
- try{
-  const {data,error}=await cloud.rpc('get_shared_people',{p_shared_id:CONFIG.SHARED_ID});if(error)throw error;
-  if(epoch!==cloudEpoch||version!==peopleVersion)return;
-  sharedPeople=(data||[]).map(p=>({user_id:p.user_id,nickname:String(p.nickname||'').slice(0,24),avatar:profileAvatar(p.avatar)}));
-  renderPeople();$('#profileHint').textContent='';
-  if(!profilesChannel){const reload=()=>{if(epoch===cloudEpoch)void loadPeople()};profilesChannel=cloud.channel('shared-profiles-'+cloudUser.id)
-   .on('postgres_changes',{event:'INSERT',schema:'public',table:'shared_profiles',filter:`shared_id=eq.${CONFIG.SHARED_ID}`},reload)
-   .on('postgres_changes',{event:'UPDATE',schema:'public',table:'shared_profiles',filter:`shared_id=eq.${CONFIG.SHARED_ID}`},reload)
-   .on('postgres_changes',{event:'DELETE',schema:'public',table:'shared_profiles'},reload)
-   .subscribe(status=>{if(epoch!==cloudEpoch)return;if(status==='SUBSCRIBED')reload();if(['CHANNEL_ERROR','TIMED_OUT'].includes(status))$('#profileHint').textContent='个人资料实时连接暂时中断，重连后会重新加载。'});}
- }catch(error){if(epoch===cloudEpoch&&version===peopleVersion)$('#profileHint').textContent=profilesError(error)}
-}
-function closePeopleMenu(restore=true){
- const wasOpen=!$('#peopleMenu').hidden;$('#peopleMenu').hidden=true;$('#peopleToggle').setAttribute('aria-expanded','false');
- if(wasOpen&&restore)$('#peopleToggle').focus();
-}
-function closeProfile(){
- if(avatarBusy||profileSaving)return;
- $('#profileModal').hidden=true;(profileReturnFocus?.isConnected?profileReturnFocus:$('#peopleToggle')).focus();
-}
-function refreshAvatarPreview(){
- const preview=$('#myAvatarPreview');preview.replaceChildren();
- if(profileAvatar(profileAvatarDraft)){const image=document.createElement('img');image.src=profileAvatarDraft;image.alt='我的头像预览';preview.append(image)}
- else preview.textContent=($('#myNickname').value.trim()||'我').slice(0,1);
-}
-function initPeopleUI(){
- renderPeople();
- $('#peopleToggle').onclick=()=>{const open=$('#peopleMenu').hidden;$('#peopleMenu').hidden=!open;$('#peopleToggle').setAttribute('aria-expanded',String(open));if(open)$('#peopleMenu button:not([hidden])').focus()};
- document.addEventListener('click',event=>{if(!$('#peopleArea').contains(event.target))closePeopleMenu(false)});
- $('#peopleArea').addEventListener('keydown',event=>{
-  if($('#peopleMenu').hidden)return;
-  if(event.key==='Escape'){event.preventDefault();closePeopleMenu();return}
-  if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){
-   event.preventDefault();const buttons=[...$('#peopleMenu').querySelectorAll('button')].filter(b=>!b.hidden&&!b.disabled),i=buttons.indexOf(document.activeElement);
-   const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(i+(event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length;buttons[next]?.focus();
-  }
- });
- // Safari 点击按钮时可能先产生 relatedTarget=null 的 focusout，不能在此时隐藏菜单。
- // 改为焦点真正进入外部元素时关闭，避免按钮在 click 派发前消失。
- document.addEventListener('focusin',event=>{if(!$('#peopleArea').contains(event.target))closePeopleMenu(false)});
- for(const id of ['exportBackup','inviteSpace','joinSpace','logout'])$('#'+id).addEventListener('click',()=>closePeopleMenu(false));
- $('#editProfile').onclick=()=>{
-  profileReturnFocus=$('#peopleToggle');closePeopleMenu(false);
-  const me=sharedPeople.find(p=>p.user_id===cloudUser?.id);
-  $('#myNickname').value=me?.nickname||'';profileAvatarDraft=profileAvatar(me?.avatar);$('#myAvatarFile').value='';$('#profileFormMessage').textContent='头像和昵称仅可修改自己的，对方会同步看到。';refreshAvatarPreview();$('#profileModal').hidden=false;$('#myNickname').focus();
- };
- $('#myNickname').oninput=refreshAvatarPreview;$('#profileCancel').onclick=closeProfile;
- $('#profileModal').onclick=e=>{if(e.target===$('#profileModal'))closeProfile()};
- $('#removeMyAvatar').onclick=()=>{if(avatarBusy||profileSaving)return;profileAvatarDraft='';refreshAvatarPreview()};
- $('#myAvatarFile').onchange=async()=>{
-  const file=$('#myAvatarFile').files[0];if(!file)return;
-  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>20*1024*1024){$('#profileFormMessage').textContent='请选择 20 MB 以内的 JPG、PNG 或 WebP 图片。';return}
-  avatarBusy=true;$('#profileSave').disabled=true;let objectURL;
-  try{
-   objectURL=URL.createObjectURL(file);const image=new Image();await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=objectURL});
-   const canvas=document.createElement('canvas');canvas.width=192;canvas.height=192;const context=canvas.getContext('2d'),side=Math.min(image.width,image.height);
-   context.fillStyle='#34302e';context.fillRect(0,0,192,192);context.drawImage(image,(image.width-side)/2,(image.height-side)/2,side,side,0,0,192,192);
-   const avatar=canvas.toDataURL('image/jpeg',.78);if(avatar.length>60000)throw new Error('头像过大，请换一张简单的图片。');
-   profileAvatarDraft=avatar;refreshAvatarPreview();$('#profileFormMessage').textContent='头像已准备，点击保存后同步。';
-  }catch(error){$('#profileFormMessage').textContent=error.message||'头像读取失败，请重新选择。'}
-  finally{if(objectURL)URL.revokeObjectURL(objectURL);avatarBusy=false;$('#profileSave').disabled=false}
- };
- $('#profileForm').onsubmit=async event=>{
-  event.preventDefault();if(avatarBusy||profileSaving)return;
-  const epoch=cloudEpoch;profileSaving=true;$('#profileSave').disabled=true;
-  try{
-   requireCloudUser();const nickname=$('#myNickname').value.trim();if(nickname.length>24)throw new Error('昵称最多 24 个字符。');
-   const {error}=await cloud.from('shared_profiles').upsert({shared_id:CONFIG.SHARED_ID,user_id:cloudUser.id,nickname,avatar:profileAvatarDraft,updated_at:new Date().toISOString()},{onConflict:'shared_id,user_id'});if(error)throw error;
-   if(epoch!==cloudEpoch)return;
-   await loadPeople();profileSaving=false;closeProfile();toast('头像和昵称已保存');
-  }catch(error){if(epoch===cloudEpoch)$('#profileFormMessage').textContent=profilesError(error)}
-  finally{profileSaving=false;$('#profileSave').disabled=false}
- };
- document.addEventListener('keydown',event=>{
-  if($('#profileModal').hidden)return;
-  if(event.key==='Escape'){event.preventDefault();closeProfile();return}
-  if(event.key==='Tab'){
-   const nodes=[...$('#profileForm').querySelectorAll('button,input')].filter(n=>!n.disabled&&n.getClientRects().length),first=nodes[0],last=nodes.at(-1);
-   if(event.shiftKey&&(document.activeElement===first||!$('#profileForm').contains(document.activeElement))){event.preventDefault();last.focus()}
-   else if(!event.shiftKey&&(document.activeElement===last||!$('#profileForm').contains(document.activeElement))){event.preventDefault();first.focus()}
-  }
- });
-}
-
-// 详情页沿用单文件，以 hash 保存当前条目，刷新后仍可打开；数据权限继续由 RLS 控制。
-let galleryBusy=false;
-function detailId(){return new URLSearchParams(window.location.hash.slice(1)).get('item')}
-function openDetails(id){void markItemRead(id);window.location.hash='item='+encodeURIComponent(id)}
-function leaveDetails(){history.replaceState(null,'',window.location.pathname+window.location.search);render()}
-function hoursScale(hours){return Math.max(100,Math.ceil(Math.max(0,finiteNumber(hours))/50)*50)}
-function gameTimeCard(item){const hours=Math.max(0,finiteNumber(item.playHours)),max=hoursScale(hours);return `<div class="progress-caption"><span>累计游玩 ${hours} 小时</span><span>标尺 ${max} 小时</span></div><div class="progress" role="meter" aria-label="累计游玩小时数" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${hours}"><span style="width:${hours/max*100}%"></span></div>`}
-function imageAddress(value){return typeof value==='string'&&/^(https?:\/\/|data:image\/(jpeg|png|webp);base64,)/i.test(value)&&(!value.startsWith('data:')||value.length<=MAX_COVER_DATA_LENGTH)?value:''}
-function travelPhotos(item){return [...new Set([item.image,...(Array.isArray(item.photos)?item.photos:[])].map(imageAddress).filter(Boolean))].slice(0,10)}
-function isoDay(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)?value:''}
-function travelDates(item){return item.endDate&&item.endDate!==item.date?`${item.date} — ${item.endDate}`:item.date||'尚未填写日期'}
-function normalizeExtras(item){
- if(item.cat==='travel'){
-  item.endDate=isoDay(item.endDate)||item.date;
-  if(item.date&&item.endDate<item.date)item.endDate=item.date;
-  item.hotels=(Array.isArray(item.hotels)?item.hotels:typeof item.hotel==='string'&&item.hotel.trim()?[{name:item.hotel}]:[]).filter(h=>h&&typeof h==='object').slice(0,20).map(h=>({name:String(h.name||'').trim().slice(0,200),checkIn:isoDay(h.checkIn),checkOut:isoDay(h.checkOut),note:String(h.note||'').slice(0,500)})).filter(h=>h.name);
-  item.hotel=item.hotels.map(h=>h.name).join('、');
-  item.photos=travelPhotos(item).filter(url=>url!==item.image).slice(0,item.image?9:10);
- }else{delete item.endDate;delete item.hotels;delete item.photos;}
- if(item.cat==='music'){try{item.musicUrl=item.musicUrl?qqShareInfo(item.musicUrl).url:''}catch{item.musicUrl=''}}else delete item.musicUrl;
- return item;
-}
-function bindDetailImages(){
- $('#content').querySelectorAll('img').forEach(image=>image.addEventListener('error',()=>{image.hidden=true},{once:true}));
- $('#content').querySelectorAll('[data-photo]').forEach(button=>button.onclick=()=>{const dialog=$('#photoLightbox');$('#largePhoto').src=button.dataset.photo;dialog.showModal()});
-}
-function renderDetail(id){
- const item=records.find(r=>r.id===id),host=$('#content');
- host.setAttribute('aria-busy',String(listLoading));
- if(!item){host.innerHTML=`<button class="btn secondary" id="backDetail">← 返回列表</button><p class="empty">${listLoading?'正在加载这份回忆…':'记录已删除或你没有访问权限。'}</p>`;$('#backDetail').onclick=leaveDetails;return}
- const pics=travelPhotos(item),cover=item.image||item.coverImage;
- const visual=item.cat==='travel'?`<div class="orbit-gallery">${pics.length?pics.map((url,i)=>`<button type="button" class="orbit-photo ${i===0?'orbit-cover':''}" data-photo="${esc(url)}" aria-label="查看${i===0?'封面':'旅行照片 '+i}"><img src="${esc(url)}" alt="${esc(item.title)}${i===0?'封面':'旅行照片 '+i}"></button>`).join(''):'<div class="orbit-empty">上传照片，收藏这次旅程</div>'}</div>`:`<div class="detail-cover">${cover?`<button type="button" data-photo="${esc(cover)}" aria-label="查看封面"><img src="${esc(cover)}" alt="${esc(item.title)}封面"></button>`:'<span>暂无封面</span>'}</div>`;
- host.innerHTML=`<div class="detail-toolbar"><button class="btn secondary" id="backDetail">← 返回列表</button><button class="btn" id="editDetail">编辑这份回忆</button></div><section class="detail-page ${item.cat==='travel'?'travel-detail':''}">${visual}<div class="detail-copy"><p class="eyebrow">${esc(cats[item.cat][1])} · ${esc(item.sub)}</p><h1>${esc(item.title)}</h1><p class="subtitle">${esc(status[item.state])} · ★ ${item.score?Number(item.score).toFixed(1):'待评分'}</p>${genreBadges(item)}<p>${esc(item.desc)}</p>${progressCard(item)}<dl><dt>${item.cat==='travel'?'旅行日期':'日期'}</dt><dd>${esc(item.cat==='travel'?travelDates(item):item.date||'尚未填写')}</dd>${item.place?`<dt>地点</dt><dd>${esc(item.place)}</dd>`:''}${item.brand?`<dt>品牌</dt><dd>${esc(item.brand)}</dd>`:''}</dl>${item.musicUrl?`<a class="btn secondary" target="_blank" rel="noopener noreferrer" href="${esc(item.musicUrl)}">在 QQ 音乐打开 ↗</a>`:''}<h3>我们的感想</h3><p class="detail-note">${esc(item.note||'还没有写下感想。')}</p></div></section>${item.cat==='travel'?`<section class="detail-panel"><h2>旅途相册</h2><p class="subtitle">${pics.length} / 10 张（含封面）。第一张居中，其余环绕。照片存于公开 R2，持链接可访问。</p><button class="btn secondary travel-upload-button" id="travelUploadButton" type="button" ${galleryBusy?'disabled':''}>＋ 上传旅行照片</button><input id="travelPhotoUpload" type="file" accept="image/jpeg,image/png,image/webp" aria-label="选择旅行照片" multiple hidden ${galleryBusy?'disabled':''}><p id="galleryMessage" role="status">${galleryBusy?'正在上传照片，请稍候…':''}</p><div class="photo-manage">${pics.map((url,i)=>`<div><img src="${esc(url)}" alt="照片 ${i+1}"><button type="button" class="btn secondary" data-remove-photo="${i}" ${galleryBusy?'disabled':''}>移除${i===0?'封面':'照片'}</button></div>`).join('')}</div><h2>入住记录</h2><div class="hotels-detail">${(item.hotels||[]).map(h=>`<article><h3>${esc(h.name)}</h3><p>${esc(h.checkIn||'未填入住日期')} — ${esc(h.checkOut||'未填退房日期')}</p><p>${esc(h.note)}</p></article>`).join('')||'<p class="subtitle">编辑这份回忆，可添加多家酒店。</p>'}</div></section>`:''}`;
- $('#backDetail').onclick=leaveDetails;$('#editDetail').onclick=()=>openForm(id);bindDetailImages();
- if(item.cat==='travel'){$('#travelUploadButton').onclick=()=>$('#travelPhotoUpload').click();$('#travelPhotoUpload').onchange=e=>void uploadTravelPhotos(id,[...e.target.files]);host.querySelectorAll('[data-remove-photo]').forEach(b=>b.onclick=()=>void removeTravelPhoto(id,Number(b.dataset.removePhoto)))}
-}
-function setupTravelEditor(item){
- let hotels=(item.hotels|| (item.hotel?[{name:item.hotel}]:[])).map(h=>({...h}));
- const host=$('#hotelEditor');
- function draw(){host.innerHTML=`<h3>入住酒店（可添加多家）</h3><input type="hidden" name="hotelsJSON"><div>${hotels.map((h,i)=>`<div class="hotel-row"><label>酒店名称<input data-hotel="${i}" data-key="name" maxlength="200" value="${esc(h.name)}"></label><label>入住日期<input type="date" data-hotel="${i}" data-key="checkIn" value="${esc(h.checkIn||'')}"></label><label>退房日期<input type="date" data-hotel="${i}" data-key="checkOut" value="${esc(h.checkOut||'')}"></label><label>备注<input data-hotel="${i}" data-key="note" maxlength="500" value="${esc(h.note||'')}"></label><button type="button" class="btn secondary" data-remove-hotel="${i}">移除酒店</button></div>`).join('')}</div><button class="btn secondary" type="button" id="addHotel">＋ 添加酒店</button>`;
- const sync=()=>{$('[name=hotelsJSON]').value=JSON.stringify(hotels)};sync();
- host.querySelectorAll('[data-hotel]').forEach(input=>input.oninput=()=>{hotels[Number(input.dataset.hotel)][input.dataset.key]=input.value;sync()});
- host.querySelectorAll('[data-remove-hotel]').forEach(b=>b.onclick=()=>{hotels.splice(Number(b.dataset.removeHotel),1);draw()});
- $('#addHotel').onclick=()=>{if(hotels.length>=20){toast('每次行程最多添加 20 家酒店');return}hotels.push({name:'',checkIn:'',checkOut:'',note:''});draw()};
- }draw();
- const start=$('[name=date]'),end=$('[name=endDate]');end.min=start.value;start.oninput=()=>{end.min=start.value};
-}
-async function compressTravelImage(file){
- const address=URL.createObjectURL(file);
- try{const picture=new Image();await new Promise((resolve,reject)=>{picture.onload=resolve;picture.onerror=()=>reject(new Error('无法读取图片，请更换文件'));picture.src=address});
- const scale=Math.min(1,1000/Math.max(picture.naturalWidth,picture.naturalHeight)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(picture.naturalWidth*scale));canvas.height=Math.max(1,Math.round(picture.naturalHeight*scale));const context=canvas.getContext('2d');if(!context)throw Error('浏览器无法压缩图片');context.fillStyle='#1b1c22';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(picture,0,0,canvas.width,canvas.height);
- return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('图片压缩失败')),'image/jpeg',0.75));
- }finally{URL.revokeObjectURL(address)}
-}
-async function uploadR2Photo(blob,name){
- const {data,error}=await cloud.auth.getSession();if(error)throw error;if(!data.session?.access_token)throw Error('登录已失效，请重新登录');
- async function request(url,options,timeout){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);try{return await fetch(url,{...options,signal:controller.signal})}finally{clearTimeout(timer)}}
- const response=await request(COVER_UPLOAD_WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+data.session.access_token},body:JSON.stringify({filename:(name.replace(/\.[^.]+$/,'').slice(0,140)||'travel')+'.jpg',contentType:'image/jpeg'})},20000);
- let result;try{result=await response.json()}catch{throw Error(`Worker 返回无效 JSON（HTTP ${response.status}）`)}if(!response.ok)throw Error(result.error||`Worker 请求失败（HTTP ${response.status}）`);
- const upload=new URL(result.uploadUrl),publicAddress=new URL(result.publicUrl);
- if(upload.protocol!=='https:'||upload.username||upload.password||!upload.hostname.endsWith('.r2.cloudflarestorage.com')||!upload.pathname.startsWith('/covers/covers/')||publicAddress.origin!==new URL(R2_PUBLIC_BASE_URL).origin||!publicAddress.pathname.startsWith('/covers/'))throw Error('上传地址或公开域名不符合配置');
- const put=await request(upload.href,{method:'PUT',headers:{'Content-Type':'image/jpeg'},body:blob},120000);if(!put.ok)throw Error(`R2 上传失败（HTTP ${put.status}），请检查 CORS 和签名`);return publicAddress.href;
-}
-async function uploadTravelPhotos(id,files){
- if(galleryBusy||writeBusy||coverBusy)return;
- const item=records.find(r=>r.id===id),row=rawRows.get(id);if(!item||!row)return;
- const existing=travelPhotos(item),remaining=10-existing.length,message=$('#galleryMessage');if(!files.length)return;
- if(files.length>remaining){message.textContent=`最多十张（含封面），还可上传 ${remaining} 张。`;return}
- if(files.some(f=>!['image/jpeg','image/png','image/webp'].includes(f.type)||f.size>20*1024*1024)){message.textContent='请选择每张小于 20 MB 的 JPG、PNG 或 WebP 图片。';return}
- const epoch=cloudEpoch;galleryBusy=true;render();
- try{requireCloudUser();const uploaded=[];for(const [i,file] of files.entries()){
- if(epoch!==cloudEpoch)throw Error('登录状态已变化，请重新打开记录');
- const status=$('#galleryMessage');if(status)status.textContent=`正在上传 ${i+1} / ${files.length} 张…`;
- uploaded.push(await uploadR2Photo(await compressTravelImage(file),file.name));}
- if(epoch!==cloudEpoch)throw Error('登录状态已变化，请重新打开记录');
- const all=[...existing,...uploaded],data={...item,image:all[0],photos:all.slice(1)};delete data.id;
- await saveSharedItem(data,id,row.content);if(epoch!==cloudEpoch)return;await loadSharedItems();toast('旅行照片已保存并同步');
- }catch(error){if(epoch===cloudEpoch){const status=$('#galleryMessage');if(status)status.textContent='上传失败：'+friendlyError(error);toast('上传失败：'+friendlyError(error));}}
- finally{galleryBusy=false;if(epoch===cloudEpoch&&detailId()===id){const status=$('#galleryMessage')?.textContent||'';render();if(status.startsWith('上传失败'))$('#galleryMessage').textContent=status;}}
-}
-async function removeTravelPhoto(id,index){
- if(galleryBusy||writeBusy||coverBusy||!confirm('从这份回忆中移除照片？R2 原文件不会被删除。'))return;
- const item=records.find(r=>r.id===id),row=rawRows.get(id);if(!item||!row)return;const epoch=cloudEpoch;galleryBusy=true;
- try{const pics=travelPhotos(item);pics.splice(index,1);const data={...item,image:pics[0]||'',photos:pics.slice(1)};delete data.id;await saveSharedItem(data,id,row.content);if(epoch===cloudEpoch)await loadSharedItems();}
- catch(error){if(epoch===cloudEpoch)toast(friendlyError(error))}finally{galleryBusy=false;if(epoch===cloudEpoch)render()}
-}
-// 仅向 QQ 官方固定 API 发起 JSONP；分享地址需严格校验，不能作为脚本地址使用。
-function qqShareInfo(text){
- const match=String(text).match(/https?:\/\/[^\s<>"'，。)）]+/i);if(!match)throw Error('请粘贴 QQ 音乐分享链接或完整分享文字');
- const url=new URL(match[0]);if(url.protocol!=='https:'||!(url.hostname==='y.qq.com'||url.hostname.endsWith('.y.qq.com'))||url.username||url.password)throw Error('仅支持 QQ 音乐的 https 分享链接');
- const path=url.pathname,album=/\/album(?:Detail)?\/([A-Za-z0-9]+)/i.exec(path)?.[1]||url.searchParams.get('albummid'),mid=/\/song(?:Detail)?\/([A-Za-z0-9]+)/i.exec(path)?.[1]||url.searchParams.get('songmid')||url.searchParams.get('mid');
- return {url:url.href,mid:mid&&/^[A-Za-z0-9]+$/.test(mid)?mid:'',album:album&&/^[A-Za-z0-9]+$/.test(album)?album:'',songId:/^\d+$/.test(url.searchParams.get('songid')||'')?url.searchParams.get('songid'):'',title:/《([^》]+)》/.exec(text)?.[1]||'',artist:/分享\s*(.*?)\s*的(?:单曲|歌曲|专辑)/.exec(text)?.[1]||''};
-}
-function qqJSONP(path,params,callbackParam='callback'){
- return new Promise((resolve,reject)=>{const callback='__twoUsQQ_'+crypto.randomUUID().replaceAll('-',''),url=new URL(path,'https://c.y.qq.com');if(url.origin!=='https://c.y.qq.com'){reject(Error('音乐接口地址不合法'));return}
- Object.entries({...params,format:'jsonp',[callbackParam]:callback}).forEach(([key,value])=>url.searchParams.set(key,value));
- const script=document.createElement('script');let timer;const clean=()=>{clearTimeout(timer);delete window[callback];script.remove()};window[callback]=data=>{clean();resolve(data)};script.onerror=()=>{clean();reject(Error('QQ 音乐接口无法访问，请检查网络或手动填写'))};timer=setTimeout(()=>{clean();reject(Error('QQ 音乐读取超时，可手动填写音乐条目'))},12000);script.src=url.href;document.head.append(script);
- });
-}
-async function readQQMusic(text){
- const info=qqShareInfo(text);
- if(info.album){const response=await qqJSONP('/v8/fcg-bin/fcg_v8_album_info_cp.fcg',{albummid:info.album},'jsonpCallback'),data=response.data;if(response.code!==0||!data)throw Error('未能读取专辑，请手动填写');return {title:data.name||data.albumname||info.title,desc:data.singername||'',image:`https://y.gtimg.cn/music/photo_new/T002R500x500M000${info.album}.jpg`,musicUrl:info.url,sub:'专辑'}}
- if(!info.mid&&!info.songId&&info.title){const result=await qqJSONP('/soso/fcgi-bin/client_search_cp',{p:1,n:5,w:info.title+' '+info.artist},'jsonpCallback');const found=result.data?.song?.list?.find(s=>s.songname===info.title&&(!info.artist||s.singer?.some(a=>a.name===info.artist)));info.mid=found?.songmid||'';if(!info.mid)return {title:info.title,desc:info.artist,image:'',musicUrl:info.url,sub:'单曲',partial:true};}
- if(!info.mid&&!info.songId)throw Error('短链接无法直接识别，请复制包含歌名的完整分享文字，或打开后复制歌曲／专辑详情链接');
- const result=await qqJSONP('/v8/fcg-bin/fcg_play_single_song.fcg',info.mid?{songmid:info.mid,tpl:'yqq_song_detail'}:{songid:info.songId,tpl:'yqq_song_detail'}),song=result.data?.[0];if(result.code!==0||!song)throw Error('未能读取歌曲，请检查链接或手动填写');
- return {title:song.name||song.title||info.title,desc:(song.singer||[]).map(s=>s.name).join(' / ')+(song.album?.name?' · '+song.album.name:''),image:song.album?.mid?`https://y.gtimg.cn/music/photo_new/T002R500x500M000${song.album.mid}.jpg`:'',musicUrl:info.url,sub:'单曲'};
-}
-function setupMusicImport(){
- const button=$('#readQQMusic');button.onclick=async()=>{const epoch=cloudEpoch;button.disabled=true;$('#qqMessage').textContent='正在读取 QQ 音乐…';try{const item=await readQQMusic($('#qqShareInput').value||$('[name=musicUrl]').value);if(epoch!==cloudEpoch||!button.isConnected)return;for(const key of ['title','desc','musicUrl','sub'])$('[name='+key+']').value=item[key]||'';if(item.image){$('[name=image]').value=item.image;$('[name=image]').dispatchEvent(new Event('input'))}$('#qqMessage').textContent=item.partial?'已读取分享文字，封面请手动补充；确认后保存。':'已读取音乐信息，确认后点击保存记录。';}catch(error){if(button.isConnected)$('#qqMessage').textContent=friendlyError(error)}finally{button.disabled=false}};
-}
-
-// 纪念日、心情瓶子和消息仅对成员开放；真正授权仍由新表 RLS 与 RPC 执行。
-const together={member:false,ready:false,error:'',milestones:[],moods:[],reads:new Set(),notifications:[],channel:null,version:0,busy:false,kind:'happy',timer:null};
-function resetTogether(){
- together.version++;if(together.channel&&cloud){void cloud.removeChannel(together.channel);together.channel=null;}clearTimeout(together.timer);
- Object.assign(together,{member:false,ready:false,error:'',milestones:[],moods:[],reads:new Set(),notifications:[],busy:false});
- for(const id of ['milestoneDialog','moodDialog','messageDialog']){const dialog=$('#'+id);if(dialog?.open)dialog.close();}
- updateTogetherBadges();
-}
-function socialError(error){return /PGRST202|PGRST205|schema cache|does not exist/.test(String(error?.code||'')+' '+String(error?.message||error))?'新功能尚未启用，请在 Supabase SQL Editor 执行 05-together-features.sql，然后刷新。':friendlyError(error)}
-function moodUnread(kind){return together.moods.filter(m=>m.kind===kind&&m.created_by!==cloudUser?.id&&!together.reads.has(m.id))}
-function unreadItem(id){return together.ready&&together.notifications.some(n=>n.item_id===id&&!n.read_at)}
-function itemUnreadBadge(id){return unreadItem(id)?'<span class="item-unread" aria-label="对方更新了此条目，有未读消息"></span>':''}
-function updateTogetherBadges(){
- const visible=!!cloudUser&&together.member;
- for(const id of ['togetherNav','messageButton']){const node=$('#'+id);if(node)node.hidden=!visible;}
- for(const kind of ['happy','sad']){const badge=$('#'+kind+'Unread'),count=moodUnread(kind).length;if(badge){badge.textContent=count;badge.hidden=!count;}}
- const count=together.notifications.filter(n=>!n.read_at).length,badge=$('#messageUnread');if(badge){badge.textContent=count>99?'99+':count;badge.hidden=!count;}
- const hint=$('#togetherHint');if(hint)hint.textContent=together.error;
- for(const id of ['happyBottle','sadBottle','messageButton']){const button=$('#'+id);if(button)button.disabled=!together.ready;}
- // 更新红点时不重绘整页，避免地图、上传和用户正在输入的内容丢失。
- if(typeof document.querySelectorAll==='function')document.querySelectorAll('#content [data-id]').forEach(card=>{const old=card.querySelector('.item-unread');if(old)old.remove();if(unreadItem(card.dataset.id))card.insertAdjacentHTML('afterbegin',itemUnreadBadge(card.dataset.id));});
-}
-async function allNotifications(){
- const rows=[];for(let start=0;;start+=500){const {data,error}=await cloud.from('item_notifications').select('id,actor_name,action,item_id,item_title,item_cat,created_at,read_at').eq('shared_id',CONFIG.SHARED_ID).eq('recipient_id',cloudUser.id).order('created_at',{ascending:false}).order('id',{ascending:false}).range(start,start+499);if(error)throw error;rows.push(...data);if(data.length<500)return rows;}
-}
-async function loadTogether(options={milestones:true}){
- if(!cloudUser||!cloud)return;
- const epoch=cloudEpoch,version=++together.version,uid=cloudUser.id;
- try{
-  const membership=await cloud.from('shared_members').select('user_id').eq('shared_id',CONFIG.SHARED_ID).eq('user_id',uid);if(membership.error)throw membership.error;
-  if(epoch!==cloudEpoch||version!==together.version)return;
-  if(!membership.data?.length){resetTogether();return}
-  together.member=true;updateTogetherBadges();
-  const [moods,notifications,milestones]=await Promise.all([
-   cloud.from('mood_entries').select('id,kind,content,created_by,created_at').eq('shared_id',CONFIG.SHARED_ID).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(200),
-   allNotifications(),options.milestones?cloud.from('milestones').select('id,title,date,repeat_yearly,is_relationship').eq('shared_id',CONFIG.SHARED_ID).order('date',{ascending:true}).order('id',{ascending:true}):Promise.resolve(null)
-  ]);
-  if(moods.error)throw moods.error;if(milestones?.error)throw milestones.error;
-  const ids=(moods.data||[]).map(m=>m.id);const reads=ids.length?await cloud.from('mood_reads').select('mood_id').eq('user_id',uid).in('mood_id',ids):{data:[],error:null};if(reads.error)throw reads.error;
-  if(epoch!==cloudEpoch||version!==together.version)return;
-  together.moods=moods.data||[];together.notifications=notifications;together.reads=new Set((reads.data||[]).map(r=>r.mood_id));if(milestones)together.milestones=milestones.data||[];
-  together.ready=true;together.error='';updateTogetherBadges();refreshMilestoneHome();
-  if($('#moodDialog')?.open)renderBottleContents();if($('#messageDialog')?.open)renderMessages();
-  if(!together.channel){const reload=()=>{if(epoch!==cloudEpoch)return;clearTimeout(together.timer);together.timer=setTimeout(()=>void loadTogether({milestones:false}),120)};
-   together.channel=cloud.channel('together-'+uid)
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'mood_entries',filter:`shared_id=eq.${CONFIG.SHARED_ID}`},reload)
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'mood_reads',filter:`user_id=eq.${uid}`},reload)
-    .on('postgres_changes',{event:'INSERT',schema:'public',table:'item_notifications',filter:`recipient_id=eq.${uid}`},reload)
-    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'item_notifications',filter:`recipient_id=eq.${uid}`},reload)
-    .subscribe(status=>{if(epoch!==cloudEpoch)return;if(status==='SUBSCRIBED')reload();if(['CHANNEL_ERROR','TIMED_OUT'].includes(status)){$('#togetherHint').textContent='心情与消息连接暂时中断，重连或回到页面时会重新读取。'}});
-  }
- }catch(error){if(epoch===cloudEpoch&&version===together.version){together.ready=false;together.error=socialError(error);together.moods=[];together.notifications=[];updateTogetherBadges();refreshMilestoneHome();}}
-}
-function localDay(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`}
-function dayIndex(value){if(!/^\d{4}-\d{2}-\d{2}$/.test(value||''))return NaN;const [y,m,d]=value.split('-').map(Number),date=new Date(Date.UTC(y,m-1,d));return date.getUTCFullYear()===y&&date.getUTCMonth()===m-1&&date.getUTCDate()===d?date.getTime()/86400000:NaN}
-function nextMilestoneDay(item,today=localDay()){
- const start=dayIndex(item.date),now=dayIndex(today);if(!Number.isFinite(start)||!Number.isFinite(now))return NaN;if(!item.repeat_yearly)return start;
- const [originYear,m,d]=item.date.split('-').map(Number);let year=Math.max(Number(today.slice(0,4)),originYear);
- const inYear=y=>Date.UTC(y,m-1,Math.min(d,new Date(Date.UTC(y,m,0)).getUTCDate()))/86400000;
- let candidate=inYear(year);if(candidate<now)candidate=inYear(++year);return candidate;
-}
-function milestoneCaption(item,today=localDay()){
- const now=dayIndex(today),start=dayIndex(item.date),next=nextMilestoneDay(item,today),delta=next-now;
- if(!Number.isFinite(delta))return '请检查日期';
- const togetherDays=item.is_relationship&&now>=start?`在一起第 ${now-start+1} 天 · `:'';
- return togetherDays+(delta===0?'今天就是纪念日':delta>0?`距离${item.repeat_yearly?'下次纪念日':'这一天'}还有 ${delta} 天`:`已经过去 ${Math.abs(delta)} 天`);
-}
-function milestoneHome(){
- if(!together.member)return '';
- const sorted=[...together.milestones].sort((a,b)=>Number(b.is_relationship)-Number(a.is_relationship)||nextMilestoneDay(a)-nextMilestoneDay(b));
- return `<section class="milestone-home"><div class="heading"><h2>♡ 我们的纪念日</h2><button id="manageMilestones" class="btn secondary" type="button" ${together.ready?'':'disabled'}>管理纪念日</button></div>${together.ready?`<div class="milestone-grid">${sorted.slice(0,4).map(m=>`<article><h3>${esc(m.title)}</h3><strong>${esc(milestoneCaption(m))}</strong><small>${esc(m.date)}${m.repeat_yearly?' · 每年纪念':''}</small></article>`).join('')||'<p class="subtitle">添加在一起的日子、第一次约会或生日，把值得期待的日子留在这里。</p>'}</div>`:`<p class="subtitle">${esc(together.error||'正在读取纪念日…')}</p>`}</section>`;
-}
-function refreshMilestoneHome(){const host=$('#milestoneHome');if(host){host.innerHTML=milestoneHome();const button=$('#manageMilestones');if(button)button.onclick=openMilestones;}}
-function memberFeature(){if(!cloudUser||!together.member||!together.ready){toast(together.error||'请先登录并加入共享空间');return false}return true}
-function openMilestones(){if(!memberFeature())return;resetMilestoneForm();renderMilestoneList();$('#milestoneDialog').showModal();}
-function resetMilestoneForm(){const form=$('#milestoneForm');form.reset();form.dataset.id='';$('#milestoneDate').value=localDay();$('#milestoneRepeat').checked=true;$('#milestoneMessage').textContent='';}
-function renderMilestoneList(){
- $('#milestoneList').innerHTML=together.milestones.map(m=>`<article><div><b>${esc(m.title)}</b><p>${esc(m.date)} · ${esc(milestoneCaption(m))}</p></div><div class="social-actions"><button class="btn secondary" type="button" data-edit-milestone="${esc(m.id)}">编辑</button><button class="btn secondary" type="button" data-delete-milestone="${esc(m.id)}">删除</button></div></article>`).join('')||'<p class="subtitle">还没有纪念日，先添加一个吧。</p>';
- $('#milestoneList').querySelectorAll('[data-edit-milestone]').forEach(button=>button.onclick=()=>{const m=together.milestones.find(m=>m.id===button.dataset.editMilestone);if(!m)return;$('#milestoneForm').dataset.id=m.id;$('#milestoneTitle').value=m.title;$('#milestoneDate').value=m.date;$('#milestoneRepeat').checked=m.repeat_yearly;$('#milestoneRelationship').checked=m.is_relationship;$('#milestoneTitle').focus();});
- $('#milestoneList').querySelectorAll('[data-delete-milestone]').forEach(button=>button.onclick=()=>void deleteMilestone(button.dataset.deleteMilestone));
-}
-async function saveMilestone(event){
- event.preventDefault();if(!memberFeature()||together.busy)return;
- const title=$('#milestoneTitle').value.trim(),date=$('#milestoneDate').value,relationship=$('#milestoneRelationship').checked,id=$('#milestoneForm').dataset.id;
- if(!title||title.length>80||!Number.isFinite(dayIndex(date))||date<'1900-01-01'||date>'2200-12-31'){$('#milestoneMessage').textContent='请填写名称和有效日期（1900–2200 年）。';return}
- if(relationship&&dayIndex(date)>dayIndex(localDay())){$('#milestoneMessage').textContent='在一起的开始日期不能晚于今天。';return}
- const epoch=cloudEpoch;together.busy=true;$('#milestoneSave').disabled=true;
- try{const payload={title,date,repeat_yearly:$('#milestoneRepeat').checked,is_relationship:relationship};
- const result=id?await cloud.from('milestones').update(payload).eq('id',id).eq('shared_id',CONFIG.SHARED_ID).select('id'):await cloud.from('milestones').insert({...payload,shared_id:CONFIG.SHARED_ID}).select('id');
- if(result.error)throw result.error;if(!result.data?.length)throw Error('纪念日已删除或没有修改权限');if(epoch!==cloudEpoch)return;
- await loadTogether();if(epoch!==cloudEpoch)return;resetMilestoneForm();renderMilestoneList();$('#milestoneMessage').textContent='已保存纪念日';
- }catch(error){if(epoch===cloudEpoch)$('#milestoneMessage').textContent=error.code==='23505'?'已设置在一起的日子，请编辑原来的记录。':socialError(error);}
- finally{if(epoch===cloudEpoch){together.busy=false;$('#milestoneSave').disabled=false;}}
-}
-async function deleteMilestone(id){
- if(!memberFeature()||together.busy||!confirm('删除这条纪念日？'))return;const epoch=cloudEpoch;together.busy=true;
- try{const {data,error}=await cloud.from('milestones').delete().eq('id',id).eq('shared_id',CONFIG.SHARED_ID).select('id');if(error)throw error;if(!data?.length)throw Error('纪念日已删除或没有权限');if(epoch!==cloudEpoch)return;await loadTogether();if(epoch===cloudEpoch){resetMilestoneForm();renderMilestoneList();}}
- catch(error){if(epoch===cloudEpoch)$('#milestoneMessage').textContent=socialError(error)}finally{if(epoch===cloudEpoch)together.busy=false;}
-}
-function personLabel(id){const person=sharedPeople.find(p=>p.user_id===id);return person?profileName(person,sharedPeople.indexOf(person)):id===cloudUser?.id?'我':'对方'}
-function socialTime(value){const date=new Date(value);return Number.isNaN(date.getTime())?'':date.toLocaleString('zh-CN',{hour12:false})}
-function renderBottleContents(){
- const kind=together.kind,entries=together.moods.filter(m=>m.kind===kind),unread=moodUnread(kind).length;
- $('#moodTitle').textContent=kind==='happy'?'好心情瓶子':'坏心情瓶子';$('#moodCount').textContent=`${entries.length} / 100 条 · ${unread} 条未读`;
- const jar=$('#moodJar');jar.className='mood-jar '+kind;jar.style.setProperty('--fill',entries.length+'%');jar.setAttribute('aria-label',`${kind==='happy'?'好':'坏'}心情瓶，${entries.length} / 100 条`);
- $('#moodList').innerHTML=entries.map(m=>`<article class="mood-entry"><div><b>${esc(personLabel(m.created_by))}</b>${m.created_by!==cloudUser?.id&&!together.reads.has(m.id)?'<span class="unread-pill">未读</span>':''}<time>${esc(socialTime(m.created_at))}</time></div><p>${esc(m.content)}</p></article>`).join('')||'<p class="empty">瓶子还是空的，放入第一份心情吧。</p>';
- $('#moodRead').hidden=!unread;$('#moodSubmit').disabled=together.busy||entries.length>=100;$('#moodFull').textContent=entries.length>=100?'瓶子已满，原有心情会一直保留。':'只分享心情，不设置回复或聊天功能。';
-}
-async function readBottle(kind){
- const ids=moodUnread(kind).map(m=>m.id);if(!ids.length||!memberFeature())return;const epoch=cloudEpoch;
- try{const {error}=await cloud.rpc('read_moods',{p_shared_id:CONFIG.SHARED_ID,p_ids:ids});if(error)throw error;if(epoch!==cloudEpoch)return;ids.forEach(id=>together.reads.add(id));updateTogetherBadges();if($('#moodDialog').open&&together.kind===kind)renderBottleContents();}
- catch(error){if(epoch===cloudEpoch)$('#moodMessage').textContent=socialError(error)}
-}
-function openBottle(kind){if(!memberFeature())return;together.kind=kind;$('#moodText').value='';$('#moodMessage').textContent='';renderBottleContents();$('#moodDialog').showModal();void readBottle(kind);}
-async function addMood(event){
- event.preventDefault();if(!memberFeature()||together.busy)return;const content=$('#moodText').value.trim();if(!content||content.length>1000){$('#moodMessage').textContent='请填写 1–1000 字的心情。';return}
- const epoch=cloudEpoch,kind=together.kind;together.busy=true;$('#moodSubmit').disabled=true;
- try{const {error}=await cloud.rpc('add_mood',{p_shared_id:CONFIG.SHARED_ID,p_kind:kind,p_content:content});if(error)throw error;if(epoch!==cloudEpoch)return;$('#moodText').value='';await loadTogether({milestones:false});if(epoch===cloudEpoch)$('#moodMessage').textContent='心情已放进瓶子，对方打开后可以看到。';}
- catch(error){if(epoch===cloudEpoch)$('#moodMessage').textContent=socialError(error)}finally{if(epoch===cloudEpoch){together.busy=false;renderBottleContents();}}
-}
-async function readNotifications(ids){
- const target=[...new Set(ids)].filter(id=>together.notifications.some(n=>n.id===id&&!n.read_at));if(!target.length||!together.ready)return;const epoch=cloudEpoch;
- try{for(let i=0;i<target.length;i+=500){const {error}=await cloud.rpc('read_item_notifications',{p_shared_id:CONFIG.SHARED_ID,p_ids:target.slice(i,i+500)});if(error)throw error;if(epoch!==cloudEpoch)return;}
- const now=new Date().toISOString();together.notifications.forEach(n=>{if(target.includes(n.id))n.read_at=n.read_at||now});updateTogetherBadges();if($('#messageDialog')?.open)renderMessages();
- }catch(error){if(epoch===cloudEpoch){toast(socialError(error));if($('#messageDialog')?.open)$('#notificationStatus').textContent=socialError(error);}}
-}
-function markItemRead(id){return readNotifications(together.notifications.filter(n=>n.item_id===id&&!n.read_at).map(n=>n.id))}
-function renderMessages(){
- const rows=together.notifications.slice(0,50);$('#notificationList').innerHTML=rows.map(n=>`<button type="button" class="notification-row ${n.read_at?'':'is-unread'}" data-notification="${esc(n.id)}"><span>${n.read_at?'':'<i class="item-unread" aria-label="未读"></i>'}${esc(n.actor_name)}${{INSERT:'添加了',UPDATE:'修改了',DELETE:'删除了'}[n.action]||'更新了'}「${esc(n.item_title)}」</span><time>${esc(socialTime(n.created_at))}</time></button>`).join('')||'<p class="empty">还没有来自对方的条目更新。</p>';
- $('#notificationStatus').textContent=together.notifications.length>50?'显示最近 50 条，条目上的红点会保留至阅读。':'';
- $('#notificationList').querySelectorAll('[data-notification]').forEach(button=>button.onclick=()=>{const n=together.notifications.find(n=>n.id===button.dataset.notification);if(!n)return;void readNotifications([n.id]);$('#messageDialog').close();if(records.some(r=>r.id===n.item_id))openDetails(n.item_id);else{go(Object.hasOwn(cats,n.item_cat)?n.item_cat:'home');toast('这条记录已删除，消息记录仍保留');}});
-}
-function openMessages(){if(!memberFeature())return;renderMessages();$('#messageDialog').showModal();void readNotifications(together.notifications.slice(0,50).map(n=>n.id));}
-function initTogetherUI(){
- $('#happyBottle').onclick=()=>openBottle('happy');$('#sadBottle').onclick=()=>openBottle('sad');$('#messageButton').onclick=openMessages;
- $('#milestoneForm').onsubmit=saveMilestone;$('#newMilestone').onclick=resetMilestoneForm;$('#milestoneRelationship').onchange=()=>{if($('#milestoneRelationship').checked)$('#milestoneRepeat').checked=true};
- $('#moodForm').onsubmit=addMood;$('#moodRead').onclick=()=>void readBottle(together.kind);$('#readAllNotifications').onclick=()=>void readNotifications(together.notifications.map(n=>n.id));
- for(const id of ['milestoneDialog','moodDialog','messageDialog']){const dialog=$('#'+id);dialog.querySelector('[data-social-close]').onclick=()=>{if(!together.busy)dialog.close()};dialog.addEventListener('cancel',event=>{if(together.busy)event.preventDefault()});dialog.addEventListener('click',event=>{if(event.target===dialog&&!together.busy)dialog.close()});}
- // 跨天、重回页面与恢复网络时重新读取；纪念日不建立 Realtime 订阅。
- window.addEventListener('online',()=>{if(cloudUser)void loadTogether()});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cloudUser)void loadTogether()});
- setInterval(()=>{if(!document.hidden&&cloudUser)refreshMilestoneHome()},60000);
-}
-
-void initSharedCloud();
-
-</script></body></html>
+    <div id="featureDialogs"></div
+    ><script src="./supabase-config.js"></script
+    ><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script
+    ><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="./src/main.js"></script></body
+></html>

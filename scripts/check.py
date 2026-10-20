@@ -1,56 +1,39 @@
-"""验证前端语法与数据层，不连接真实 Supabase。"""
+"""静态检查与真实模块测试；不读取真实配置或访问正式数据库。"""
 from pathlib import Path
-import json
 import re
 import shutil
 import subprocess
-import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 html = (ROOT / 'shared.html').read_text()
-assert 'const seeds' not in html and 'switchCatalog' not in html
-assert ' onerror=' not in html
-assert 'role="dialog" aria-modal="true"' in html
-assert 'searchDebounce=setTimeout' in html
-assert "event:'UPDATE'" in html
-assert 'src="./supabase-config.js"' in html
-assert 'sb_publishable_' not in html
-assert not re.search(r'new Date\(2026\s*,\s*9\s*,\s*1\)', html)
-assert 'ACCESS_MODE' in (ROOT / 'supabase-config.example.js').read_text()
-
-script = '\n'.join(re.findall(r'<script>(.*?)</script>', html, re.S))
-start = html.index('// 配置唯一来源')
-end = html.index('void initSharedCloud();', start) + len('void initSharedCloud();')
-backend = re.search(r'function hasProgress\(r\)\{[^\n]+', html).group(0) + '\n' + html[start:end].replace('void initSharedCloud();', '')
-fixture = (ROOT / 'tests/cloud-stubs.js').read_text() + backend + (ROOT / 'tests/cloud-assertions.js').read_text()
-
-menu_fixture=(ROOT / 'tests/menu-stubs.js').read_text() + backend + (ROOT / 'tests/menu-events.js').read_text()
+assert not re.search(r'<script>(.*?)</script>', html, re.S), '业务脚本不能回到 HTML 内'
+assert '<style>' not in html, '样式必须放入 styles/'
+assert 'type="module"' in html and './src/main.js' in html
+assert './styles/app.css' in html and './supabase-config.js' in html
+source_files = list((ROOT / 'src').rglob('*.js'))
+project_map = (ROOT / 'project map.md').read_text()
+for path in source_files:
+    assert path.relative_to(ROOT).as_posix() in project_map, f'新增源码必须在 project map.md 补功能行：{path.relative_to(ROOT)}'
+for path in (ROOT / 'styles').glob('*.css'):
+    assert path.relative_to(ROOT).as_posix() in project_map, f'样式需登记地图：{path.name}'
+source = '\n'.join(p.read_text() for p in source_files)
+assert 'switchCatalog' not in source and 'const seeds' not in source
+assert ' onerror=' not in source
+assert 'sb_publishable_' not in source
+assert "replace_shared_item" in source and 'p_expected_content' in source
+assert "event: 'UPDATE'" in source or 'event: "UPDATE"' in source
+assert 'setTimeout' in source and '200' in source
+for p in source_files:
+    text = p.read_text()
+    for ref in re.findall(r'from\s+[\'\"]([^\'\"]+)[\'\"]', text):
+        if ref.startswith('.'):
+            assert (p.parent / ref).is_file(), f'模块引用不存在：{p}: {ref}'
 
 node = shutil.which('node')
-jsc = Path('/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc')
-if not node and not jsc.exists():
-    raise SystemExit('源码检查通过；运行 JS 检查还需要 Node.js 或 macOS JavaScriptCore。')
-
-with tempfile.TemporaryDirectory(prefix='two-us-check-') as directory:
-    folder = Path(directory)
-    syntax = folder / 'syntax.js'
-    syntax.write_text(script)
-    test = folder / 'data-layer.js'
-    menu_test = folder / 'menu-events.js'
-    menu_test.write_text(menu_fixture)
-    if node:
-        # 兼容现有测试的 JavaScriptCore 输出接口。
-        test.write_text('const print=console.log;const quit=code=>process.exit(code);\n' + fixture)
-        subprocess.run([node, '--check', str(syntax)], check=True)
-        subprocess.run([node, str(test)], check=True)
-        subprocess.run([node, str(menu_test)], check=True)
-        subprocess.run([node, str(ROOT / 'tests/cover-upload.mjs')], check=True)
-        subprocess.run([node, str(ROOT / 'tests/travel-map.mjs')], check=True)
-        subprocess.run([node, str(ROOT / 'tests/details-and-music.mjs')], check=True)
-    else:
-        syntax.write_text('new Function(' + json.dumps(script) + ');print("PASS: script syntax");')
-        test.write_text(fixture)
-        subprocess.run([str(jsc), str(syntax)], check=True)
-        subprocess.run([str(jsc), str(test)], check=True)
-        subprocess.run([str(jsc), str(menu_test)], check=True)
-print('PASS: 源码、语法和模拟数据层检查完成；未连接真实数据库。')
+if not node:
+    raise SystemExit('原生模块检查需要 Node.js 22；安装后运行 npm ci --ignore-scripts && npm test。')
+for path in source_files:
+    subprocess.run([node, '--check', str(path)], check=True)
+for name in ['app-contract.mjs', 'cloud.mjs', 'menu.mjs', 'cover-upload.mjs', 'travel-map.mjs', 'details-and-music.mjs', 'ui-parity.mjs', 'build.mjs']:
+    subprocess.run([node, str(ROOT / 'tests' / name)], check=True)
+print('PASS: 静态结构、模块语法、功能及构建检查；未连接正式数据库。')

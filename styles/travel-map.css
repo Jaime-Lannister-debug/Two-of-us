@@ -1,0 +1,32 @@
+/* Leaflet 瓦片、弹出提示和控件必须封闭在地图自身层级，不能覆盖编辑弹窗。 */
+.map {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+}
+.modal {
+  z-index: 2000;
+}
+#profileModal {
+  z-index: 2100;
+}
+.map-load-status {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 32px;
+  z-index: 1000;
+  background: #202127ee;
+  color: #ebdbd0;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  pointer-events: none;
+}
+.map-load-status[hidden] {
+  display: none;
+}
+.map-guide {
+  margin: -12px 0 26px;
+}

@@ -1,0 +1,113 @@
+.poster.wrap-cover img {
+  width: 210%;
+  max-width: none;
+  height: 100%;
+  object-fit: fill;
+  position: relative;
+  left: -110%;
+}
+.poster.wrap-cover .poster-title {
+  display: none;
+}
+.poster.wrap-cover .tag {
+  top: auto;
+  bottom: 10px;
+  left: 9px;
+  font-size: 9px;
+  max-width: 68%;
+}
+.poster.wrap-cover .score {
+  bottom: 14px;
+}
+.poster:not(.wrap-cover) .cover-pending {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  color: #bca8ac;
+  font-size: 11px;
+}
+.poster.missing-cover .poster-title {
+  display: block;
+}
+.genre-badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 10px 0 3px;
+}
+.genre-badges span {
+  font-size: 10px;
+  color: #d0b7a6;
+  border: 1px solid #55463c;
+  border-radius: 5px;
+  padding: 3px 6px;
+  background: #2b2423;
+}
+.genre-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 18px 0 22px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.genre-filter select {
+  margin-left: 10px;
+  color: #ead0bd;
+  background: #24232a;
+  border: 1px solid #55483f;
+  border-radius: 7px;
+  padding: 9px 12px;
+  max-width: 200px;
+}
+.genre-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.genre-options .chip {
+  font-size: 11px;
+  padding: 6px 9px;
+}
+.cover-credit {
+  font-size: 11px;
+  grid-column: 1/-1;
+  margin: 0;
+}
+.cover-credit a {
+  color: #b79e8c;
+}
+.progress-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: #c6b6ae;
+  margin-top: 14px;
+}
+.progress {
+  height: 6px;
+  margin-top: 7px;
+  overflow: hidden;
+}
+.progress span {
+  background: linear-gradient(90deg, #d99d98, #efc49d);
+  transition: width 0.35s ease;
+}
+.progress-hint {
+  display: block;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 8px;
+}
+input[type='range'] {
+  accent-color: var(--accent);
+  padding: 8px 0;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress span {
+    transition: none;
+  }
+}

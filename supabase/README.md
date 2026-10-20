@@ -2,12 +2,12 @@
 
 ## 文件与运行
 
-- shared.html：完整网页，原生 HTML/JS，保持五个板块和原视觉动效。
+- shared.html：网页骨架；原生模块在 src/，样式在 styles/，功能定位见根目录 project map.md。
 - supabase-config.js：唯一运行配置来源。已配置包中直接提供；源码包中将 supabase-config.example.js 复制为此文件再填写。
-- 01-option-a.sql：初始化 / 迁移表、基础 RLS、SECURITY DEFINER 编辑 RPC、Realtime。schema.sql 是同内容的兼容副本。
+- 01-option-a.sql：首次初始化表、基础 RLS、编辑 RPC 与 Realtime；已有 B 的项目不要单独重跑。
 - 02-option-b-members.sql：在基础 SQL 上升级成员授权，附一次性邀请码 RPC。
 - 03-bootstrap-owner.sql：管理员手动指定第一位成员，执行前必须替换邮箱。
-- shared-cloud.js：网页内嵌云端逻辑的审阅副本；不需重复引入。
+- src/data/items.js 与 src/auth/controller.js：模块化后的数据访问、会话与条目订阅。
 
 在 Supabase 项目 SQL Editor 执行 SQL；无需浏览器数据库密码或 service_role。前端继续使用 publishable key（也兼容旧 anon key）。实际配置和已配置压缩包均通过 .gitignore 排除。不要将配置包提交公开仓库。
 
@@ -111,3 +111,8 @@ B 方案不把邀请 token 放在 URL 中。只需将邀请码通过你们自己
 9. 首页添加开始日、生日和第一次约会；当天为第 1 天；跨年、闰年与 2 月 29 日倒计时正确。另一人重新打开网页后能看到修改；纪念日无实时订阅。
 
 隔离 PostgreSQL 与 DOM 的上述核心验证已自动化，不代表已在正式 Supabase 和真实账号中执行。
+
+
+## 模块化维护
+
+2026-10-20 的工程化整理没有修改本目录 SQL 或正式数据库，不需新迁移。新路径与每项功能对应关系请读根目录 `project map.md`；新增功能涉及数据库时新增编号 SQL 并更新地图、说明和测试，不把旧单文件重新上传覆盖模块化网页。

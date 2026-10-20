@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {readFile,readdir,stat} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+execFileSync('python3',['scripts/build_pages.py'],{cwd:root,env:{...process.env,SUPABASE_URL:'https://test.supabase.co',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_test-only',SHARED_ID:'test-space'}});
+const output=new URL('../_site/',import.meta.url),entries=await readdir(output);
+for(const name of ['src','styles','index.html','shared.html','supabase-config.js','.nojekyll'])assert(entries.includes(name));
+for(const name of ['supabase','tests','node_modules','project map.md','AGENTS.md','package.json'])assert(!entries.includes(name),'构建不能发布 '+name);
+const html=await readFile(new URL('shared.html',output),'utf8');for(const [,ref]of html.matchAll(/(?:src|href)=["'](\.\/[^"']+)["']/g))await stat(new URL(ref,output));
+async function walk(dir){for(const entry of await readdir(dir,{withFileTypes:true})){const url=new URL(entry.name+(entry.isDirectory()?'/':''),dir);if(entry.isDirectory())await walk(url);else if(entry.name.endsWith('.js')){const source=await readFile(url,'utf8');for(const [,ref]of source.matchAll(/from\s+['"](\.[^'"]+)['"]/g))await stat(new URL(ref,url));}}}await walk(new URL('src/',output));
+const css=await readFile(new URL('styles/app.css',output),'utf8');for(const [,ref]of css.matchAll(/url\(['"]([^'"]+)['"]\)/g))await stat(new URL(ref,new URL('styles/app.css',output)));
+console.log('PASS: Pages includes all ES modules and styles; imports resolve; SQL/tests/config templates remain excluded');
