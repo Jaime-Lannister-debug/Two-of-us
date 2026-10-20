@@ -34,7 +34,8 @@ export function createShellNavigation(app) {
   function initNavigation() {
     $("#nav").innerHTML = Object.entries(cats)
       .map(
-        ([k, v]) => `<button data-page="${k}"><i>${v[0]}</i>${v[1]}</button>`,
+        ([k, v]) =>
+          `<button data-page="${k}"><span class="sidebar-icon" aria-hidden="true">${v[0]}</span><span class="sidebar-label">${v[1]}</span></button>`,
       )
       .join("");
     $("#nav").onclick = (e) => {

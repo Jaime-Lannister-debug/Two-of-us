@@ -1,0 +1,84 @@
+/* 图标宽度不受字形影响；按钮不被侧栏 Flex 压缩，文字与点击框保持同一中心线。 */
+#nav,
+aside > .listnav {
+  flex-shrink: 0;
+}
+#nav button,
+aside > .listnav {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  line-height: 24px;
+  text-align: left;
+}
+.sidebar-icon {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 24px;
+  font-size: 18px;
+  font-style: normal;
+  line-height: 1;
+}
+.sidebar-label {
+  display: block;
+  min-width: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+aside > .listnav {
+  grid-template-columns: 18px minmax(0, 1fr) 18px;
+  column-gap: 6px;
+  padding-inline: 12px;
+  text-align: center;
+}
+.listnav .sidebar-icon {
+  width: 18px;
+  font-size: 16px;
+}
+/* 对称预留两侧空间，让文字中心与背景框的中心重合。 */
+aside > .listnav::after {
+  content: "";
+  width: 18px;
+}
+@media (hover: hover) {
+  #nav button:hover,
+  aside > .listnav:hover {
+    transform: none;
+  }
+}
+@media (max-width: 1100px) and (min-width: 751px) {
+  #nav button {grid-template-columns:18px minmax(0,1fr);column-gap:8px;padding-inline:12px}
+  #nav .sidebar-icon {width:18px}
+  aside > .listnav {font-size:13px;grid-template-columns:16px minmax(0,1fr) 16px;column-gap:4px;padding-inline:8px}
+  .listnav .sidebar-icon, aside > .listnav::after {width:16px}
+  .aside-label {white-space:nowrap;margin-inline:8px;font-size:9px;letter-spacing:1.6px}
+}
+@media (max-width: 750px) {
+  #nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    margin-top: 8px;
+  }
+  #nav button {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+    min-height: 38px;
+    padding: 7px 4px;
+    margin: 0;
+    font-size: 12px;
+    text-align: center;
+  }
+  #nav .sidebar-icon {
+    display: none;
+  }
+  aside > .listnav {
+    display: none;
+  }
+}

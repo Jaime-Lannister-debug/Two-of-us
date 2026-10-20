@@ -105,3 +105,9 @@
 | 纪念日对方通知 | `supabase/06-milestone-notifications.sql`、`src/interactions/notifications.js`、`src/interactions/runtime.js` | SQL Editor 执行 06；触发器复用 item_notifications、接收人 RLS 与已读 RPC；消息到达后重新取纪念日，无 milestones Realtime | `tests/together-db.mjs`、`tests/milestones-page.mjs` |
 
 06 需要管理员在正式 Supabase 手动执行，网页发布不等于数据库迁移已执行。新提醒仅从执行后开始记录，不补发历史操作。
+
+## 2026-10-20：侧栏对齐修复
+
+| 功能 | 主要文件 | 入口与依赖 | 验证 |
+|---|---|---|---|
+| 侧栏文字、图标与悬停框对齐 | `styles/sidebar.css`、`src/shell/navigation.js`、`shared.html` | 固定图标栏、显式文字栏；三项收藏状态文字居中，分类文字左对齐；按钮保持高度，悬停不位移；手机分类三列两行 | 浏览器桌面/窄侧栏/390px 的位置及悬停检查；`tests/ui-parity.mjs` |
