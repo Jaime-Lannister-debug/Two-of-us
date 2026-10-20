@@ -100,7 +100,7 @@
 
 | 功能 | 主要文件 | 入口与依赖 | 验证 |
 |---|---|---|---|
-| R2 统一上传 / 有限重试 | `src/media/r2-upload.js` | `uploadR2Photo()`、`cancelImageUploads()`；60s 签名 / 180s PUT、响应体计时、临时失败重试一次，退出中止；封面和旅行共用 | `tests/cover-upload.mjs`、`tests/r2-resilience.mjs` |
+| R2 统一上传 / 有限重试 | `src/media/r2-upload.js` | `uploadR2Photo()`、`cancelImageUploads()`；60s 签名 / 180s PUT、响应体计时、临时失败重试一次，退出中止、压缩后再次检查会话；封面和旅行共用 | `tests/cover-upload.mjs`、`tests/r2-resilience.mjs` |
 | 纪念日独立板块 / 完整列表 | `src/interactions/milestones-page.js`、`styles/milestones.css` | `openMilestonePage()`、`refreshMilestonePage()`；#view=milestones，分页加载全部，首页改摘要 | `tests/milestones-page.mjs`、`tests/together-ui.mjs` |
 | 纪念日对方通知 | `supabase/06-milestone-notifications.sql`、`src/interactions/notifications.js`、`src/interactions/runtime.js` | SQL Editor 执行 06；触发器复用 item_notifications、接收人 RLS 与已读 RPC；消息到达后重新取纪念日，无 milestones Realtime | `tests/together-db.mjs`、`tests/milestones-page.mjs` |
 

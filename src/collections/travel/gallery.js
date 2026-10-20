@@ -39,9 +39,11 @@ export function createCollectionsTravelGallery(app) {
         const status = $("#galleryMessage");
         if (status)
           status.textContent = `正在上传 ${i + 1} / ${files.length} 张…`;
+        const compressed = await app.actions.compressTravelImage(file);
+        if (epoch !== store.cloudEpoch) throw Error('登录状态已变化，请重新打开记录');
         uploaded.push(
           await app.actions.uploadR2Photo(
-            await app.actions.compressTravelImage(file),
+            compressed,
             file.name,
             (phase) => {
               if (epoch === store.cloudEpoch && $("#galleryMessage"))

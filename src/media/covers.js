@@ -64,6 +64,8 @@ export function createMediaCovers(app) {
             0.6,
           );
         });
+        if (epoch !== store.cloudEpoch || !url.isConnected)
+          throw new Error('登录状态或编辑窗口已变化，请重新打开记录。');
         const publicUrl = await app.actions.uploadR2Photo(
           blob,
           file.name,
