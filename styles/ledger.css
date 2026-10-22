@@ -1,0 +1,333 @@
+/* 账本样式仅作用于账本容器和专属弹窗，不改变原页面组件。 */
+.ledger-nav[hidden] {
+  display: none;
+}
+.ledger-nav {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #242329;
+  border: 1px solid #3c3338;
+  border-radius: 9px;
+  padding: 11px 10px;
+  color: #d8c5b5;
+  font-size: 12px;
+  margin-top: 12px;
+  flex-shrink: 0;
+}
+.ledger-nav.active {
+  border-color: #c69a78;
+  background: #34302e;
+}
+.ledger-workspace {
+  max-width: 1200px;
+  margin: auto;
+  padding: 32px 0;
+}
+.ledger-heading,
+.ledger-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ledger-heading h1 {
+  font-size: 30px;
+  margin: 10px 0;
+}
+.ledger-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.ledger-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  background: #1b1c22;
+  padding: 20px;
+  border: 1px solid #2b2c33;
+  border-radius: 15px;
+  margin-bottom: 18px;
+}
+.ledger-filters label,
+.ledger-period label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #bbb2ac;
+  font-size: 12px;
+  min-width: 0;
+}
+.ledger-workspace input,
+.ledger-workspace select {
+  width: 100%;
+  min-width: 0;
+  background: #24242c;
+  color: #f4eee8;
+  border: 1px solid #3e3940;
+  border-radius: 8px;
+  padding: 10px;
+}
+.ledger-period {
+  margin: 18px 0;
+  max-width: 260px;
+}
+.ledger-workspace [hidden],
+.ledger-dialog [hidden] {
+  display: none !important;
+}
+.ledger-status-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #94959f;
+  font-size: 12px;
+}
+.ledger-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin: 24px 0 12px;
+}
+.ledger-metric,
+.ledger-scope-grid > article,
+.ledger-scope-grid > section {
+  background: #1b1c22;
+  border: 1px solid #342e33;
+  border-radius: 15px;
+  padding: 22px;
+  min-width: 0;
+}
+.ledger-metric span {
+  color: #aaa0a1;
+  font-size: 13px;
+}
+.ledger-metric strong {
+  display: block;
+  font-size: 25px;
+  color: #efb994;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.ledger-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+.ledger-scope-grid h3 {
+  margin-top: 0;
+}
+.ledger-scope-grid p {
+  color: #c3b8b1;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.ledger-table-wrap {
+  max-width: 100%;
+  overflow: auto;
+  background: #1b1c22;
+  border-radius: 12px;
+  margin: 15px 0 28px;
+}
+.ledger-workspace table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ledger-workspace th,
+.ledger-workspace td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #2b2c33;
+  text-align: left;
+}
+.ledger-workspace th {
+  color: #b7a69a;
+}
+.ledger-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  background: #1b1c22;
+  border: 1px solid #302e35;
+  border-radius: 13px;
+  padding: 20px;
+  text-align: left;
+  margin-top: 12px;
+  min-width: 0;
+}
+.ledger-entry > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ledger-entry b {
+  font-size: 15px;
+}
+.ledger-entry small {
+  display: block;
+  color: #a29796;
+  font-size: 12px;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.ledger-entry strong {
+  font-size: 18px;
+  white-space: nowrap;
+}
+.ledger-entry .income {
+  color: #8dbda8;
+}
+.ledger-entry .expense {
+  color: #efb994;
+}
+.ledger-comparison {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 0 5px;
+  color: #b9aaa0;
+  font-size: 13px;
+}
+.ledger-category-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid #ffffff0b;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.ledger-category-row small {
+  color: #94959f;
+}
+.ledger-trend {
+  background: #1b1c22;
+  border: 1px solid #342e33;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 24px 0;
+}
+.ledger-trend svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 330px;
+}
+.ledger-trend text {
+  fill: #b4a69f;
+  font-size: 11px;
+}
+.ledger-trend summary {
+  cursor: pointer;
+  color: #efb994;
+  font-size: 13px;
+  margin: 15px 0;
+}
+.ledger-dialog {
+  color: #f6f2ee;
+  background: #1b1c22;
+  border: 1px solid #45373d;
+  border-radius: 20px;
+  padding: 26px;
+  width: min(760px, 95vw);
+  max-height: 90dvh;
+  overflow: auto;
+}
+.ledger-dialog::backdrop {
+  background: #090a10bd;
+  backdrop-filter: blur(5px);
+}
+.ledger-dialog fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.ledger-dialog .field > button {
+  margin-top: 8px;
+}
+.ledger-dialog .field.full {
+  grid-column: 1/-1;
+}
+.ledger-dialog #ledgerCustom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.ledger-dialog dt {
+  color: #9c9391;
+  font-size: 12px;
+  margin-top: 18px;
+}
+.ledger-dialog dd {
+  margin: 7px 0;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ledger-dialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+.ledger-detail-amount {
+  font-size: 25px;
+  color: #efb994;
+}
+.ledger-dialog #ledgerFormStatus {
+  color: #efb994;
+  line-height: 1.7;
+}
+@media (max-width: 750px) {
+  .ledger-nav {
+    text-align: center;
+    margin: 8px 0 0;
+  }
+  .ledger-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ledger-heading h1 {
+    font-size: 26px;
+  }
+  .ledger-filters {
+    grid-template-columns: 1fr 1fr;
+    padding: 14px;
+  }
+  .ledger-metrics {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ledger-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px;
+  }
+  .ledger-metric strong {
+    font-size: 22px;
+    margin: 0;
+  }
+  .ledger-scope-grid {
+    grid-template-columns: 1fr;
+  }
+  .ledger-entry {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ledger-dialog {
+    padding: 20px;
+  }
+  .ledger-dialog #ledgerCustom {
+    grid-template-columns: 1fr;
+  }
+}

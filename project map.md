@@ -111,3 +111,18 @@
 | 功能 | 主要文件 | 入口与依赖 | 验证 |
 |---|---|---|---|
 | 侧栏文字、图标与悬停框对齐 | `styles/sidebar.css`、`src/shell/navigation.js`、`shared.html` | 固定图标栏、显式文字栏；三项收藏状态文字居中，分类文字左对齐；按钮保持高度，悬停不位移；手机分类三列两行 | 浏览器桌面/窄侧栏/390px 的位置及悬停检查；`tests/ui-parity.mjs` |
+
+## 2026-10-22：双人账本（feature/ledger）
+
+| 功能 | 主要文件 | 入口与依赖 | 验证 |
+|---|---|---|---|
+| 账本按需入口 / 成员门禁 | `src/ledger/controller.js`、`src/ledger/state.js` | `openLedger()`、`activateLedger()`；#view=ledger，独立状态与会话清理 | `tests/ledger-ui.mjs`、原有界面回归 |
+| 金额精度 / 日期 / 环比 | `src/ledger/money.js` | 字符串解析为整数分、BigInt 计算、固定成员排序分配余分；北京时间默认日期 | `tests/ledger-money.mjs` |
+| 数据访问 / 完整统计 | `src/ledger/data.js` | ledger_* RPC、相同筛选条件下分页与全部合计；金额字符串 | `tests/ledger-db.mjs` |
+| 记账 / 详情 / 自定义分类 | `src/ledger/editor.js` | 原生 dialog、本人编辑删除、分摊验证、凭证失败保留；复用注册/生命周期 | `tests/ledger-ui.mjs` |
+| 明细 / 实时同步 | `src/ledger/workspace.js` | 分类/年月/性质/人员/关键词筛选；INSERT/UPDATE（软删除）空间过滤；草稿独立 | `tests/ledger-ui.mjs` |
+| 月报 / 年报 / 轻量趋势 | `src/ledger/reports.js`、`styles/ledger.css` | 全量 SQL 聚合、承担与收付分开、12 月 SVG 和精确金额表；样式只影响账本 | `tests/ledger-db.mjs`、`tests/ledger-ui.mjs` |
+| 私有 R2 凭证 | `src/ledger/receipts.js`、`workers/ledger-receipts.js`、`workers/wrangler.ledger.jsonc` | 原有私有桶，独立 Worker binding；鉴权上传/读取、本地 Blob URL，无公开图片链接 | `tests/ledger-worker.mjs` |
+| 账本 SQL 与权限 | `supabase/07-ledger.sql` | 独立 entries/allocations/categories/receipts、服务端校验、本人写权限、版本检查与幂等；不改旧 RLS | `tests/ledger-db.mjs` |
+
+部署说明见 `docs/ledger.md`。分支开发不自动执行正式数据库迁移或部署 Worker；正式 Pages 仍只由 master 发布。

@@ -2,7 +2,7 @@
   "name": "two-of-us-checks",
   "private": true,
   "scripts": {
-    "test": "python3 scripts/check.py && node tests/together-db.mjs && node tests/together-ui.mjs"
+    "test": "python3 scripts/check.py && node tests/together-db.mjs && node tests/together-ui.mjs && node tests/ledger-db.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.10",

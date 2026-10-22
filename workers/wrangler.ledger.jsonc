@@ -1,0 +1,9 @@
+{
+  "name": "two-of-us-ledger-receipts",
+  "main": "ledger-receipts.js",
+  "compatibility_date": "2026-10-01",
+  "r2_buckets": [{"binding": "LEDGER_RECEIPTS", "bucket_name": "covers"}],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://jaime-lannister-debug.github.io"
+  }
+}

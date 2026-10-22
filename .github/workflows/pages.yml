@@ -37,6 +37,7 @@ jobs:
           SUPABASE_URL: ${{ vars.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
           SHARED_ID: our-shared-space
+          LEDGER_RECEIPTS_WORKER_URL: ${{ vars.LEDGER_RECEIPTS_WORKER_URL }}
         run: python3 scripts/build_pages.py
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

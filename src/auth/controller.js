@@ -11,6 +11,7 @@ export function createAuthController(app) {
       $("#cloudMessage"),
     );
     if (!user) {
+      app.actions.resetLedger();
       app.actions.cancelImageUploads();
       app.actions.resetTogether();
       ++store.peopleVersion;
@@ -119,8 +120,10 @@ export function createAuthController(app) {
     void app.actions.loadSharedItems();
     void app.actions.loadPeople();
     void app.actions.loadTogether();
+    void app.actions.activateLedger();
   }
   async function initSharedCloud() {
+    app.actions.initLedgerUI();
     app.actions.initPeopleUI();
     app.actions.initTogetherUI();
     app.actions.initAccountActions();
