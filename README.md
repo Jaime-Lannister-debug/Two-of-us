@@ -98,3 +98,9 @@ npm test
 侧栏「我们的纪念日」展示全部记录，首页只保留摘要与查看全部入口。新增、修改、删除纪念日的提醒沿用现有铃铛消息和已读状态；点击可跳回纪念日板块。**在 Supabase → SQL Editor → New query 完整执行 `supabase/06-milestone-notifications.sql`**，无需修改已有记录、RLS 或配置。只执行 06，不重跑方案 A。执行前的历史纪念日不会补发消息。纪念日本身不订阅 Realtime，通知到达时重新读取列表。
 
 封面与旅行图片共用 `src/media/r2-upload.js`。签名请求允许 60 秒，PUT 允许 180 秒；网络超时/408/429/5xx 最多自动重试一次，HTTP 401/403 不重试。超时覆盖 JSON/响应体读取，显示具体失败阶段，失败保留旧图片；退出取消在途请求。浏览器中仍只有公开 Worker/R2 地址，无 R2 密钥。
+
+### 双人记账（feature/ledger）
+
+侧栏独立入口，包含明细、月报、年报；各自消费和共同消费单独统计，金额归属与实际收付分开。金额按整数分计算，仅创建人可改删，成员共享查看，更新实时同步。凭证使用现有私有 R2 桶的独立鉴权 Worker，不使用公开图片 URL。
+
+执行与验收见 [docs/ledger.md](docs/ledger.md)，数据迁移为 `supabase/07-ledger.sql`。首次配置需部署 `workers/ledger-receipts.js` 并填写外部 `LEDGER_RECEIPTS_WORKER_URL`；不配置凭证服务也可保存无凭证账目。分支检查不发布正式网页、不执行正式迁移。

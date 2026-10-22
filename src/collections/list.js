@@ -20,6 +20,16 @@ export function createCollectionsList(app) {
   }
   function render() {
     if (!store.cloudUser) return;
+    if (app.actions.isLedgerPage()) {
+      if (store.map) {
+        store.map.remove();
+        store.map = null;
+      }
+      app.actions.disposeStarBottles();
+      void app.actions.renderLedger();
+      return;
+    }
+    app.actions.leaveLedger();
     if (store.map) {
       store.map.remove();
       store.map = null;

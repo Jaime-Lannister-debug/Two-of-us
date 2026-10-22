@@ -28,6 +28,12 @@ for name in ['index.html', 'shared.html']:
 for name in ['src', 'styles']:
     shutil.copytree(ROOT / name, output / name)
 config = dict(SUPABASE_URL=url, SUPABASE_ANON_KEY=key, SHARED_ID=space, ACCESS_MODE='members')
+receipt_worker = os.environ.get('LEDGER_RECEIPTS_WORKER_URL', '').strip()
+if receipt_worker:
+    receipt_parsed = urlsplit(receipt_worker)
+    if receipt_parsed.scheme != 'https' or not receipt_parsed.hostname or receipt_parsed.username or receipt_parsed.password or receipt_parsed.query or receipt_parsed.fragment:
+        raise SystemExit('LEDGER_RECEIPTS_WORKER_URL 必须是 HTTPS 地址。')
+    config['LEDGER_RECEIPTS_WORKER_URL'] = receipt_worker
 # 配置属于部署产物，不回写或提交 Git；浏览器运行时可见，这是公共 key 的用途。
 (output / 'supabase-config.js').write_text('window.TWO_US_CONFIG = ' + json.dumps(config, ensure_ascii=False) + ';\n')
 (output / '.nojekyll').touch()

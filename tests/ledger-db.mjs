@@ -1,0 +1,40 @@
+// 独立 PostgreSQL 验证账本真实 SQL，绝不连接正式项目。
+import {PGlite} from '@electric-sql/pglite';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db=new PGlite();await db.waitReady;
+const A='00000000-0000-4000-8000-000000000001',B='00000000-0000-4000-8000-000000000002',C='00000000-0000-4000-8000-000000000003',space='test-space';
+const sql=name=>readFile(new URL('../supabase/'+name,import.meta.url),'utf8');
+const uuid=()=>crypto.randomUUID();
+try{
+ await db.exec(`create role anon;create role authenticated;create schema auth;create schema private;create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth,private to authenticated;create publication supabase_realtime;create table public.shared_items(id uuid primary key,content text,shared_id text);insert into auth.users values('${A}'),('${B}'),('${C}');`);
+ await db.exec(await sql('02-option-b-members.sql'));await db.exec(await sql('04-shared-profiles.sql'));
+ await db.exec(`insert into public.shared_members values('${space}','${A}'),('${space}','${B}');insert into public.shared_profiles(shared_id,user_id,nickname) values('${space}','${A}','小甲'),('${space}','${B}','小乙');`);
+ const migration=await sql('07-ledger.sql');await db.exec(migration);await db.exec(migration);
+ const login=async id=>{await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]);await db.exec('set role authenticated')};
+ const rpc=async(name,args)=>Object.values((await db.query(`select public.${name}(${args.map((_,i)=>'$'+(i+1)).join(',')})`,args)).rows[0])[0];
+ await login(A);const boot=await rpc('ledger_bootstrap',[space]);assert.equal(boot.people.length,2);const expense=boot.categories.find(c=>c.kind==='expense'),income=boot.categories.find(c=>c.kind==='income');
+ const payload=(extra={})=>({kind:'expense',scope:'shared',amount_minor:'12000',payer_user_id:A,split_method:'equal',category_id:expense.id,occurred_on:'2026-01-15',description:'一起吃饭',notes:'',payment_method:'微信',...extra});
+ async function save(value,id=uuid(),version=0,request=uuid()){return rpc('ledger_save',[space,id,version,request,value])}
+ let id=uuid(),request=uuid();let first=await save(payload(),id,0,request);assert.equal(first.version,1);assert.deepEqual(await save(payload(),id,0,request),first,'重复请求不重复记账');
+ await save(payload({scope:'personal',owner_user_id:B,split_method:'none',amount_minor:'8000',description:'代付对方衣服'}));
+ await save(payload({kind:'income',scope:'personal',owner_user_id:A,split_method:'none',amount_minor:'800000',category_id:income.id,description:'工资'}));
+ const odd=await save(payload({kind:'income',amount_minor:'1001',category_id:income.id,description:'共同收入'}));
+ const custom=await save(payload({amount_minor:'300',split_method:'custom',allocations:[{user_id:A,amount_minor:'0'},{user_id:B,amount_minor:'300'}],description:'自定义支出'}));
+ const report=await rpc('ledger_report',[space,2026,1]);assert.equal(report.current.income,'801001');assert.equal(report.current.expense,'20300');assert.equal(report.current.net,'780701');assert.equal(report.current.count,5);
+ assert.equal(report.current.scopes.shared.expense,'12300');assert.equal(report.current.scopes.personal.expense,'8000');
+ const pa=report.current.people.find(p=>p.user_id===A),pb=report.current.people.find(p=>p.user_id===B);assert.equal(pa.expense,'6000');assert.equal(pb.expense,'14300');assert.equal(pa.paid,'20300');assert.equal(pa.income,'800501');assert.equal(pb.income,'500');
+ const listed=await rpc('ledger_list',[space,{},0,2]);assert.equal(listed.entries.length,2);assert.equal(listed.summary.count,5,'分页合计计全部');assert.equal(typeof listed.entries[0].amount_minor,'string');
+ assert.equal((await rpc('ledger_list',[space,{scope:'personal',kind:'expense',payer_user_id:A,query:'衣服'},0,50])).summary.expense,'8000');
+ const annual=await rpc('ledger_report',[space,2026,null]);assert.equal(annual.current.expense,report.current.expense);assert.equal(annual.current.categories.filter(c=>c.kind==='expense').reduce((n,c)=>n+BigInt(c.amount),0n),20300n);
+ for(const bad of [payload({amount_minor:'0'}),payload({amount_minor:'-1'}),payload({amount_minor:'1.5'}),payload({amount_minor:'1000000000001'}),payload({category_id:income.id}),payload({payer_user_id:C}),payload({scope:'personal',owner_user_id:C}),payload({occurred_on:'2200-01-01'}),payload({description:''}),payload({split_method:'custom',allocations:[{user_id:A,amount_minor:'1'},{user_id:B,amount_minor:'2'}]}),payload({split_method:'custom',allocations:[{user_id:A,amount_minor:'6000'},{user_id:A,amount_minor:'6000'}]})])await assert.rejects(save(bad));
+ const sub=await rpc('ledger_add_category',[space,'expense','二级分类',expense.id]);await save(payload({subcategory_id:sub}));await assert.rejects(save(payload({subcategory_id:income.id})));
+ await login(B);assert.equal((await rpc('ledger_list',[space,{},0,50])).summary.count,6);await assert.rejects(save(payload(),id,1),/只能编辑/);await assert.rejects(rpc('ledger_delete',[space,id,1]),/只能删除/);
+ await assert.rejects(db.query("update public.ledger_entries set amount_minor=1 where id=$1",[id]),/permission denied/);await assert.rejects(db.query('delete from public.ledger_entries where id=$1',[id]),/permission denied/);await assert.rejects(db.query("insert into public.ledger_allocations values($1,$2,1)",[id,B]),/permission denied/);
+ await login(A);await save(payload({amount_minor:'10000'}),id,1);await assert.rejects(save(payload(),id,1),/已被修改/);
+ const prefix=(await rpc('ledger_receipt_access',[space,id,'upload'])).prefix;const receiptKey=prefix+uuid()+'.jpg';await save(payload({receipt_key:receiptKey}),id,2);await login(B);assert.equal((await rpc('ledger_receipt_access',[space,id,'read'])).objectKey,receiptKey);await assert.rejects(rpc('ledger_receipt_access',[space,id,'upload']),/只能上传/);
+ await login(A);await assert.rejects(save(payload({receipt_key:'ledger/test-space/'+B+'/'+id+'/'+uuid()+'.jpg'}),id,3),/凭证不属于/);await rpc('ledger_delete',[space,id,3]);await login(B);await assert.rejects(rpc('ledger_receipt_access',[space,id,'read']),/已删除/);assert(!(await rpc('ledger_list',[space,{},0,50])).entries.some(e=>e.id===id));
+ await login(C);for(const table of ['ledger_entries','ledger_allocations','ledger_categories','ledger_receipts'])assert.equal((await db.query('select * from public.'+table)).rows.length,0);await assert.rejects(rpc('ledger_bootstrap',[space]),/共享空间/);await assert.rejects(rpc('ledger_report',[space,2026,1]),/共享空间/);await assert.rejects(rpc('ledger_receipt_access',[space,odd.id,'read']),/共享空间/);
+ await db.exec('reset role');await db.exec('set role anon');await assert.rejects(rpc('ledger_list',[space,{},0,50]),/permission denied/);
+ console.log('PASS: real ledger SQL idempotence, ownership/RLS, exact full-data reports, payer vs allocation, odd/custom split, filters, conflicts, receipt authorization and soft deletion');
+}catch(e){console.error({message:e.message,detail:e.detail,where:e.where,position:e.position,code:e.code,stack:e.stack?.split('\n').slice(-4).join('\n')});process.exitCode=1;}finally{await db.close()}

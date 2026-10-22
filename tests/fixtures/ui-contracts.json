@@ -23,7 +23,7 @@
     "messages": "3a0b6318cc4e90e892897dde8608d706fd4c2e43b57a053f79a07dff76a7f740",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "72d7ee5f59621046f51e510fd8bd04b5529bc604773f13a20b28b99deb415582",
+  "cssHash": "106ade8fc01bdca80b78346bc0395f53e02515dec76b29b9525c682c70ebeee9",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -36,6 +36,10 @@
     {
       "date": "2026-10-20",
       "feature": "人工核对侧栏状态文字与按钮框居中、固定分类图标栏和手机三列布局；仅更新样式摘要，20个内容DOM摘要不变。"
+    },
+    {
+      "date": "2026-10-22",
+      "feature": "新增限定作用域的账本样式与隐藏导航入口；经桌面预览核对，原20个内容DOM摘要保持不变。"
     }
   ]
 }
