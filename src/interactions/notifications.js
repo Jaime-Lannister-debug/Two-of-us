@@ -74,24 +74,34 @@ export function createInteractionsNotifications(app) {
     );
   }
   function renderMessages() {
-    const rows = store.together.notifications.slice(0, 50);
+    const unread = store.together.notifications.filter((n) => !n.read_at);
+    const rows = unread.slice(0, 50);
     $("#notificationList").innerHTML =
       rows
         .map(
           (n) =>
-            `<button type="button" class="notification-row ${n.read_at ? "" : "is-unread"}" data-notification="${esc(n.id)}"><span>${n.read_at ? "" : '<i class="item-unread" aria-label="未读"></i>'}${esc(n.actor_name)}${
+            `<article class="notification-row is-unread"><button type="button" class="notification-open" data-notification="${esc(n.id)}"><span>${n.read_at ? "" : '<i class="item-unread" aria-label="未读"></i>'}${esc(n.actor_name)}${
               {
                 INSERT: "添加了",
                 UPDATE: "修改了",
                 DELETE: "删除了",
               }[n.action] || "更新了"
-            }${n.item_cat === "milestone" ? "纪念日" : ""}「${esc(n.item_title)}」</span><time>${esc(socialTime(n.created_at))}</time></button>`,
+            }${n.item_cat === "milestone" ? "纪念日" : ""}「${esc(n.item_title)}」</span><time>${esc(socialTime(n.created_at))}</time></button><button type="button" class="btn secondary" data-read-notification="${esc(n.id)}">看过这条</button></article>`,
         )
-        .join("") || '<p class="empty">还没有来自对方的条目更新。</p>';
+        .join("") || '<p class="empty">没有未读消息了。</p>';
     $("#notificationStatus").textContent =
-      store.together.notifications.length > 50
-        ? "显示最近 50 条，条目上的红点会保留至阅读。"
+      unread.length > 50
+        ? "显示最近 50 条未读消息，确认一条后会显示下一条。"
         : "";
+    $("#notificationList")
+      .querySelectorAll("[data-read-notification]")
+      .forEach((button) => {
+        button.onclick = async () => {
+          button.disabled = true;
+          await readNotifications([button.dataset.readNotification]);
+          if (button.isConnected) button.disabled = false;
+        };
+      });
     $("#notificationList")
       .querySelectorAll("[data-notification]")
       .forEach(
@@ -101,7 +111,6 @@ export function createInteractionsNotifications(app) {
               (n) => n.id === button.dataset.notification,
             );
             if (!n) return;
-            void readNotifications([n.id]);
             $("#messageDialog").close();
             if (n.item_cat === "milestone") {
               app.actions.openMilestonePage(n.item_id);
@@ -122,9 +131,6 @@ export function createInteractionsNotifications(app) {
     if (!app.actions.memberFeature()) return;
     renderMessages();
     $("#messageDialog").showModal();
-    void readNotifications(
-      store.together.notifications.slice(0, 50).map((n) => n.id),
-    );
   }
   return {
     unreadItem,

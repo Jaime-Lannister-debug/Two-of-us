@@ -12,7 +12,7 @@ export function ledgerEditor(app, state, data, receipts, reload, label) {
     mounted = true;
     $("#featureDialogs").insertAdjacentHTML(
       "beforeend",
-      `<dialog id="ledgerEditor" class="ledger-dialog" aria-labelledby="ledgerEditorTitle" aria-modal="true"><div class="ledger-dialog-head"><h2 id="ledgerEditorTitle">记一笔账</h2><button type="button" class="btn secondary" id="ledgerEditorClose">关闭</button></div><form id="ledgerForm"><fieldset id="ledgerFields"><div class="formgrid">${select("ledgerKind", "收支类型", option("expense", "支出") + option("income", "收入"))}<label class="field">金额（元，必填）<input id="ledgerAmount" inputmode="decimal" required maxlength="14" placeholder="0.00"></label>${select("ledgerScope", "消费性质（必填）", option("shared", "一起消费") + option("personal", "各自消费"))}${select("ledgerPayer", "付款人 / 收款人", "")}<div id="ledgerOwnerGroup">${select("ledgerOwner", "这笔账属于谁", "")}</div><div id="ledgerSplitGroup">${select("ledgerSplit", "共同金额分配", option("equal", "两人平摊") + option("custom", "自定义金额"))}</div><div class="field full" id="ledgerCustom"></div><p class="field full subtitle" id="ledgerSplitHint"></p>${select("ledgerCategory", "一级分类（必填）", "")}${select("ledgerSubcategory", "二级分类（可选）", "")}<label class="field">自定义一级分类<input id="ledgerNewCategory" maxlength="40" placeholder="输入新分类名称"><button type="button" class="btn secondary" id="ledgerAddCategory">添加一级分类</button></label><label class="field">自定义二级分类<input id="ledgerNewSubcategory" maxlength="40" placeholder="添加到当前一级分类"><button type="button" class="btn secondary" id="ledgerAddSubcategory">添加二级分类</button></label><label class="field">发生日期（必填）<input id="ledgerDate" type="date" min="1900-01-01" required></label>${select("ledgerPayment", "支付方式（可选）", payment.map((v) => option(v, v || "未填写")).join(""))}<label class="field full">说明（必填）<input id="ledgerDescription" required maxlength="120" placeholder="简短描述这笔账"></label><label class="field full">备注（可选）<textarea id="ledgerNotes" maxlength="2000" rows="3"></textarea></label><label class="field full">小票 / 凭证（可选）<input id="ledgerReceiptFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="subtitle" id="ledgerReceiptStatus"></span></label><button type="button" id="ledgerRemoveReceipt" class="btn secondary">移除本笔账的凭证引用</button></div></fieldset><p id="ledgerFormStatus" role="status"></p><button type="submit" id="ledgerSave" class="btn">保存账目</button></form></dialog><dialog id="ledgerDetail" class="ledger-dialog" aria-labelledby="ledgerDetailTitle" aria-modal="true"><div class="ledger-dialog-head"><h2 id="ledgerDetailTitle">账目详情</h2><button type="button" id="ledgerDetailClose" class="btn secondary">关闭</button></div><div id="ledgerDetailContent"></div></dialog>`,
+      `<dialog id="ledgerEditor" class="ledger-dialog" aria-labelledby="ledgerEditorTitle" aria-modal="true"><div class="ledger-dialog-head"><h2 id="ledgerEditorTitle">记一笔账</h2><button type="button" class="btn secondary" id="ledgerEditorClose">关闭</button></div><form id="ledgerForm"><fieldset id="ledgerFields"><div class="formgrid">${select("ledgerKind", "收支类型", option("expense", "支出") + option("income", "收入"))}<label class="field">金额（元，必填）<input id="ledgerAmount" inputmode="decimal" required maxlength="14" placeholder="0.00"></label>${select("ledgerScope", "消费性质（必填）", option("shared", "一起消费") + option("personal", "各自消费"))}${select("ledgerPurpose", "消费用途（必填）", option("", "请选择消费用途") + option("self", "自己消费") + option("romance", "恋爱消费"))}<p class="field full subtitle">消费用途与一起／各自消费、付款人和分摊方式独立；收入也可按用途归类。</p>${select("ledgerPayer", "付款人 / 收款人", "")}<div id="ledgerOwnerGroup">${select("ledgerOwner", "这笔账属于谁", "")}</div><div id="ledgerSplitGroup">${select("ledgerSplit", "共同金额分配", option("equal", "两人平摊") + option("custom", "自定义金额"))}</div><div class="field full" id="ledgerCustom"></div><p class="field full subtitle" id="ledgerSplitHint"></p>${select("ledgerCategory", "一级分类（必填）", "")}${select("ledgerSubcategory", "二级分类（可选）", "")}<label class="field">自定义一级分类<input id="ledgerNewCategory" maxlength="40" placeholder="输入新分类名称"><button type="button" class="btn secondary" id="ledgerAddCategory">添加一级分类</button></label><label class="field">自定义二级分类<input id="ledgerNewSubcategory" maxlength="40" placeholder="添加到当前一级分类"><button type="button" class="btn secondary" id="ledgerAddSubcategory">添加二级分类</button></label><label class="field">发生日期（必填）<input id="ledgerDate" type="date" min="1900-01-01" required></label>${select("ledgerPayment", "支付方式（可选）", payment.map((v) => option(v, v || "未填写")).join(""))}<label class="field full">说明（必填）<input id="ledgerDescription" required maxlength="120" placeholder="简短描述这笔账"></label><label class="field full">备注（可选）<textarea id="ledgerNotes" maxlength="2000" rows="3"></textarea></label><label class="field full">小票 / 凭证（可选）<input id="ledgerReceiptFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="subtitle" id="ledgerReceiptStatus"></span></label><button type="button" id="ledgerRemoveReceipt" class="btn secondary">移除本笔账的凭证引用</button></div></fieldset><p id="ledgerFormStatus" role="status"></p><button type="submit" id="ledgerSave" class="btn">保存账目</button></form></dialog><dialog id="ledgerDetail" class="ledger-dialog" aria-labelledby="ledgerDetailTitle" aria-modal="true"><div class="ledger-dialog-head"><h2 id="ledgerDetailTitle">账目详情</h2><button type="button" id="ledgerDetailClose" class="btn secondary">关闭</button></div><div id="ledgerDetailContent"></div></dialog>`,
     );
     $("#ledgerForm").onsubmit = save;
     $("#ledgerEditorClose").onclick = close;
@@ -118,6 +118,7 @@ export function ledgerEditor(app, state, data, receipts, reload, label) {
     $("#ledgerOwner").value = entry?.owner_user_id || app.state.cloudUser.id;
     $("#ledgerKind").value = entry?.kind || "expense";
     $("#ledgerScope").value = entry?.scope || "shared";
+    $("#ledgerPurpose").value = entry?.purpose || "";
     $("#ledgerSplit").value =
       entry?.split_method === "custom" ? "custom" : "equal";
     $("#ledgerAmount").value = entry ? decimal(entry.amount_minor) : "";
@@ -213,6 +214,7 @@ export function ledgerEditor(app, state, data, receipts, reload, label) {
         kind: $("#ledgerKind").value,
         amount_minor: amount,
         scope,
+        purpose: $("#ledgerPurpose").value,
         owner_user_id: scope === "personal" ? $("#ledgerOwner").value : null,
         payer_user_id: $("#ledgerPayer").value,
         split_method: scope === "personal" ? "none" : split,
@@ -224,6 +226,8 @@ export function ledgerEditor(app, state, data, receipts, reload, label) {
         payment_method: $("#ledgerPayment").value,
         receipt_key: state.receiptKey || null,
       };
+      if (!["self", "romance"].includes(payload.purpose))
+        throw Error("请选择自己消费或恋爱消费。");
       if (!payload.category_id || !payload.description)
         throw Error("请选择分类并填写说明。");
       if (!payload.occurred_on || payload.occurred_on > bookToday())
@@ -281,6 +285,11 @@ export function ledgerEditor(app, state, data, receipts, reload, label) {
     const mine = entry.created_by === app.state.cloudUser.id;
     $("#ledgerDetailContent").innerHTML =
       `<h3>${esc(entry.description)}</h3><p class="ledger-detail-amount">${money(entry.amount_minor)} · ${entry.kind === "expense" ? "支出" : "收入"}</p><dl>${[
+        [
+          "消费用途",
+          { self: "自己消费", romance: "恋爱消费" }[entry.purpose] ||
+            "未分类（历史账目）",
+        ],
         ["性质", entry.scope === "shared" ? "一起消费" : "各自消费"],
         ["个人所属", entry.owner_user_id ? label(entry.owner_user_id) : "共同"],
         [

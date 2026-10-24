@@ -5,7 +5,19 @@ export function summaryHTML(s, people, label) {
   if (!s) return "";
   const metric = (title, value) =>
     `<article class="ledger-metric"><span>${esc(title)}</span><strong>${money(value)}</strong></article>`;
-  return `<div class="ledger-metrics">${metric("总收入", s.income)}${metric("总支出", s.expense)}${metric("净结余", s.net)}</div><p class="subtitle">${esc(label)} · 共 ${s.count} 笔记录</p><div class="ledger-scope-grid">${["shared", "personal"].map((scope) => `<article><h3>${scope === "shared" ? "一起消费" : "各自消费"}</h3><p>支出 <b>${money(s.scopes[scope].expense)}</b></p><p>收入 <b>${money(s.scopes[scope].income)}</b></p><p>净结余 ${money(s.scopes[scope].net)}</p></article>`).join("")}</div><h3>金额归属与实际收付</h3><div class="ledger-table-wrap"><table><thead><tr><th>成员</th><th>承担支出</th><th>归属收入</th><th>实际付款</th><th>实际收款</th></tr></thead><tbody>${s.people.map((p) => `<tr><th>${esc(people(p.user_id))}</th><td>${money(p.expense)}</td><td>${money(p.income)}</td><td>${money(p.paid)}</td><td>${money(p.received)}</td></tr>`).join("")}</tbody></table></div>`;
+  const purposes = s.purposes
+    ? `<h3>消费用途</h3><div class="ledger-scope-grid">${Object.entries({
+        self: "自己消费",
+        romance: "恋爱消费",
+        unclassified: "未分类（历史账目）",
+      })
+        .map(
+          ([key, title]) =>
+            `<article><h3>${title}</h3><p>支出 <b>${money(s.purposes[key].expense)}</b></p><p>收入 <b>${money(s.purposes[key].income)}</b></p><p>净结余 ${money(s.purposes[key].net)}</p></article>`,
+        )
+        .join("")}</div>`
+    : `<p class="subtitle">消费用途统计需要执行 08-ledger-purpose.sql 后刷新账本。</p>`;
+  return `${purposes}<div class="ledger-metrics">${metric("总收入", s.income)}${metric("总支出", s.expense)}${metric("净结余", s.net)}</div><p class="subtitle">${esc(label)} · 共 ${s.count} 笔记录</p><div class="ledger-scope-grid">${["shared", "personal"].map((scope) => `<article><h3>${scope === "shared" ? "一起消费" : "各自消费"}</h3><p>支出 <b>${money(s.scopes[scope].expense)}</b></p><p>收入 <b>${money(s.scopes[scope].income)}</b></p><p>净结余 ${money(s.scopes[scope].net)}</p></article>`).join("")}</div><h3>金额归属与实际收付</h3><div class="ledger-table-wrap"><table><thead><tr><th>成员</th><th>承担支出</th><th>归属收入</th><th>实际付款</th><th>实际收款</th></tr></thead><tbody>${s.people.map((p) => `<tr><th>${esc(people(p.user_id))}</th><td>${money(p.expense)}</td><td>${money(p.income)}</td><td>${money(p.paid)}</td><td>${money(p.received)}</td></tr>`).join("")}</tbody></table></div>`;
 }
 export function reportHTML(data, state, label) {
   if (!data) return "";

@@ -136,9 +136,6 @@
         </button>
         <p id="togetherHint" role="status"></p>
       </div>
-      <button id="ledgerNav" class="ledger-nav" type="button" hidden>
-        ▤ 双人记账
-      </button>
       <div class="aside-label">OUR COLLECTIONS</div>
       <button class="listnav" data-list="wish">
         <span class="sidebar-icon" aria-hidden="true">♡</span
@@ -175,12 +172,13 @@
           hidden=""
         >
           🔔 <span class="message-label">消息</span
-          ><span
-            id="messageUnread"
-            class="unread-badge"
-            hidden=""
-          ></span></button
-        ><button class="btn" id="add">＋ 新增回忆</button>
+          ><span id="messageUnread" class="unread-badge" hidden=""></span>
+        </button>
+        <div class="header-actions">
+          <button id="ledgerNav" class="btn secondary" type="button" hidden>
+            ▤ 双人记账</button
+          ><button class="btn" id="add">＋ 新增回忆</button>
+        </div>
       </header>
       <div id="content"></div>
       <div class="notice">

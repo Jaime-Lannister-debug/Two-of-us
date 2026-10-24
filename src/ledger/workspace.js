@@ -30,7 +30,7 @@ export function createLedgerWorkspace(app, state) {
         )
         .join(
           "",
-        )}</div><form id="ledgerFilters" class="ledger-filters"><label>月份（清空看全部）<input id="ledgerFilterMonth" type="month"></label><label>收支<select id="ledgerFilterKind"><option value="">全部</option><option value="expense">支出</option><option value="income">收入</option></select></label><label>消费性质<select id="ledgerFilterScope"><option value="">全部</option><option value="shared">一起消费</option><option value="personal">各自消费</option></select></label><label>分类<select id="ledgerFilterCategory"></select></label><label>付款 / 收款人<select id="ledgerFilterPayer"></select></label><label>关键词<input id="ledgerFilterQuery" type="search" maxlength="120" placeholder="搜索说明和备注"></label><button class="btn secondary" type="button" id="ledgerResetFilters">清空筛选</button></form><div class="ledger-period" id="ledgerReportPeriod"><label id="ledgerMonthLabel">年月<input id="ledgerMonth" type="month" required></label><label id="ledgerYearLabel">年份<input id="ledgerYear" type="number" min="1900" max="2200" step="1"></label></div><div class="ledger-status-line"><span id="ledgerConnection" role="status"></span><button class="btn secondary" id="ledgerRefresh">刷新账本</button></div><p id="ledgerStatus" role="status" aria-live="polite"></p><div id="ledgerResults"></div><div id="ledgerPagination" class="social-actions"></div></section>`;
+        )}</div><form id="ledgerFilters" class="ledger-filters"><label>月份（清空看全部）<input id="ledgerFilterMonth" type="month"></label><label>收支<select id="ledgerFilterKind"><option value="">全部</option><option value="expense">支出</option><option value="income">收入</option></select></label><label>消费性质<select id="ledgerFilterScope"><option value="">全部</option><option value="shared">一起消费</option><option value="personal">各自消费</option></select></label><label>消费用途<select id="ledgerFilterPurpose"><option value="">全部用途</option><option value="self">自己消费</option><option value="romance">恋爱消费</option><option value="unclassified">未分类（历史账目）</option></select></label><label>分类<select id="ledgerFilterCategory"></select></label><label>付款 / 收款人<select id="ledgerFilterPayer"></select></label><label>关键词<input id="ledgerFilterQuery" type="search" maxlength="120" placeholder="搜索说明和备注"></label><button class="btn secondary" type="button" id="ledgerResetFilters">清空筛选</button></form><div class="ledger-period" id="ledgerReportPeriod"><label id="ledgerMonthLabel">年月<input id="ledgerMonth" type="month" required></label><label id="ledgerYearLabel">年份<input id="ledgerYear" type="number" min="1900" max="2200" step="1"></label></div><div class="ledger-status-line"><span id="ledgerConnection" role="status"></span><button class="btn secondary" id="ledgerRefresh">刷新账本</button></div><p id="ledgerStatus" role="status" aria-live="polite"></p><div id="ledgerResults"></div><div id="ledgerPagination" class="social-actions"></div></section>`;
     $("#ledgerNew").onclick = () => editor.open();
     $("#ledgerRefresh").onclick = () => load(true);
     for (const button of document.querySelectorAll("[data-ledger-tab]"))
@@ -39,6 +39,7 @@ export function createLedgerWorkspace(app, state) {
       Month: "month",
       Kind: "kind",
       Scope: "scope",
+      Purpose: "purpose",
       Category: "category_id",
       Payer: "payer_user_id",
     };
@@ -56,6 +57,7 @@ export function createLedgerWorkspace(app, state) {
         month: "",
         kind: "",
         scope: "",
+        purpose: "",
         category_id: "",
         payer_user_id: "",
         query: "",
@@ -65,6 +67,7 @@ export function createLedgerWorkspace(app, state) {
         "Month",
         "Kind",
         "Scope",
+        "Purpose",
         "Category",
         "Payer",
         "Query",
@@ -153,7 +156,7 @@ export function createLedgerWorkspace(app, state) {
     }
     host.innerHTML =
       summaryHTML(state.summary, label, "当前完整筛选结果") +
-      `<div class="ledger-entry-list">${state.entries.map((e) => `<button class="ledger-entry" data-ledger-entry="${esc(e.id)}"><span><b>${esc(e.description)}</b><small>${esc(e.occurred_on)} · ${esc(e.category_name)}${e.subcategory_name ? " / " + esc(e.subcategory_name) : ""} · ${e.scope === "shared" ? "一起消费" : "各自消费"}</small><small>${e.kind === "expense" ? "付款" : "收款"}：${esc(label(e.payer_user_id))} · 记账：${esc(label(e.created_by))} · ${esc(new Date(e.created_at).toLocaleString("zh-CN"))}${e.receipt_key ? " · 有凭证" : ""}</small></span><strong class="${e.kind}">${e.kind === "expense" ? "-" : "+"}${money(e.amount_minor)}</strong></button>`).join("") || '<p class="empty">当前筛选条件下没有账目。点击「记一笔」开始记录。</p>'}</div>`;
+      `<div class="ledger-entry-list">${state.entries.map((e) => `<button class="ledger-entry" data-ledger-entry="${esc(e.id)}"><span><b>${esc(e.description)}</b><small>${esc(e.occurred_on)} · ${esc(e.category_name)}${e.subcategory_name ? " / " + esc(e.subcategory_name) : ""} · ${e.scope === "shared" ? "一起消费" : "各自消费"} · ${{ self: "自己消费", romance: "恋爱消费" }[e.purpose] || "未分类"}</small><small>${e.kind === "expense" ? "付款" : "收款"}：${esc(label(e.payer_user_id))} · 记账：${esc(label(e.created_by))} · ${esc(new Date(e.created_at).toLocaleString("zh-CN"))}${e.receipt_key ? " · 有凭证" : ""}</small></span><strong class="${e.kind}">${e.kind === "expense" ? "-" : "+"}${money(e.amount_minor)}</strong></button>`).join("") || '<p class="empty">当前筛选条件下没有账目。点击「记一笔」开始记录。</p>'}</div>`;
     for (const b of host.querySelectorAll("[data-ledger-entry]"))
       b.onclick = () =>
         editor.detail(
