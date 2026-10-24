@@ -268,3 +268,35 @@ header #add {
     padding: 30px 10px;
   }
 }
+
+/* 每条消息有独立确认按钮；查看与确认分开，支持手机换行。 */
+#notificationList article.notification-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notification-open {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+}
+.notification-open span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.notification-open time {
+  display: block;
+  margin-top: 8px;
+}
+#notificationList [data-read-notification] {
+  flex-shrink: 0;
+}
+@media (max-width: 500px) {
+  #notificationList article.notification-row {
+    flex-wrap: wrap;
+  }
+}

@@ -20,10 +20,10 @@
     "editor-trip": "c8498610c34383b3c8f4611075f8f3bf806daafb63a45c831c62d54547ac91be",
     "editor-intimacy": "154196d81643d2273218a538d62ae24300d3a77c2a6af439b1e5628434623506",
     "bottle-happy": "2c4c485c40ded4706f94b8c9c4b30002de59d5411babb3b7c81a816f33eb2704",
-    "messages": "3a0b6318cc4e90e892897dde8608d706fd4c2e43b57a053f79a07dff76a7f740",
+    "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "106ade8fc01bdca80b78346bc0395f53e02515dec76b29b9525c682c70ebeee9",
+  "cssHash": "478be3b03d610590873ec5e76052caaf839de33e80804ed2b8b52a429f4a7779",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -40,6 +40,10 @@
     {
       "date": "2026-10-22",
       "feature": "新增限定作用域的账本样式与隐藏导航入口；经桌面预览核对，原20个内容DOM摘要保持不变。"
+    },
+    {
+      "date": "2026-10-24",
+      "feature": "核对消息 DOM 每条独立确认、无嵌套按钮，以及头部账本相邻结构；仅更新消息摘要与用途/入口样式摘要，其他19个DOM契约保持不变。"
     }
   ]
 }

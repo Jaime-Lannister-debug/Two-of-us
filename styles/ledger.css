@@ -1,23 +1,31 @@
 /* 账本样式仅作用于账本容器和专属弹窗，不改变原页面组件。 */
-.ledger-nav[hidden] {
-  display: none;
-}
-.ledger-nav {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: #242329;
-  border: 1px solid #3c3338;
-  border-radius: 9px;
-  padding: 11px 10px;
-  color: #d8c5b5;
-  font-size: 12px;
-  margin-top: 12px;
+/* 头部入口与新增回忆相邻，窄屏可换行，不挤压搜索框。 */
+header .header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   flex-shrink: 0;
 }
-.ledger-nav.active {
+#ledgerNav[hidden] {
+  display: none;
+}
+#ledgerNav.active {
   border-color: #c69a78;
   background: #34302e;
+}
+@media (max-width: 750px) {
+  header {
+    height: auto;
+    min-height: 73px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+  header .search {
+    flex: 1 1 100%;
+  }
+  header .header-actions {
+    margin-left: auto;
+  }
 }
 .ledger-workspace {
   max-width: 1200px;
@@ -288,10 +296,6 @@
   line-height: 1.7;
 }
 @media (max-width: 750px) {
-  .ledger-nav {
-    text-align: center;
-    margin: 8px 0 0;
-  }
   .ledger-heading {
     align-items: flex-start;
     flex-direction: column;

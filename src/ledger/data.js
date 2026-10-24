@@ -23,6 +23,7 @@ export function ledgerData(app, state) {
   }
   async function bootstrap() {
     const data = await rpc("ledger_bootstrap", {});
+    state.purposeEnabled = data.purpose_enabled === true;
     state.people = data.people;
     state.categories = data.categories;
     state.ready = true;
@@ -32,6 +33,8 @@ export function ledgerData(app, state) {
     return { ...filters, ...(month ? monthRange(month) : {}) };
   }
   async function list() {
+    if (state.filters.purpose && !state.purposeEnabled)
+      throw Error("用途筛选需要执行 08-ledger-purpose.sql 后刷新账本。");
     return rpc("ledger_list", {
       p_filters: filterArgs(),
       p_offset: state.offset,
@@ -46,6 +49,10 @@ export function ledgerData(app, state) {
     });
   }
   async function save(id, version, requestId, payload) {
+    if (!state.purposeEnabled)
+      throw Error(
+        "消费用途尚未启用，请在 Supabase SQL Editor 执行 08-ledger-purpose.sql 后刷新账本。",
+      );
     return rpc("ledger_save", {
       p_id: id,
       p_expected_version: version,

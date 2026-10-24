@@ -126,3 +126,12 @@
 | 账本 SQL 与权限 | `supabase/07-ledger.sql` | 独立 entries/allocations/categories/receipts、服务端校验、本人写权限、版本检查与幂等；不改旧 RLS | `tests/ledger-db.mjs` |
 
 部署说明见 `docs/ledger.md`。分支开发不自动执行正式数据库迁移或部署 Worker；正式 Pages 仍只由 master 发布。
+
+## 2026-10-24：消息逐条确认与消费用途
+
+| 功能 | 主要文件 | 入口与依赖 | 验证 |
+|---|---|---|---|
+| 消息逐条移出 | `src/interactions/notifications.js`、`src/interactions/notifications-template.js`、`src/interactions/runtime.js`、`styles/interactions.css` | 打开不再整批已读；「看过这条」仅调用当前 ID 的已读 RPC，列表只显示未读；回执跨设备保留，不删除共享内容 | `tests/together-ui.mjs` |
+| 顶部账本入口 / 消费用途 | `shared.html`、`styles/ledger.css`、`src/ledger/editor.js`、`src/ledger/state.js`、`src/ledger/data.js`、`src/ledger/workspace.js`、`src/ledger/reports.js`、`supabase/08-ledger-purpose.sql` | 双人记账移到新增回忆旁；purpose=self/romance 与 scope、付款、分摊独立；历史 NULL 未分类；明细筛选与报表全量精确汇总；SQL 未升级时拒绝静默丢失用途 | `tests/ledger-db.mjs`、`tests/ledger-ui.mjs` |
+
+正式项目需在 SQL Editor 完整执行 08；不要重跑 07。旧客户端写入无用途时，新记录保留未分类，编辑保留既有用途；新版填写用途后才允许保存。

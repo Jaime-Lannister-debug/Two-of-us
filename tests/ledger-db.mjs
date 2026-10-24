@@ -36,5 +36,17 @@ try{
  await login(A);await assert.rejects(save(payload({receipt_key:'ledger/test-space/'+B+'/'+id+'/'+uuid()+'.jpg'}),id,3),/凭证不属于/);await rpc('ledger_delete',[space,id,3]);await login(B);await assert.rejects(rpc('ledger_receipt_access',[space,id,'read']),/已删除/);assert(!(await rpc('ledger_list',[space,{},0,50])).entries.some(e=>e.id===id));
  await login(C);for(const table of ['ledger_entries','ledger_allocations','ledger_categories','ledger_receipts'])assert.equal((await db.query('select * from public.'+table)).rows.length,0);await assert.rejects(rpc('ledger_bootstrap',[space]),/共享空间/);await assert.rejects(rpc('ledger_report',[space,2026,1]),/共享空间/);await assert.rejects(rpc('ledger_receipt_access',[space,odd.id,'read']),/共享空间/);
  await db.exec('reset role');await db.exec('set role anon');await assert.rejects(rpc('ledger_list',[space,{},0,50]),/permission denied/);
+ await db.exec('reset role');const upgrade=await sql('08-ledger-purpose.sql');await db.exec(upgrade);await db.exec(upgrade);
+ await login(A);assert.equal((await rpc('ledger_bootstrap',[space])).purpose_enabled,true);
+ const legacy=(await rpc('ledger_list',[space,{},0,50])).entries;assert(legacy.every(e=>e.purpose===null),'历史记录不推断用途');
+ const own=await save(payload({purpose:'self',amount_minor:'101'}));await save(payload({purpose:'romance',amount_minor:'203',scope:'personal',owner_user_id:B,split_method:'none'}));
+ const purposeReport=(await rpc('ledger_report',[space,2026,1])).current;assert.equal(purposeReport.purposes.self.expense,'101');assert.equal(purposeReport.purposes.romance.expense,'203');
+ assert.equal(Object.values(purposeReport.purposes).reduce((n,p)=>n+BigInt(p.expense),0n).toString(),purposeReport.expense);
+ assert.equal((await rpc('ledger_list',[space,{purpose:'self'},0,50])).summary.count,1);
+ assert((await rpc('ledger_list',[space,{purpose:'unclassified'},0,50])).entries.every(e=>e.purpose===null));
+ await assert.rejects(save(payload({purpose:'invalid'})),/消费用途/);
+ await save(payload({amount_minor:'102'}),own.id,1);assert.equal((await rpc('ledger_list',[space,{purpose:'self'},0,50])).entries[0].purpose,'self','旧客户端编辑保留用途');
+ await login(B);await assert.rejects(save(payload({purpose:'romance'}),own.id,2),/只能编辑/);
+ await login(C);await assert.rejects(rpc('ledger_list',[space,{purpose:'self'},0,50]),/共享空间/);
  console.log('PASS: real ledger SQL idempotence, ownership/RLS, exact full-data reports, payer vs allocation, odd/custom split, filters, conflicts, receipt authorization and soft deletion');
 }catch(e){console.error({message:e.message,detail:e.detail,where:e.where,position:e.position,code:e.code,stack:e.stack?.split('\n').slice(-4).join('\n')});process.exitCode=1;}finally{await db.close()}

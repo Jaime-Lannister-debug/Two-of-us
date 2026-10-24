@@ -251,10 +251,6 @@ export function createInteractionsRuntime(app) {
         $("#milestoneRepeat").checked = true;
     };
     $("#moodForm").onsubmit = app.actions.addMood;
-    $("#readAllNotifications").onclick = () =>
-      void app.actions.readNotifications(
-        store.together.notifications.map((n) => n.id),
-      );
     for (const id of ["milestoneDialog", "moodDialog", "messageDialog"]) {
       const dialog = $("#" + id);
       dialog.querySelector("[data-social-close]").onclick = () => {

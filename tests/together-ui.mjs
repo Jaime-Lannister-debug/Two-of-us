@@ -248,8 +248,8 @@ try {
   $('#messageButton').click();
   await tick();
   assert.match($('#notificationList').textContent, /小乙修改了「王国之泪」/);
-  assert($('#messageUnread').hidden);
-  assert(!api.unreadItem('game'));
+  assert(!$('#messageUnread').hidden, '打开消息不批量已读');
+  assert(api.unreadItem('game'));
   tables.item_notifications.push({
     id: 'n2',
     shared_id: 'test-space',
@@ -265,7 +265,14 @@ try {
   await api.loadTogether({
     milestones: false
   });
-  assert.equal($('#messageUnread').textContent, '1', '新到消息不会因先前打开消息中心而误标已读');
+  assert.equal($('#messageUnread').textContent, '2', '新旧消息都保留未读');
+  $('[data-read-notification="n1"]').click();await tick();
+  assert(!$('#notificationList').querySelector('[data-notification="n1"]'),'确认后仅当前消息移出');
+  assert($('#notificationList').querySelector('[data-notification="n2"]'),'其他消息保持');
+  assert.equal($('#messageUnread').textContent,'1');
+  await api.loadTogether({milestones:false});
+  api.renderMessages();
+  assert(!$('#notificationList').querySelector('[data-notification="n1"]'),'刷新后已读不恢复');
   await api.markItemRead('another');
   assert($('#messageUnread').hidden);
   assert(!subscriptions.some(s => s.table === 'milestones'), '纪念日无 Realtime');

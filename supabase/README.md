@@ -126,3 +126,7 @@ B 方案不把邀请 token 放在 URL 中。只需将邀请码通过你们自己
 ## 07：双人账本
 
 成员方案 B + 04 后执行 `07-ledger.sql`，与 05/06 相互独立。新增账目、金额分配、分类、凭证表和只允许成员调用的 RPC。写入只走服务端事务，检查创建人、分摊合计、类别归属、日期、版本和幂等请求。只有创建者可以编辑和软删除，报表和正常列表排除软删除。金额 bigint 分，RPC 返回字符串；汇总不受分页影响。ledger_entries 加入 Realtime，订阅 INSERT/UPDATE，删除通过受 RLS 保护的 UPDATE 同步。凭证读写权限 RPC 与 Worker 设置见 docs/ledger.md。
+
+## 08：消费用途
+
+在 Supabase SQL Editor 完整执行 `08-ledger-purpose.sql`，依赖已执行的 07；可重复执行，不重跑 07。新增 purpose 字段（self 自己消费 / romance 恋爱消费），与一起/各自消费及金额分配独立，收入也可归类。旧账保持 NULL 未分类，不回填猜测。迁移保留原权限、版本和幂等检查；明细筛选及月报/年报按用途汇总。新版网页检测 bootstrap.purpose_enabled，未升级时保存提示执行 08，避免字段被旧 RPC 静默忽略。

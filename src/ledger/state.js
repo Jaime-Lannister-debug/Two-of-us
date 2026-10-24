@@ -5,6 +5,7 @@ export function ledgerState() {
   return {
     active: false,
     ready: false,
+    purposeEnabled: false,
     loading: false,
     error: "",
     view: "entries",
@@ -17,6 +18,7 @@ export function ledgerState() {
       month: today.slice(0, 7),
       kind: "",
       scope: "",
+      purpose: "",
       category_id: "",
       payer_user_id: "",
       query: "",
