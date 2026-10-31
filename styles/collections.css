@@ -117,3 +117,19 @@ input[type='range'] {
 .poster:has(img) img, .poster.wrap-cover:has(img) img { display: block; width: 100%; height: auto; }
 .trip img { height: auto; align-self: center; }
 @media (max-width: 750px) { .trip img { height: auto; } }
+
+/* 悬停放大整个图片容器，避免放大图片本身时被原容器裁掉边缘。 */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .poster, .detail-cover, .orbit-photo,
+  .memory-photos a, .photo-manage img, .trip img {
+    transition: transform 0.25s ease;
+    transform-origin: center;
+  }
+  .poster:hover, .detail-cover:hover, .orbit-photo:hover,
+  .memory-photos a:hover, .photo-manage img:hover, .trip img:hover {
+    position: relative;
+    z-index: 5;
+    transform: scale(1.07);
+  }
+  .trip:hover { overflow: visible; }
+}
