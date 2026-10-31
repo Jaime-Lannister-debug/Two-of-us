@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "ab919330aaff325a5a107e944b0448a2d90d105d934ede0cd51ce175ec4d9f5c",
+  "cssHash": "0e41ecb217385eeee9af24d6ac1769d87143a08612d4745e2f351cac0a951eea",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -60,6 +60,10 @@
     {
       "date": "2026-10-31",
       "feature": "有图封面容器适配原图比例以消除侧边空白，无图占位保持不变。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "封面及其他照片增加悬停放大，并尊重减少动态效果。"
     }
   ]
 }

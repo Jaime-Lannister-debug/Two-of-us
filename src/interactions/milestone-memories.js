@@ -93,6 +93,16 @@ export function createMilestoneMemories(app) {
     bindImages($("#memoryPhotos"));
   }
   function bindImages(host) {
+    // 沿用旅行详情的大图弹窗；普通链接仍作为脚本不可用时的备用入口。
+    host.querySelectorAll("a").forEach((link) => {
+      link.onclick = (event) => {
+        event.preventDefault();
+        const dialog = $("#photoLightbox");
+        $("#largePhoto").src = link.href;
+        $("#largePhoto").alt = link.querySelector("img")?.alt || "纪念照片大图";
+        if (!dialog.open) dialog.showModal();
+      };
+    });
     host.querySelectorAll("img").forEach((img) =>
       img.addEventListener(
         "error",

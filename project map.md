@@ -147,3 +147,7 @@
 | 收藏封面与纪念照片显示 | `styles/collection-layout.css`、`styles/collections.css`、`styles/milestone-memories.css` | 收藏卡片与旅行列表完整显示封面，纪念照片限制尺寸并保持比例；不改变已上传图片 | `tests/ui-parity.mjs`、完整回归 |
 
 收藏有图封面容器随图片原始比例调整，消除固定比例容器产生的侧边空白；无图占位仍使用原比例。
+
+纪念照片点击放大复用 `#photoLightbox`，上传预览及已保存照片均可打开；关闭/点击背景沿用 `src/auth/controller.js`。验证见 `tests/milestone-memories-ui.mjs`。
+
+封面、详情图、纪念照片与旅行相册支持悬停放大容器，保留边缘；减少动态效果或触屏设备不启用悬停动效。样式入口为 `styles/collections.css`。
