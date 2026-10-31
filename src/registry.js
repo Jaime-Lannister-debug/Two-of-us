@@ -1,3 +1,4 @@
+import { createMilestoneMemories } from "./interactions/milestone-memories.js";
 import { createLedgerController } from "./ledger/controller.js";
 import { createMilestonesPage } from "./interactions/milestones-page.js";
 import { createR2Upload } from "./media/r2-upload.js";
@@ -42,6 +43,7 @@ export const featureTemplates = [
 ];
 
 export const featureModules = [
+  { id: "interactions/milestone-memories", create: createMilestoneMemories },
   { id: "ledger/controller", create: createLedgerController },
   { id: "interactions/milestones-page", create: createMilestonesPage },
   { id: "media/r2-upload", create: createR2Upload },

@@ -4,6 +4,7 @@ import { friendlyError } from "../core/errors.js";
 export function createInteractionsRuntime(app) {
   const store = app.state;
   function resetTogether() {
+    app.actions.stopMilestoneMemories();
     app.actions.closeMoodLetter();
     app.actions.disposeStarBottles();
     store.together.version++;

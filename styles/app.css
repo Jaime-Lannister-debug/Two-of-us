@@ -14,8 +14,10 @@
 
 @import url("./mood-bottles.css");
 
-@import url('./milestones.css');
+@import url("./milestones.css");
 
-@import url('./sidebar.css');
+@import url("./sidebar.css");
 
-@import url('./ledger.css');
+@import url("./ledger.css");
+
+@import url("./milestone-memories.css");

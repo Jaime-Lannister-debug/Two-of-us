@@ -20,6 +20,17 @@ export function createMilestonesPage(app) {
         ?.scrollIntoView?.({ block: "center" });
   }
   function renderMilestonePage() {
+    if (app.actions.milestoneMemoryRoute()) {
+      app.actions.disposeStarBottles();
+      document
+        .querySelectorAll("[data-page]")
+        .forEach((b) => b.classList.remove("active"));
+      $("#moodBottles").classList.remove("active");
+      $("#milestonesNav").classList.add("active");
+      app.actions.renderMilestoneMemories();
+      return;
+    }
+    app.actions.stopMilestoneMemories();
     app.actions.disposeStarBottles();
     $("#add").textContent = "＋ 新增纪念日";
     document
@@ -39,8 +50,15 @@ export function createMilestonesPage(app) {
         nextMilestoneDay(a) - nextMilestoneDay(b),
     );
     $("#content").innerHTML =
-      `<section class="milestones-page" aria-labelledby="milestonesPageTitle"><button class="btn secondary" id="milestonesBack">← 返回首页</button><div class="milestones-heading"><span class="eyebrow">EVERY DATE HAS A STORY</span><h1 id="milestonesPageTitle">我们的纪念日</h1><p class="subtitle">${sorted.length} 个值得记住的日子，都在这里。日期倒计时每天自动计算。</p><button class="btn" id="addMilestonePage">＋ 添加纪念日</button></div><div class="milestones-board">${sorted.map((m) => `<article class="milestone-card ${m.is_relationship ? "relationship" : ""}" id="milestone-card-${esc(m.id)}" data-milestone-id="${esc(m.id)}"><span class="eyebrow">${m.is_relationship ? "OUR STORY" : "A DAY TO REMEMBER"}</span><h2>${esc(m.title)}${app.actions.itemUnreadBadge(m.id)}</h2><strong>${esc(milestoneCaption(m))}</strong><p>${esc(m.date)}${m.repeat_yearly ? " · 每年纪念" : ""}</p><button class="btn secondary" data-view-milestone="${esc(m.id)}">查看 / 编辑</button></article>`).join("") || '<p class="empty">还没有纪念日。添加在一起的日子、第一次约会或生日，记录属于我们的时光。</p>'}</div></section>`;
+      `<section class="milestones-page" aria-labelledby="milestonesPageTitle"><button class="btn secondary" id="milestonesBack">← 返回首页</button><div class="milestones-heading"><span class="eyebrow">EVERY DATE HAS A STORY</span><h1 id="milestonesPageTitle">我们的纪念日</h1><p class="subtitle">${sorted.length} 个值得记住的日子，都在这里。日期倒计时每天自动计算。</p><button class="btn" id="addMilestonePage">＋ 添加纪念日</button></div><div class="milestones-board">${sorted.map((m) => `<article class="milestone-card ${m.is_relationship ? "relationship" : ""}" id="milestone-card-${esc(m.id)}" data-milestone-id="${esc(m.id)}"><span class="eyebrow">${m.is_relationship ? "OUR STORY" : "A DAY TO REMEMBER"}</span><h2>${esc(m.title)}${app.actions.itemUnreadBadge(m.id)}</h2><strong>${esc(milestoneCaption(m))}</strong><p>${esc(m.date)}${m.repeat_yearly ? " · 每年纪念" : ""}</p><button class="btn" data-memory-milestone="${esc(m.id)}">查看纪念记录 →</button><button class="btn secondary" data-view-milestone="${esc(m.id)}">查看 / 编辑</button></article>`).join("") || '<p class="empty">还没有纪念日。添加在一起的日子、第一次约会或生日，记录属于我们的时光。</p>'}</div></section>`;
     $("#content").setAttribute("aria-busy", "false");
+    document
+      .querySelectorAll("[data-memory-milestone]")
+      .forEach(
+        (b) =>
+          (b.onclick = () =>
+            app.actions.openMilestoneMemories(b.dataset.memoryMilestone)),
+      );
     $("#milestonesBack").onclick = () => app.actions.go("home");
     $("#addMilestonePage").onclick = () => app.actions.openMilestones();
     document.querySelectorAll("[data-view-milestone]").forEach(

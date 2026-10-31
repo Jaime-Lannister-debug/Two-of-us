@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "478be3b03d610590873ec5e76052caaf839de33e80804ed2b8b52a429f4a7779",
+  "cssHash": "8156b71895abfbad2a19f87c3079d0d412fab0a8e5c18460b2ed4c99e1692373",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -44,6 +44,10 @@
     {
       "date": "2026-10-24",
       "feature": "核对消息 DOM 每条独立确认、无嵌套按钮，以及头部账本相邻结构；仅更新消息摘要与用途/入口样式摘要，其他19个DOM契约保持不变。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "新增限定在纪念记录页面的五图相册及表单样式，核对DOM结构和窄屏CSS；保留原20个内容DOM摘要。"
     }
   ]
 }

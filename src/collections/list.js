@@ -20,6 +20,8 @@ export function createCollectionsList(app) {
   }
   function render() {
     if (!store.cloudUser) return;
+    if (!app.actions.milestoneMemoryRoute())
+      app.actions.stopMilestoneMemories();
     if (app.actions.isLedgerPage()) {
       if (store.map) {
         store.map.remove();

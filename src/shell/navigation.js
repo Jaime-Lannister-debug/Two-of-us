@@ -56,11 +56,13 @@ export function createShellNavigation(app) {
     $("#add").onclick = () =>
       app.actions.isLedgerPage()
         ? app.actions.newLedgerEntry()
-        : app.actions.isMilestonePage()
-          ? app.actions.openMilestones()
-          : app.actions.isMoodPage()
-            ? app.actions.openMoodComposer(store.together.kind)
-            : app.actions.openForm();
+        : app.actions.milestoneMemoryRoute()
+          ? app.actions.focusMilestoneMemoryForm()
+          : app.actions.isMilestonePage()
+            ? app.actions.openMilestones()
+            : app.actions.isMoodPage()
+              ? app.actions.openMoodComposer(store.together.kind)
+              : app.actions.openForm();
   }
   return {
     go,
