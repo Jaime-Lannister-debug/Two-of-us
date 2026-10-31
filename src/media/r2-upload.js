@@ -178,7 +178,7 @@ export function createR2Upload(app) {
     await requestStage(
       "上传图片到 R2",
       upload.href,
-      { method: "PUT", headers: { "Content-Type": contentType }, body: blob },
+      { method: "PUT", headers: { "Content-Type": contentType, "Cache-Control": "public, max-age=2592000" }, body: blob },
       epoch,
       onStatus,
       false,

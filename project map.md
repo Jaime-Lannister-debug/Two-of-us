@@ -155,3 +155,5 @@
 悬停放大统一使用 0.55 秒缓动、较小的放大幅度；覆盖旧卡片样式对 transform 过渡的冲突，避免跳动。
 
 2026-10-31：本地封面保留原图文件及 MIME 类型，不缩放、不重编码；沿用 20 MB 上限。旧封面需使用原图重新上传。
+
+图片上传 PUT 增加 `Cache-Control: public, max-age=2592000`，新对象建议浏览器缓存 30 天；需桶 CORS 允许 Cache-Control 请求头，旧对象不自动变化。验证 `tests/cover-upload.mjs`、`tests/r2-resilience.mjs`。

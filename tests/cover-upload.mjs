@@ -13,7 +13,7 @@ try{
  app.services.fetch=async(address,options)=>{
   calls.push({address,options});if(mode==='network')throw new TypeError('Failed to fetch');
   if(options.method==='POST'){const body=JSON.parse(options.body);assert.equal(body.contentType,currentFile.type);assert.ok(body.filename.endsWith(({ 'image/png':'.png','image/webp':'.webp','image/jpeg':'.jpg' })[currentFile.type]));assert.equal(options.headers.Authorization,'Bearer fake-session-token');return new Response(JSON.stringify({uploadUrl:'https://test.r2.cloudflarestorage.com/covers/covers/test.jpg?signature=test',publicUrl:'https://pub-e97c7ebcf6e7475d85a27152bc869d5f.r2.dev/covers/test.jpg'}),{status:200})}
-  assert.equal(options.headers['Content-Type'],currentFile.type);assert.equal(options.headers.Authorization,undefined);assert.equal(options.body,currentFile,'PUT 必须直接发送用户选择的原始文件');if(mode==='session-change')app.state.cloudEpoch++;return new Response(null,{status:mode==='put-failure'?403:200});
+  assert.equal(options.headers['Content-Type'],currentFile.type);assert.equal(options.headers['Cache-Control'],'public, max-age=2592000');assert.equal(options.headers.Authorization,undefined);assert.equal(options.body,currentFile,'PUT 必须直接发送用户选择的原始文件');if(mode==='session-change')app.state.cloudEpoch++;return new Response(null,{status:mode==='put-failure'?403:200});
  };
  app.actions.setupCoverUpload();
  for(const [name,type] of [['测试封面.png','image/png'],['测试.webp','image/webp'],['测试.jpg','image/jpeg']]){currentFile=new w.File(['原始照片内容'],name,{type});mode='success';calls=[];await input.onchange();assert.equal(calls.length,2,message.textContent);assert.match(url.value,/r2.dev/);assert.equal(app.state.coverBusy,false);assert.equal(save.disabled,false);}

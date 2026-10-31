@@ -11,7 +11,7 @@ async function advance(ms){await tick();for(const [id,t]of [...tasks])if(t.ms===
 app.state.cloudUser={id:'a'};app.state.cloud={auth:{getSession:async()=>({data:{session:{access_token:'test-token'}},error:null})}};
 try{
  let post=0,put=0;const addresses=[],statuses=[];
- app.services.fetch=async(url,options)=>{if(options.method==='POST'){post++;return post===1?{ok:true,status:200,json:()=>new Promise(()=>{})}:reply()}put++;addresses.push(url);assert(!options.headers.Authorization);return new Response(null,{status:200})};
+ app.services.fetch=async(url,options)=>{if(options.method==='POST'){post++;return post===1?{ok:true,status:200,json:()=>new Promise(()=>{})}:reply()}put++;addresses.push(url);assert.equal(options.headers['Cache-Control'],'public, max-age=2592000');assert(!options.headers.Authorization);return new Response(null,{status:200})};
  let pending=app.actions.uploadR2Photo(new Blob(['jpeg']),'a.png',s=>statuses.push(s));await advance(60000);await advance(1000);assert.equal(await pending,result.publicUrl);assert.equal(post,2);assert.equal(put,1);assert(statuses.some(s=>/重试/.test(s)),'响应体读取卡住也超时重试');
  post=put=0;addresses.length=0;
  app.services.fetch=async(url,options)=>{if(options.method==='POST'){post++;return reply()}put++;addresses.push(url);if(put===1)return new Promise(()=>{});return new Response(null,{status:200})};
