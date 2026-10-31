@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "0e41ecb217385eeee9af24d6ac1769d87143a08612d4745e2f351cac0a951eea",
+  "cssHash": "ae0ab49a2d6053d0d89e106893fab0caff6c8b428e87abce7a697380db6d1fcb",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -64,6 +64,10 @@
     {
       "date": "2026-10-31",
       "feature": "封面及其他照片增加悬停放大，并尊重减少动态效果。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "图片悬停放大使用较慢缓动，修复卡片样式覆盖 transform 过渡导致的跳动。"
     }
   ]
 }
