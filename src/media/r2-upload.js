@@ -130,6 +130,10 @@ export function createR2Upload(app) {
     if (session.error) throw session.error;
     if (!session.data.session?.access_token)
       throw Error("登录已失效，请重新登录后上传。");
+    // 旅行相册仍传入压缩后的 JPEG；原始封面按文件 MIME 保留格式。
+    const contentType = blob.type || "image/jpeg";
+    const extension = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" }[contentType];
+    if (!extension) throw Error("仅支持 JPG、PNG 或 WebP 图片。");
     const result = await requestStage(
       "获取图片上传地址",
       COVER_UPLOAD_WORKER_URL,
@@ -143,8 +147,8 @@ export function createR2Upload(app) {
           filename:
             (String(name || "photo")
               .replace(/\.[^.]+$/, "")
-              .slice(0, 140) || "photo") + ".jpg",
-          contentType: "image/jpeg",
+              .slice(0, 140) || "photo") + extension,
+          contentType,
         }),
       },
       epoch,
@@ -174,7 +178,7 @@ export function createR2Upload(app) {
     await requestStage(
       "上传图片到 R2",
       upload.href,
-      { method: "PUT", headers: { "Content-Type": "image/jpeg" }, body: blob },
+      { method: "PUT", headers: { "Content-Type": contentType }, body: blob },
       epoch,
       onStatus,
       false,

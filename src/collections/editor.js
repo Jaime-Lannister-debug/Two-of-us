@@ -67,7 +67,7 @@ export function createCollectionsEditor(app) {
       field('score', '我们的评分（0–10，0 表示未评分）', 'number', r.score) +
       field('date', '日期 / 旅行开始日期', 'date', r.date) +
       field('image', '海报图片链接（也可直接上传）', 'text', r.image || '') +
-      `<label class="field full">上传本地封面<input id="coverUpload" type="file" accept="image/jpeg,image/png,image/webp"><small id="coverMessage">支持 JPG、PNG、WebP；最长边 400px，压缩后上传 R2，保存记录后同步。</small><img id="coverPreview" alt="封面预览" style="max-width:140px;max-height:180px;object-fit:contain;border-radius:8px" hidden></label>` +
+      `<label class="field full">上传本地封面<input id="coverUpload" type="file" accept="image/jpeg,image/png,image/webp"><small id="coverMessage">支持 JPG、PNG、WebP（最大 20 MB）；原图上传，保存记录后同步。</small><img id="coverPreview" alt="封面预览" style="max-width:140px;max-height:180px;object-fit:contain;border-radius:8px" hidden></label>` +
       field('desc', '简介 / 游玩项目', 'text', r.desc || '', true) +
       `<div class="field full" id="progressEditor"></div><div class="field full" id="extra"></div>` +
       field(
