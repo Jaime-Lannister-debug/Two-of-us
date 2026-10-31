@@ -42,8 +42,8 @@
 }
 #milestoneMemoryPage .memory-photos img {
   width: 100%;
-  height: 190px;
-  object-fit: cover;
+  height: auto;
+  max-width: 100%;
   border-radius: 10px;
   background: #24242c;
 }
@@ -68,8 +68,5 @@
   }
   #milestoneMemoryPage .memory-photos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  #milestoneMemoryPage .memory-photos img {
-    height: 145px;
   }
 }
