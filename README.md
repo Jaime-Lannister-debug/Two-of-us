@@ -108,3 +108,5 @@ npm test
 2026-10-24：消息中心仅展示未读消息，打开不再整批已读；每条「看过这条」只移出当前消息，回执跨设备保存。账本增加自己消费/恋爱消费独立用途，升级执行 `supabase/08-ledger-purpose.sql`，详情见 docs/ledger.md。
 
 纪念日卡片新增「查看纪念记录」二级页：按日期记录活动、感想和最多5张照片。成员共享、本人编辑删除、实时重读保留草稿。启用执行 `supabase/09-milestone-memories.sql`，无需更改已有图片 Worker；维护入口见 project map.md。
+
+新上传的封面、旅行及纪念照片通过 PUT 设置浏览器缓存 30 天。桶 CORS 的 AllowedHeaders 必须包含 Content-Type 和 Cache-Control；已有对象的响应头不会自动改变。私有账本凭证仍保持原有鉴权读取策略。
