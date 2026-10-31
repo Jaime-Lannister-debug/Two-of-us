@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "8156b71895abfbad2a19f87c3079d0d412fab0a8e5c18460b2ed4c99e1692373",
+  "cssHash": "4e5436461fd85642ee31da1d4648e1075eec7febb4ade6a2ebfe2bd278239ae6",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -48,6 +48,10 @@
     {
       "date": "2026-10-31",
       "feature": "新增限定在纪念记录页面的五图相册及表单样式，核对DOM结构和窄屏CSS；保留原20个内容DOM摘要。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "纪念照片取消固定高度与裁切，按原图比例显示，上传预览和记录列表共用。"
     }
   ]
 }
