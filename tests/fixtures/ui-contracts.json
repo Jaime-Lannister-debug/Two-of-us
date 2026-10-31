@@ -13,12 +13,12 @@
     "details-music": "f1ab6bffe7b91773e7a3c48671c3158fc5825ae0ede4d33ac104c074bb552a35",
     "details-trip": "67d3c93a9c1dcc9561e25833f53572f48c358b167aa3a8bcfc8112855f2d4867",
     "details-intimacy": "e755a519d6bd70ab0202266798fc85963893ca2aee05d8da967fc04279a4c5e2",
-    "editor-game": "eb117668d6df49171f28917b57d328d210c9c6e98dde5fd6ead742eac1337df6",
-    "editor-tv": "6c4105cad61e0e27ed49578c4ff168a8cf7861582f411178a9ee653af872bc64",
-    "editor-film": "2b049b656aad78899fceabdaa552c5612b2f4942fa9bf0da822d25229b024adf",
-    "editor-music": "b1942e3c1550e8fe7c70f684de642df02814e8a3fddcd5edd2b1a08a4e93719d",
-    "editor-trip": "c8498610c34383b3c8f4611075f8f3bf806daafb63a45c831c62d54547ac91be",
-    "editor-intimacy": "154196d81643d2273218a538d62ae24300d3a77c2a6af439b1e5628434623506",
+    "editor-game": "410dc8c867205d2da5d57f44bbfdcf5075b2d81cba843e7a14e407d33d86615c",
+    "editor-tv": "3a85078df1414561f5de61ecfb016f5cc1b54370779322548d3518c2b0ea99b9",
+    "editor-film": "1908f6b57ea1f48b23ffc6211a6181a83b78369cea9890cd7c9859b302116a39",
+    "editor-music": "c8f08c00543c4032b42052e6f8563bbad22b273338e26cb0444e8dc92251aacc",
+    "editor-trip": "92e53d7a87e0590a61a20d25629631a9d0a0ce84073aa54014f004c739f78b49",
+    "editor-intimacy": "634ffbb79747d32fe2f154fc0b4a334e2b3a60808f645fc85cb2c6091e740937",
     "bottle-happy": "2c4c485c40ded4706f94b8c9c4b30002de59d5411babb3b7c81a816f33eb2704",
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
@@ -68,6 +68,10 @@
     {
       "date": "2026-10-31",
       "feature": "图片悬停放大使用较慢缓动，修复卡片样式覆盖 transform 过渡导致的跳动。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "本地封面提示改为原图上传和20MB上限，其余DOM契约不变。"
     }
   ]
 }

@@ -34,7 +34,7 @@
 | 旅行地图 | `src/collections/travel/map.js` | `initMap()`；OSM 瓦片、有效零坐标、选点草稿 | `styles/travel-map.css`、`tests/travel-map.mjs` |
 | 旅行日期区间 / 多酒店 | `src/collections/travel/editor.js` | `setupTravelEditor()`；表单提交仍在收藏编辑器统一校验 | `tests/details-and-music.mjs`、`tests/ui-parity.mjs` |
 | 旅行相册 | `src/collections/travel/gallery.js` | `uploadTravelPhotos()`、`removeTravelPhoto()`；含封面最多十张；通过原编辑 RPC 保存 URL | `tests/details-and-music.mjs` |
-| 本地封面 / R2 图片上传 | `src/media/covers.js` | `setupCoverUpload()`、`compressTravelImage()`、`uploadR2Photo()`；400px/.6 封面、1000px/.75 相册 | `tests/cover-upload.mjs` |
+| 本地封面 / R2 图片上传 | `src/media/covers.js` | `setupCoverUpload()`、`compressTravelImage()`、`uploadR2Photo()`；原格式原图封面、1000px/.75 相册 | `tests/cover-upload.mjs` |
 | QQ 音乐分享解析 / 信息读取 | `src/collections/music-link.js`、`src/collections/music.js` | `qqShareInfo()` 纯校验；`readQQMusic()`、`setupMusicImport()`；官方 JSONP，不下载歌曲 | `tests/details-and-music.mjs` |
 | 头像、昵称与双人菜单 | `src/profiles/model.js`、`src/profiles/controller.js`、`src/profiles/template.js` | `initPeopleUI()`、`loadPeople()`、`renderPeople()`；独立资料订阅 | `tests/menu.mjs`、`tests/cloud.mjs`、`supabase/04-shared-profiles.sql` |
 | 互动门禁、数据加载与实时协调 | `src/interactions/runtime.js` | `loadTogether()`、`resetTogether()`、`initTogetherUI()`；只有成员有入口，读取互动表并刷新各功能 | `tests/together-ui.mjs`、`supabase/05-together-features.sql` |
@@ -153,3 +153,5 @@
 封面、详情图、纪念照片与旅行相册支持悬停放大容器，保留边缘；减少动态效果或触屏设备不启用悬停动效。样式入口为 `styles/collections.css`。
 
 悬停放大统一使用 0.55 秒缓动、较小的放大幅度；覆盖旧卡片样式对 transform 过渡的冲突，避免跳动。
+
+2026-10-31：本地封面保留原图文件及 MIME 类型，不缩放、不重编码；沿用 20 MB 上限。旧封面需使用原图重新上传。

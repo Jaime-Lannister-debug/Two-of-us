@@ -27,47 +27,19 @@ export function createMediaCovers(app) {
         return;
       }
       const epoch = store.cloudEpoch;
-      let objectUrl,
-        phase = "压缩图片";
+      let phase = "准备原图";
       store.coverBusy = true;
       input.disabled = true;
       url.disabled = true;
       save.disabled = true;
-      message.textContent = "正在压缩封面…";
+      message.textContent = "正在上传原图…";
       try {
         app.actions.requireCloudUser();
-        objectUrl = URL.createObjectURL(file);
-        const picture = new Image();
-        await new Promise((resolve, reject) => {
-          picture.onload = resolve;
-          picture.onerror = () =>
-            reject(new Error("无法读取图片，请更换文件。"));
-          picture.src = objectUrl;
-        });
-        const scale = Math.min(
-          1,
-          400 / Math.max(picture.naturalWidth, picture.naturalHeight),
-        );
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1, Math.round(picture.naturalWidth * scale));
-        canvas.height = Math.max(1, Math.round(picture.naturalHeight * scale));
-        const context = canvas.getContext("2d");
-        if (!context) throw new Error("浏览器无法创建图片压缩画布。");
-        context.fillStyle = "#1b1c22";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(picture, 0, 0, canvas.width, canvas.height);
-        const blob = await new Promise((resolve, reject) => {
-          canvas.toBlob(
-            (value) =>
-              value ? resolve(value) : reject(new Error("JPEG 压缩失败。")),
-            "image/jpeg",
-            0.6,
-          );
-        });
+        // 直接上传原文件，不缩放、不重编码，保留格式与图片质量。
         if (epoch !== store.cloudEpoch || !url.isConnected)
           throw new Error('登录状态或编辑窗口已变化，请重新打开记录。');
         const publicUrl = await app.actions.uploadR2Photo(
-          blob,
+          file,
           file.name,
           (status) => {
             phase = status;
@@ -92,7 +64,6 @@ export function createMediaCovers(app) {
               : friendlyError(error);
         message.textContent = `封面上传失败（${phase}）：${detail} 可改用图片链接。`;
       } finally {
-        if (objectUrl) URL.revokeObjectURL(objectUrl);
         store.coverBusy = false;
         input.disabled = false;
         url.disabled = false;
