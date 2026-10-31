@@ -46,7 +46,7 @@ export function createMediaCovers(app) {
         });
         const scale = Math.min(
           1,
-          400 / Math.max(picture.naturalWidth, picture.naturalHeight),
+          1200 / Math.max(picture.naturalWidth, picture.naturalHeight),
         );
         const canvas = document.createElement("canvas");
         canvas.width = Math.max(1, Math.round(picture.naturalWidth * scale));
@@ -61,7 +61,7 @@ export function createMediaCovers(app) {
             (value) =>
               value ? resolve(value) : reject(new Error("JPEG 压缩失败。")),
             "image/jpeg",
-            0.6,
+            0.85,
           );
         });
         if (epoch !== store.cloudEpoch || !url.isConnected)
