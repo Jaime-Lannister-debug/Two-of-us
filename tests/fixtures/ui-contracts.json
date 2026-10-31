@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "4e5436461fd85642ee31da1d4648e1075eec7febb4ade6a2ebfe2bd278239ae6",
+  "cssHash": "5c7ebe94614f27962046b0ae0b36479bb382b0c4263f0ad23e61b00ca528e33b",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -52,6 +52,10 @@
     {
       "date": "2026-10-31",
       "feature": "纪念照片取消固定高度与裁切，按原图比例显示，上传预览和记录列表共用。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "收藏和旅行封面完整显示并取消悬停裁切；纪念照片限制显示尺寸并保留比例。"
     }
   ]
 }

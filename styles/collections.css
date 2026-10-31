@@ -1,11 +1,11 @@
 .poster.wrap-cover img {
-  width: 210%;
-  max-width: none;
+  width: 100%;
+  max-width: 100%;
   height: 100%;
-  object-fit: fill;
-  position: relative;
-  left: -110%;
+  object-fit: contain;
+  position: static;
 }
+
 .poster.wrap-cover .poster-title {
   display: none;
 }
