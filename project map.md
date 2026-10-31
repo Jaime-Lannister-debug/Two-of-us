@@ -135,3 +135,11 @@
 | 顶部账本入口 / 消费用途 | `shared.html`、`styles/ledger.css`、`src/ledger/editor.js`、`src/ledger/state.js`、`src/ledger/data.js`、`src/ledger/workspace.js`、`src/ledger/reports.js`、`supabase/08-ledger-purpose.sql` | 双人记账移到新增回忆旁；purpose=self/romance 与 scope、付款、分摊独立；历史 NULL 未分类；明细筛选与报表全量精确汇总；SQL 未升级时拒绝静默丢失用途 | `tests/ledger-db.mjs`、`tests/ledger-ui.mjs` |
 
 正式项目需在 SQL Editor 完整执行 08；不要重跑 07。旧客户端写入无用途时，新记录保留未分类，编辑保留既有用途；新版填写用途后才允许保存。
+
+## 2026-10-31：纪念日的纪念记录
+
+| 功能 | 主要文件 | 入口与依赖 | 验证 |
+|---|---|---|---|
+| 纪念记录详情 / 日期 / 活动感想 / 最多五图 | `src/interactions/milestone-memories.js`、`styles/milestone-memories.css`、`src/interactions/milestones-page.js`、`supabase/09-milestone-memories.sql` | 纪念日卡片「查看纪念记录」→ #view=milestones&milestone=UUID&memories=1；独立 app.state.milestoneMemories；复用 compressTravelImage / uploadR2Photo；双方查看各自添加、本人修改删除、版本冲突；INSERT/UPDATE 订阅重读不覆盖草稿，离页/退出清理 | `tests/milestone-memories-ui.mjs`、`tests/milestone-memories-db.mjs`、完整回归 |
+
+需管理员执行 09（依赖 05），不重跑旧脚本、不修改封面 Worker 或 R2 权限。图片沿用已有旅行上传方式，数据库只存服务返回的 HTTPS URL；移除引用不删除桶原文件。删除纪念日会同时删除其纪念记录，确认文案已明确。

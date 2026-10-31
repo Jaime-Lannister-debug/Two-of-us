@@ -166,7 +166,7 @@ export function createInteractionsMilestones(app) {
     if (
       !app.actions.memberFeature() ||
       store.together.busy ||
-      !confirm("删除这条纪念日？")
+      !confirm("删除这条纪念日及其全部纪念记录？照片原文件不会随之删除。")
     )
       return;
     const epoch = store.cloudEpoch;

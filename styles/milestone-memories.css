@@ -1,0 +1,75 @@
+/* 仅用于纪念记录详情；与既有纪念日、收藏和账本样式隔离。 */
+#milestoneMemoryPage .memory-form,
+#milestoneMemoryPage .memory-entry {
+  padding: 24px;
+  background: #1b1c22;
+  border: 1px solid #393139;
+  border-radius: 16px;
+  margin: 22px 0;
+}
+#milestoneMemoryPage fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+#milestoneMemoryPage .field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 18px 0;
+}
+#milestoneMemoryPage textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+#milestoneMemoryPage .memory-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+}
+#milestoneMemoryPage .memory-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+#milestoneMemoryPage figure {
+  margin: 0;
+  min-width: 0;
+}
+#milestoneMemoryPage .memory-photos a {
+  display: block;
+}
+#milestoneMemoryPage .memory-photos img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #24242c;
+}
+#milestoneMemoryPage figure button {
+  margin-top: 8px;
+  width: 100%;
+}
+#milestoneMemoryPage [role="status"] {
+  color: #e7b79a;
+  overflow-wrap: anywhere;
+}
+#milestoneMemoryPage .social-actions {
+  flex-wrap: wrap;
+}
+.milestone-card [data-memory-milestone] {
+  margin: 8px 5px 0 0;
+}
+@media (max-width: 500px) {
+  #milestoneMemoryPage .memory-form,
+  #milestoneMemoryPage .memory-entry {
+    padding: 17px;
+  }
+  #milestoneMemoryPage .memory-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #milestoneMemoryPage .memory-photos img {
+    height: 145px;
+  }
+}

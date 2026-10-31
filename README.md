@@ -106,3 +106,5 @@ npm test
 执行与验收见 [docs/ledger.md](docs/ledger.md)，数据迁移为 `supabase/07-ledger.sql`。首次配置需部署 `workers/ledger-receipts.js` 并填写外部 `LEDGER_RECEIPTS_WORKER_URL`；不配置凭证服务也可保存无凭证账目。分支检查不发布正式网页、不执行正式迁移。
 
 2026-10-24：消息中心仅展示未读消息，打开不再整批已读；每条「看过这条」只移出当前消息，回执跨设备保存。账本增加自己消费/恋爱消费独立用途，升级执行 `supabase/08-ledger-purpose.sql`，详情见 docs/ledger.md。
+
+纪念日卡片新增「查看纪念记录」二级页：按日期记录活动、感想和最多5张照片。成员共享、本人编辑删除、实时重读保留草稿。启用执行 `supabase/09-milestone-memories.sql`，无需更改已有图片 Worker；维护入口见 project map.md。

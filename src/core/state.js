@@ -2,6 +2,7 @@
 export function createState() {
   return {
     ledger: null,
+    milestoneMemories: null,
     records: [],
     selectedTripPoint: null,
     genreFilter: "",
