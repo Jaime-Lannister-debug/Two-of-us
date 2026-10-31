@@ -143,3 +143,5 @@
 | 纪念记录详情 / 日期 / 活动感想 / 最多五图 | `src/interactions/milestone-memories.js`、`styles/milestone-memories.css`、`src/interactions/milestones-page.js`、`supabase/09-milestone-memories.sql` | 纪念日卡片「查看纪念记录」→ #view=milestones&milestone=UUID&memories=1；独立 app.state.milestoneMemories；复用 compressTravelImage / uploadR2Photo；双方查看各自添加、本人修改删除、版本冲突；INSERT/UPDATE 订阅重读不覆盖草稿，离页/退出清理 | `tests/milestone-memories-ui.mjs`、`tests/milestone-memories-db.mjs`、完整回归 |
 
 需管理员执行 09（依赖 05），不重跑旧脚本、不修改封面 Worker 或 R2 权限。图片沿用已有旅行上传方式，数据库只存服务返回的 HTTPS URL；移除引用不删除桶原文件。删除纪念日会同时删除其纪念记录，确认文案已明确。
+
+| 收藏封面与纪念照片显示 | `styles/collection-layout.css`、`styles/collections.css`、`styles/milestone-memories.css` | 收藏卡片与旅行列表完整显示封面，纪念照片限制尺寸并保持比例；不改变已上传图片 | `tests/ui-parity.mjs`、完整回归 |
