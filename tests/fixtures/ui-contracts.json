@@ -23,7 +23,7 @@
     "messages": "ce6700561ef27ac522a81be26c3d81b0140658537c7f8ff4d13129c77614786b",
     "milestone-manager": "d98560af5d529224cb24a98d3e598d10c9d46fbb5c6beef66b9baa9d49b51a53"
   },
-  "cssHash": "5c7ebe94614f27962046b0ae0b36479bb382b0c4263f0ad23e61b00ca528e33b",
+  "cssHash": "ab919330aaff325a5a107e944b0448a2d90d105d934ede0cd51ce175ec4d9f5c",
   "intentionalUpdates": [
     {
       "date": "2026-10-20",
@@ -56,6 +56,10 @@
     {
       "date": "2026-10-31",
       "feature": "收藏和旅行封面完整显示并取消悬停裁切；纪念照片限制显示尺寸并保留比例。"
+    },
+    {
+      "date": "2026-10-31",
+      "feature": "有图封面容器适配原图比例以消除侧边空白，无图占位保持不变。"
     }
   ]
 }

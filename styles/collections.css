@@ -111,3 +111,9 @@ input[type='range'] {
     transition: none;
   }
 }
+
+/* 有图时容器跟随原图比例，避免完整显示时出现侧边空白。无图占位保持原有尺寸。 */
+.poster:has(img), .music .poster:has(img) { aspect-ratio: auto; background: transparent; }
+.poster:has(img) img, .poster.wrap-cover:has(img) img { display: block; width: 100%; height: auto; }
+.trip img { height: auto; align-self: center; }
+@media (max-width: 750px) { .trip img { height: auto; } }
