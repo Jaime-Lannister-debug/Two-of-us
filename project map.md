@@ -151,3 +151,5 @@
 纪念照片点击放大复用 `#photoLightbox`，上传预览及已保存照片均可打开；关闭/点击背景沿用 `src/auth/controller.js`。验证见 `tests/milestone-memories-ui.mjs`。
 
 封面、详情图、纪念照片与旅行相册支持悬停放大容器，保留边缘；减少动态效果或触屏设备不启用悬停动效。样式入口为 `styles/collections.css`。
+
+悬停放大统一使用 0.55 秒缓动、较小的放大幅度；覆盖旧卡片样式对 transform 过渡的冲突，避免跳动。
